@@ -5,10 +5,30 @@ import cn.afterturn.easypoi.excel.entity.ExportParams;
 import cn.afterturn.easypoi.excel.entity.ImportParams;
 import cn.afterturn.easypoi.excel.entity.result.ExcelImportResult;
 import cn.hutool.core.bean.BeanUtil;
+import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.util.RandomUtil;
 import cn.hutool.core.util.StrUtil;
 import cn.hutool.crypto.SecureUtil;
 import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.google.common.collect.Multimap;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiImplicitParams;
+import io.swagger.annotations.ApiOperation;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.apache.poi.ss.formula.functions.T;
+import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 import top.tangyh.basic.annotation.log.SysLog;
 import top.tangyh.basic.annotation.security.PreAuth;
 import top.tangyh.basic.base.R;
@@ -18,7 +38,8 @@ import top.tangyh.basic.base.request.PageParams;
 import top.tangyh.basic.database.mybatis.conditions.query.LbqWrapper;
 import top.tangyh.basic.database.mybatis.conditions.query.QueryWrap;
 import top.tangyh.basic.echo.core.EchoService;
-import top.tangyh.basic.utils.BizAssert;
+import top.tangyh.basic.model.EchoVO;
+import top.tangyh.basic.utils.ArgumentAssert;
 import top.tangyh.lamp.authority.controller.poi.ExcelUserVerifyHandlerImpl;
 import top.tangyh.lamp.authority.controller.poi.UserExcelDictHandlerImpl;
 import top.tangyh.lamp.authority.dto.auth.UserExcelVO;
@@ -34,28 +55,14 @@ import top.tangyh.lamp.authority.entity.core.Org;
 import top.tangyh.lamp.authority.service.auth.UserService;
 import top.tangyh.lamp.authority.service.core.OrgService;
 import top.tangyh.lamp.common.constant.BizConstant;
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiImplicitParam;
-import io.swagger.annotations.ApiImplicitParams;
-import io.swagger.annotations.ApiOperation;
-import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
-import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.multipart.MultipartFile;
+import top.tangyh.lamp.common.vo.result.AppendixResultVO;
+import top.tangyh.lamp.file.service.AppendixService;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.groups.Default;
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -85,6 +92,7 @@ import static top.tangyh.lamp.common.constant.SwaggerConstants.PARAM_TYPE_QUERY;
 public class UserController extends SuperCacheController<UserService, Long, User, UserPageQuery, UserSaveDTO, UserUpdateDTO> {
     private final OrgService orgService;
     private final EchoService echoService;
+    private final AppendixService appendixService;
     private final ExcelUserVerifyHandlerImpl excelUserVerifyHandler;
     private final UserExcelDictHandlerImpl userExcelDictHandlerIImpl;
 
@@ -162,10 +170,8 @@ public class UserController extends SuperCacheController<UserService, Long, User
     @ApiOperation(value = "修改头像", notes = "修改头像")
     @PutMapping("/avatar")
     @SysLog("'修改头像:' + #p0.id")
-    public R<User> avatar(@RequestBody @Validated(SuperEntity.Update.class) UserUpdateAvatarDTO data) {
-        User user = BeanUtil.toBean(data, User.class);
-        baseService.updateById(user);
-        return success(user);
+    public R<Boolean> avatar(@RequestBody @Validated(SuperEntity.Update.class) UserUpdateAvatarDTO data) {
+        return success(baseService.updateAvatar(data));
     }
 
     /**
@@ -275,7 +281,8 @@ public class UserController extends SuperCacheController<UserService, Long, User
 
         Set<String> accounts = new HashSet<>();
         List<User> userList = list.stream().map(item -> {
-            BizAssert.isFalse(accounts.contains(item.getAccount()), StrUtil.format("Excel中存在重复的账号: {}", item.getAccount()));
+            ArgumentAssert.notContain(accounts, item.getAccount(), "Excel中存在重复的账号: {}", item.getAccount());
+
             accounts.add(item.getAccount());
             User user = new User();
             BeanUtil.copyProperties(item, user);
@@ -295,7 +302,7 @@ public class UserController extends SuperCacheController<UserService, Long, User
      */
     @Override
     public IPage<User> query(PageParams<UserPageQuery> params) {
-        IPage<User> page = params.buildPage();
+        IPage<User> page = params.buildPage(User.class);
         UserPageQuery userPage = params.getModel();
 
         QueryWrap<User> wrap = handlerWrapper(null, params);
@@ -324,6 +331,9 @@ public class UserController extends SuperCacheController<UserService, Long, User
             item.setPassword(null);
             item.setSalt(null);
         });
+
+        appendixService.echoAppendix(page);
+
         return page;
     }
 

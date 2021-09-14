@@ -1,6 +1,6 @@
 package top.tangyh.lamp.file.vo.result;
 
-import top.tangyh.lamp.common.enums.FileType;
+import top.tangyh.lamp.common.enumeration.FileType;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.AllArgsConstructor;
@@ -55,6 +55,12 @@ public class FileResultVO implements Serializable {
      */
     @ApiModelProperty(value = "文件相对地址")
     private String path;
+    /**
+     * 文件访问地址
+     * 当bucket设置为私有桶时，可能无法访问
+     */
+    @ApiModelProperty(value = "文件访问地址")
+    private String url;
     /**
      * 唯一文件名
      */
