@@ -6,7 +6,6 @@ import cn.hutool.core.lang.UUID;
 import cn.hutool.core.util.RandomUtil;
 import cn.hutool.core.util.StrUtil;
 import cn.hutool.crypto.SecureUtil;
-
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import lombok.RequiredArgsConstructor;
@@ -19,13 +18,11 @@ import top.tangyh.basic.context.ContextUtil;
 import top.tangyh.basic.database.mybatis.conditions.Wraps;
 import top.tangyh.basic.database.mybatis.conditions.query.LbQueryWrap;
 import top.tangyh.basic.exception.BizException;
-import top.tangyh.basic.jackson.JsonUtil;
 import top.tangyh.basic.utils.ArgumentAssert;
 import top.tangyh.basic.utils.BeanPlusUtil;
 import top.tangyh.lamp.common.cache.tenant.base.DefUserEmailCacheKeyBuilder;
 import top.tangyh.lamp.common.cache.tenant.base.DefUserIdCardCacheKeyBuilder;
 import top.tangyh.lamp.common.cache.tenant.base.DefUserMobileCacheKeyBuilder;
-
 import top.tangyh.lamp.common.properties.SystemProperties;
 import top.tangyh.lamp.file.service.AppendixService;
 import top.tangyh.lamp.system.entity.tenant.DefUser;
@@ -42,6 +39,7 @@ import top.tangyh.lamp.system.vo.update.tenant.DefUserPasswordResetVO;
 import top.tangyh.lamp.system.vo.update.tenant.DefUserPasswordUpdateVO;
 
 import java.io.Serializable;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -146,6 +144,16 @@ public class DefUserServiceImpl extends SuperCacheServiceImpl<DefUserManager, Lo
 
         superManager.save(defUser);
         return defUser.getMobile();
+    }
+
+    @Override
+    protected <SaveVO> void saveAfter(SaveVO saveVO, DefUser entity) {
+        superManager.delUserCache(Collections.singletonList(entity));
+    }
+
+    @Override
+    protected <UpdateVO> void updateAfter(UpdateVO updateVO, DefUser entity) {
+        superManager.delUserCache(Collections.singletonList(entity));
     }
 
     @Transactional(rollbackFor = Exception.class)
