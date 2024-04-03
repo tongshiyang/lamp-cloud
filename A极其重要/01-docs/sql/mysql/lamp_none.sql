@@ -11,7 +11,7 @@
  Target Server Version : 80031 (8.0.31)
  File Encoding         : 65001
 
- Date: 15/01/2024 16:25:49
+ Date: 03/04/2024 22:19:53
 */
 
 SET NAMES utf8mb4;
@@ -384,17 +384,8 @@ CREATE TABLE `com_appendix` (
   `id` bigint NOT NULL COMMENT 'ID',
   `biz_id` bigint NOT NULL COMMENT '业务id',
   `biz_type` varchar(255) NOT NULL DEFAULT '' COMMENT '业务类型;同一个业务，不同的字段，需要分别设置不同的业务类型',
-  `file_type` varchar(10) DEFAULT '' COMMENT '文件类型;#FileType{IMAGE:图片;VIDEO:视频;AUDIO:音频;DOC:文档;OTHER:其他;}',
-  `bucket` varchar(255) DEFAULT '' COMMENT '桶',
-  `path` varchar(255) DEFAULT '' COMMENT '文件相对地址',
-  `original_file_name` varchar(255) DEFAULT '' COMMENT '原始文件名',
-  `content_type` varchar(255) DEFAULT '' COMMENT '文件类型',
-  `size_` bigint DEFAULT '0' COMMENT '大小',
   `created_time` datetime NOT NULL COMMENT '创建时间',
   `created_by` bigint DEFAULT NULL COMMENT '创建人',
-  `updated_time` datetime NOT NULL COMMENT '最后修改时间',
-  `updated_by` bigint DEFAULT NULL COMMENT '最后修改人',
-  `created_org_id` bigint DEFAULT NULL COMMENT '创建人组织',
   PRIMARY KEY (`id`) USING BTREE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci COMMENT='业务附件';
 
@@ -466,7 +457,7 @@ CREATE TABLE `def_application` (
 -- Records of def_application
 -- ----------------------------
 BEGIN;
-INSERT INTO `def_application` (`id`, `app_key`, `app_secret`, `name`, `version`, `type`, `redirect`, `introduce`, `remark`, `url`, `is_general`, `is_visible`, `sort_value`, `created_by`, `created_time`, `updated_by`, `updated_time`) VALUES (1, 'basicPlatform', 'uhpe70w9rw0qjyp1hd6rae58ioa7anycc00p', '基础平台', '1', '10', '/msg/myMsg', '租户的工作台，最基础的功能。', '基础平台是整个平台最基础，最核心的功能，所有租户都拥有。可以理解为用户的工作台，跳转其他业务系统的控制台等。', '', b'1', b'1', 1, 2, '2021-09-16 12:37:34', 1452186486253289472, '2022-09-23 09:55:53');
+INSERT INTO `def_application` (`id`, `app_key`, `app_secret`, `name`, `version`, `type`, `redirect`, `introduce`, `remark`, `url`, `is_general`, `is_visible`, `sort_value`, `created_by`, `created_time`, `updated_by`, `updated_time`) VALUES (1, 'basicPlatform', 'uhpe70w9rw0qjyp1hd6rae58ioa7anycc00p', '基础平台', '1', '10', '/msg/myMsg', '租户的工作台，最基础的功能。', '基础平台是整个平台最基础，最核心的功能，所有租户都拥有。可以理解为用户的工作台，跳转其他业务系统的控制台等。', '', b'1', b'1', 1, 2, '2021-09-16 12:37:34', 1452186486253289472, '2024-04-03 21:57:48');
 INSERT INTO `def_application` (`id`, `app_key`, `app_secret`, `name`, `version`, `type`, `redirect`, `introduce`, `remark`, `url`, `is_general`, `is_visible`, `sort_value`, `created_by`, `created_time`, `updated_by`, `updated_time`) VALUES (2, 'devOperation', 'ymyqj01qvmz7bpkne5li81cvxma2bebrzb57', '开发运营系统', '1', '10', '/application/application', '开发者或运营者使用，系统级功能，不能分配给租户。', '开发运营系统是给 开发者和运营者公司的用户使用的，主要维护一些系统级的配置和数据，不能分配给普通租户使用。', '', b'0', b'1', 2, 2, '2021-09-18 12:49:26', 1452186486253289472, '2021-11-10 21:18:15');
 INSERT INTO `def_application` (`id`, `app_key`, `app_secret`, `name`, `version`, `type`, `redirect`, `introduce`, `remark`, `url`, `is_general`, `is_visible`, `sort_value`, `created_by`, `created_time`, `updated_by`, `updated_time`) VALUES (3, 'businessSystem', 'c2mn7qb9i194mcypuletfxv8qe182e61awut', '业务系统', '1', '10', '/111/111/1-1-1-1', '根据不同业务开发出来的系统，租户需要购买方可使用。', '根据各自的业务，开发出来的系统。根据不同的租户需求，购买后获得此系统的功能。 （这个系统需要你们根据自己情况自行二次开发）', '', b'0', b'1', 3, 2, '2021-09-24 21:11:00', 1452186486253289472, '2022-03-29 09:42:07');
 COMMIT;
@@ -554,8 +545,8 @@ CREATE TABLE `def_datasource_config` (
 -- Records of def_datasource_config
 -- ----------------------------
 BEGIN;
+INSERT INTO `def_datasource_config` (`id`, `name`, `username`, `password`, `url`, `driver_class_name`, `created_time`, `created_by`, `updated_time`, `updated_by`) VALUES (1, '默认库', 'root', 'root', 'jdbc:mysql://127.0.0.1:3306/lamp_ds_c_defaults?serverTimezone=Asia/Shanghai&characterEncoding=utf8&useUnicode=true&useSSL=false&autoReconnect=true&zeroDateTimeBehavior=convertToNull&allowMultiQueries=true&nullCatalogMeansCurrent=true', 'com.mysql.cj.jdbc.Driver', '2022-03-03 13:30:41', 1452186486253289472, '2023-12-18 21:45:44', 1452186486253289472);
 INSERT INTO `def_datasource_config` (`id`, `name`, `username`, `password`, `url`, `driver_class_name`, `created_time`, `created_by`, `updated_time`, `updated_by`) VALUES (13123123, 'defaults库', 'root', '12', 'jdbc:mysql://106.53.26.9:3218/lamp_local_ds_c_defaults?serverTimezone=Asia/Shanghai&characterEncoding=utf8&useUnicode=true&useSSL=false&autoReconnect=true&zeroDateTimeBehavior=convertToNull&allowMultiQueries=true&nullCatalogMeansCurrent=true', 'com.mysql.cj.jdbc.Driver', '2022-03-03 13:30:41', 1452186486253289472, '2022-03-03 13:30:41', 1452186486253289472);
-INSERT INTO `def_datasource_config` (`id`, `name`, `username`, `password`, `url`, `driver_class_name`, `created_time`, `created_by`, `updated_time`, `updated_by`) VALUES (198310764748996704, '默认库', 'root', 'root', 'jdbc:mysql://127.0.0.01:3306/lamp_ds_c_defaults?serverTimezone=Asia/Shanghai&characterEncoding=utf8&useUnicode=true&useSSL=false&autoReconnect=true&zeroDateTimeBehavior=convertToNull&allowMultiQueries=true&nullCatalogMeansCurrent=true', 'com.mysql.cj.jdbc.Driver', '2022-03-03 13:30:41', 1452186486253289472, '2023-12-18 21:45:44', 1452186486253289472);
 COMMIT;
 
 -- ----------------------------
@@ -815,6 +806,7 @@ CREATE TABLE `def_gen_table` (
 -- Records of def_gen_table
 -- ----------------------------
 BEGIN;
+INSERT INTO `def_gen_table` (`id`, `name`, `comment_`, `swagger_comment`, `ds_id`, `author`, `sub_id`, `sub_java_field_name`, `entity_name`, `entity_super_class`, `super_class`, `parent`, `plus_application_name`, `plus_module_name`, `service_name`, `module_name`, `child_package_name`, `is_tenant_line`, `ds_value`, `is_ds`, `is_lombok`, `is_chain`, `is_column_constant`, `gen_type`, `output_dir`, `front_output_dir`, `tpl_type`, `popup_type`, `add_auth`, `edit_auth`, `delete_auth`, `view_auth`, `copy_auth`, `add_show`, `edit_show`, `delete_show`, `copy_show`, `view_show`, `options`, `remark`, `menu_parent_id`, `menu_application_id`, `menu_name`, `menu_icon`, `tree_parent_id`, `tree_name`, `created_by`, `created_time`, `updated_by`, `updated_time`) VALUES (478186858279416836, 'def_tenant', '企业', '企业', 1, 'zuihou', NULL, NULL, 'DefTenant', '02', '01', 'top.tangyh.lamp', 'dev', '1', 'dev', 'dev', '', b'0', '', b'0', b'1', b'1', b'0', '01', '/Users/tangyh/gitlab/lamp-boot-pro-none', '/Users/tangyh/gitlab/lamp-web-pro', '01', '01', NULL, NULL, NULL, NULL, NULL, b'1', b'1', b'1', b'1', b'1', NULL, NULL, NULL, 1, '企业维护', NULL, NULL, NULL, 1452186486253289472, '2024-03-26 15:04:59', 1452186486253289472, '2024-03-26 15:04:59');
 COMMIT;
 
 -- ----------------------------
@@ -1670,7 +1662,7 @@ CREATE TABLE `def_user` (
 -- ----------------------------
 BEGIN;
 INSERT INTO `def_user` (`id`, `username`, `nick_name`, `email`, `mobile`, `id_card`, `wx_open_id`, `dd_open_id`, `readonly`, `nation`, `education`, `sex`, `state`, `work_describe`, `password_error_last_time`, `password_error_num`, `password_expire_time`, `password`, `salt`, `last_login_time`, `created_by`, `created_time`, `updated_by`, `updated_time`) VALUES (1, 'superAdmin', '超管', NULL, '13000000000', NULL, NULL, NULL, b'0', '01', '02', '1', b'1', '', '2021-11-22 11:22:42', 0, NULL, 'ed731dc9c61991487cb3721864141ae78a83169b2ea4202d7f958d6052221b64', 'mie9yvvuinijost6j8s7', '2021-11-22 11:22:42', 1452186486253289472, '2021-11-21 16:45:24', 1452186486253289472, '2021-11-21 16:45:24');
-INSERT INTO `def_user` (`id`, `username`, `nick_name`, `email`, `mobile`, `id_card`, `wx_open_id`, `dd_open_id`, `readonly`, `nation`, `education`, `sex`, `state`, `work_describe`, `password_error_last_time`, `password_error_num`, `password_expire_time`, `password`, `salt`, `last_login_time`, `created_by`, `created_time`, `updated_by`, `updated_time`) VALUES (1452186486253289472, 'lamp', '内置超管-啊汤哥', '306479353@qq.com', '15211111111', '52212119', '1', '2', b'0', '10', '01', '1', b'1', '老子今天不上班，爽翻，巴适得板。', NULL, 0, NULL, '47f7a9c31a8c1bc0f11b1f7d57dd7642578839b5fa502c517a4c730c39d15af9', 'u7lftmhjpppsio79ld7e', '2024-01-15 16:07:42', 1, '2021-10-24 16:13:33', 1452186486253289472, '2021-11-11 12:56:11');
+INSERT INTO `def_user` (`id`, `username`, `nick_name`, `email`, `mobile`, `id_card`, `wx_open_id`, `dd_open_id`, `readonly`, `nation`, `education`, `sex`, `state`, `work_describe`, `password_error_last_time`, `password_error_num`, `password_expire_time`, `password`, `salt`, `last_login_time`, `created_by`, `created_time`, `updated_by`, `updated_time`) VALUES (1452186486253289472, 'lamp', '内置超管-啊汤哥', '306479353@qq.com', '15211111111', '52212119', '1', '2', b'0', '10', '01', '1', b'1', '老子今天不上班，爽翻，巴适得板。', NULL, 0, NULL, '47f7a9c31a8c1bc0f11b1f7d57dd7642578839b5fa502c517a4c730c39d15af9', 'u7lftmhjpppsio79ld7e', '2024-04-03 21:53:19', 1, '2021-10-24 16:13:33', 1452186486253289472, '2021-11-11 12:56:11');
 INSERT INTO `def_user` (`id`, `username`, `nick_name`, `email`, `mobile`, `id_card`, `wx_open_id`, `dd_open_id`, `readonly`, `nation`, `education`, `sex`, `state`, `work_describe`, `password_error_last_time`, `password_error_num`, `password_expire_time`, `password`, `salt`, `last_login_time`, `created_by`, `created_time`, `updated_by`, `updated_time`) VALUES (1454329823852756992, 'test1', '门店管理员-最后哥', NULL, '15211111112', NULL, '', '', b'0', '02', '02', '1', b'1', '', NULL, 0, NULL, '47f7a9c31a8c1bc0f11b1f7d57dd7642578839b5fa502c517a4c730c39d15af9', 'u7lftmhjpppsio79ld7e', '2023-06-28 22:05:46', 1, '2021-10-30 14:10:25', 1, '2021-11-22 13:14:04');
 INSERT INTO `def_user` (`id`, `username`, `nick_name`, `email`, `mobile`, `id_card`, `wx_open_id`, `dd_open_id`, `readonly`, `nation`, `education`, `sex`, `state`, `work_describe`, `password_error_last_time`, `password_error_num`, `password_expire_time`, `password`, `salt`, `last_login_time`, `created_by`, `created_time`, `updated_by`, `updated_time`) VALUES (1457904455960756224, 'test2', '普通用户-小沙比', NULL, '15211111113', NULL, '', '', b'0', '02', '06', '1', b'1', '', '2022-01-16 10:51:07', 0, NULL, '47f7a9c31a8c1bc0f11b1f7d57dd7642578839b5fa502c517a4c730c39d15af9', 'u7lftmhjpppsio79ld7e', '2022-01-16 10:51:07', 1, '2021-11-09 10:54:44', 1, '2021-11-22 13:14:05');
 COMMIT;
@@ -1874,7 +1866,7 @@ CREATE TABLE `worker_node` (
   `modified` timestamp NULL DEFAULT NULL COMMENT '修改时间',
   `created` timestamp NULL DEFAULT NULL COMMENT '创建时间',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=70 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci COMMENT='DB;WorkerID Assigner for UID Generator';
+) ENGINE=InnoDB AUTO_INCREMENT=88 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci COMMENT='DB;WorkerID Assigner for UID Generator';
 
 -- ----------------------------
 -- Records of worker_node
