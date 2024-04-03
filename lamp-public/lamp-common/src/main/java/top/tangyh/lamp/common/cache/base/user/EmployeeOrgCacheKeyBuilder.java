@@ -19,14 +19,6 @@ public class EmployeeOrgCacheKeyBuilder implements CacheKeyBuilder {
         return new EmployeeOrgCacheKeyBuilder().key(employeeId);
     }
 
-    public static CacheKey build(Long employeeId, Long tenantId) {
-        EmployeeOrgCacheKeyBuilder employeeOrgCacheKeyBuilder = new EmployeeOrgCacheKeyBuilder();
-        if (tenantId != null) {
-            employeeOrgCacheKeyBuilder.setTenantId(tenantId);
-        }
-        return employeeOrgCacheKeyBuilder.key(employeeId);
-    }
-
     @Override
     public String getTenant() {
         return null;

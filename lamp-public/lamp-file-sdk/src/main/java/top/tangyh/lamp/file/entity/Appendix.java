@@ -47,18 +47,15 @@ public class Appendix extends SuperEntity<Long> {
      */
     @TableField(value = "biz_type", condition = LIKE)
     private String bizType;
-    @TableField(value = "tenant_id")
-    private Long tenantId;
 
 
     @Builder
-    public Appendix(Long id, LocalDateTime createdTime, Long createdBy, Long bizId, String bizType, Long tenantId) {
+    public Appendix(Long id, LocalDateTime createdTime, Long createdBy, Long bizId, String bizType) {
         this.id = id;
         this.createdTime = createdTime;
         this.createdBy = createdBy;
         this.bizId = bizId;
         this.bizType = bizType;
-        this.tenantId = tenantId;
     }
 
 }

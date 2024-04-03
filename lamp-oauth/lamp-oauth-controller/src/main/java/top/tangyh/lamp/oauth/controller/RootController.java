@@ -75,8 +75,8 @@ public class RootController {
         return tokenGranterBuilder.getGranter(login.getGrantType()).login(login);
     }
 
-    @Operation(summary = "切换企业")
-    @PutMapping("/switchTenantAndOrg")
+    @Operation(summary = "切换部门")
+    @PutMapping("/anyone/switchTenantAndOrg")
     public R<LoginResultVO> switchOrg(@RequestParam(required = false) Long orgId) {
         return R.success(tokenGranterBuilder.getGranter(GrantType.PASSWORD).switchOrg(orgId));
     }
