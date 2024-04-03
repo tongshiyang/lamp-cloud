@@ -6,7 +6,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import top.tangyh.basic.base.R;
 import top.tangyh.basic.base.controller.DeleteController;
 import top.tangyh.basic.base.controller.QueryController;
 import top.tangyh.basic.base.controller.SuperSimpleController;
@@ -15,16 +14,11 @@ import top.tangyh.basic.interfaces.echo.EchoService;
 import top.tangyh.lamp.file.entity.File;
 import top.tangyh.lamp.file.service.FileService;
 
-import java.util.List;
-
 /**
  * <p>
  * 前端控制器
  * 增量文件上传日志
  * </p>
- * FileDefController 和 FileBaseController的区别：
- * 1. FileDefController 操作def库的file表，上传和下载操作 都需要租户隔离时使用。 如：A租户下，某个审批单业务的附件。
- * 2. FileBaseController 操作base库的file表，上传和下载操作 可能或租户时使用。 如：user表头像、应用表头像（所有的租户都能需要能查看用户和应用头像）
  *
  * @author tangyh
  * @date 2021-06-30
@@ -33,10 +27,10 @@ import java.util.List;
 @Slf4j
 @Validated
 @RestController
-@RequestMapping("/file/def")
+@RequestMapping("/file")
 @RequiredArgsConstructor
-@Tag(name = "默认库-文件操作接口")
-public class FileDefController extends SuperSimpleController<FileService, Long, File>
+@Tag(name = "com_file表增删改")
+public class FileController extends SuperSimpleController<FileService, Long, File>
         implements QueryController<Long, File, File, File>, DeleteController<Long, File> {
 
     private final EchoService echoService;
@@ -55,8 +49,9 @@ public class FileDefController extends SuperSimpleController<FileService, Long, 
     public void handlerQueryParams(PageParams<File> params) {
     }
 
-    @Override
-    public R<Boolean> handlerDelete(List<Long> longs) {
-        return R.successDef(true);
-    }
+//    @Override
+//    public R<Boolean> handlerDelete(List<Long> longs) {
+//        ContextUtil.setDefTenantId();
+//        return R.successDef(true);
+//    }
 }

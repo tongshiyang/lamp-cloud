@@ -99,11 +99,11 @@ public class AliFileStrategyImpl extends AbstractFileStrategy {
             String bucket = StrUtil.isEmpty(fileGet.getBucket()) ? ali.getBucket() : fileGet.getBucket();
             try {
                 if (CollUtil.isNotEmpty(publicBucket) && publicBucket.contains(bucket)) {
-                    StringBuilder url = new StringBuilder(ali.getUrlPrefix())
-                            .append(fileGet.getBucket())
-                            .append(StrPool.SLASH)
-                            .append(fileGet.getPath());
-                    map.put(fileGet.getPath(), url.toString());
+                    String url = ali.getUrlPrefix() +
+                            fileGet.getBucket() +
+                            StrPool.SLASH +
+                            fileGet.getPath();
+                    map.put(fileGet.getPath(), url);
                 } else {
                     map.put(fileGet.getPath(), generatePresignedUrl(bucket, fileGet.getPath()));
                 }

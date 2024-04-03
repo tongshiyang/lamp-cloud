@@ -23,8 +23,10 @@ import top.tangyh.basic.utils.BeanPlusUtil;
 import top.tangyh.lamp.common.cache.tenant.base.DefUserEmailCacheKeyBuilder;
 import top.tangyh.lamp.common.cache.tenant.base.DefUserIdCardCacheKeyBuilder;
 import top.tangyh.lamp.common.cache.tenant.base.DefUserMobileCacheKeyBuilder;
+import top.tangyh.lamp.common.constant.AppendixType;
 import top.tangyh.lamp.common.properties.SystemProperties;
 import top.tangyh.lamp.file.service.AppendixService;
+import top.tangyh.lamp.model.vo.save.AppendixSaveVO;
 import top.tangyh.lamp.system.entity.tenant.DefUser;
 import top.tangyh.lamp.system.manager.tenant.DefUserManager;
 import top.tangyh.lamp.system.service.tenant.DefUserService;
@@ -205,7 +207,7 @@ public class DefUserServiceImpl extends SuperCacheServiceImpl<DefUserManager, Lo
     @Transactional(rollbackFor = Exception.class)
     public Boolean updateAvatar(DefUserAvatarUpdateVO data) {
         ArgumentAssert.isFalse(data.getAppendixAvatar() == null, "请上传或选择头像");
-        boolean flag = appendixService.save(data.getId(), data.getAppendixAvatar());
+        boolean flag = appendixService.save(AppendixSaveVO.build(data.getId(), AppendixType.System.DEF__USER__AVATAR, data.getAppendixAvatar()));
         superManager.delCache(data.getId());
         return flag;
     }

@@ -8,10 +8,8 @@ import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 import lombok.experimental.Accessors;
-import top.tangyh.lamp.model.enumeration.base.FileType;
 
 import java.io.Serializable;
-import java.time.LocalDateTime;
 
 /**
  * <p>
@@ -45,43 +43,9 @@ public class AppendixResultVO implements Serializable {
      */
     @Schema(description = "业务类型")
     private String bizType;
-    /**
-     * 文件类型
-     */
-    @Schema(description = "文件类型")
-    private FileType fileType;
-    /**
-     * 桶
-     */
-    @Schema(description = "桶")
-    private String bucket;
-    /**
-     * 文件相对地址
-     */
-    @Schema(description = "文件相对地址")
-    private String path;
-    /**
-     * 原始文件名
-     */
-    @Schema(description = "原始文件名")
-    private String originalFileName;
-    /**
-     * 文件类型
-     */
-    @Schema(description = "文件类型")
-    private String contentType;
-    /**
-     * 大小
-     */
-    @Schema(description = "大小")
-    private Long size;
+
 
     @Schema(description = "主键")
     private Long id;
 
-    /**
-     * 创建时间
-     */
-    @Schema(description = "创建时间")
-    private LocalDateTime createdTime;
 }
