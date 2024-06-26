@@ -16,19 +16,19 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import top.tangyh.basic.annotation.log.WebLog;
 import top.tangyh.basic.base.R;
-import top.tangyh.basic.base.controller.SuperController;
+import top.tangyh.basic.base.controller.SuperExcelController;
 import top.tangyh.basic.base.request.PageParams;
 import top.tangyh.basic.interfaces.echo.EchoService;
 import top.tangyh.lamp.system.entity.tenant.DefUser;
 import top.tangyh.lamp.system.service.tenant.DefUserService;
 import top.tangyh.lamp.system.vo.query.tenant.DefUserPageQuery;
+import top.tangyh.lamp.system.vo.result.tenant.DefUserExcelVO;
 import top.tangyh.lamp.system.vo.result.tenant.DefUserResultVO;
 import top.tangyh.lamp.system.vo.save.tenant.DefUserSaveVO;
 import top.tangyh.lamp.system.vo.update.tenant.DefUserPasswordResetVO;
 import top.tangyh.lamp.system.vo.update.tenant.DefUserUpdateVO;
 
 import java.util.List;
-
 
 /**
  * <p>
@@ -45,9 +45,14 @@ import java.util.List;
 @RestController
 @RequestMapping("/defUser")
 @Tag(name = "用户")
-public class DefUserController extends SuperController<DefUserService, Long, DefUser, DefUserSaveVO, DefUserUpdateVO, DefUserPageQuery, DefUserResultVO> {
+public class DefUserController extends SuperExcelController<DefUserService, Long, DefUser, DefUserSaveVO, DefUserUpdateVO, DefUserPageQuery, DefUserResultVO> {
 
     private final EchoService echoService;
+
+    @Override
+    public Class<?> getExcelClass() {
+        return DefUserExcelVO.class;
+    }
 
     @Override
     public EchoService getEchoService() {
