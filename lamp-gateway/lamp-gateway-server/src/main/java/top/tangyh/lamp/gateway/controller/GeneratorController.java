@@ -70,6 +70,7 @@ public class GeneratorController {
                     }
                 })
         );
+        map.put(application, "gateway");
         return R.success(map);
     }
 

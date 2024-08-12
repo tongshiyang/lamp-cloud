@@ -12,6 +12,7 @@ import top.tangyh.basic.model.cache.CacheKey;
 import top.tangyh.basic.model.cache.CacheKeyBuilder;
 import top.tangyh.lamp.common.cache.tenant.application.ResourceApiCacheKeyBuilder;
 import top.tangyh.lamp.common.cache.tenant.application.ResourceResourceApiCacheKeyBuilder;
+import top.tangyh.lamp.model.vo.result.ResourceApiVO;
 import top.tangyh.lamp.system.entity.application.DefResourceApi;
 import top.tangyh.lamp.system.manager.application.DefResourceApiManager;
 import top.tangyh.lamp.system.mapper.application.DefResourceApiMapper;
@@ -38,7 +39,10 @@ public class DefResourceApiManagerImpl extends SuperCacheManagerImpl<DefResource
     protected CacheKeyBuilder cacheKeyBuilder() {
         return new ResourceApiCacheKeyBuilder();
     }
-
+    @Override
+    public List<ResourceApiVO> findAllApi() {
+        return baseMapper.findAllApi();
+    }
     @Override
     @Transactional(rollbackFor = Exception.class)
     public void removeByResourceId(List<Long> resourceIdList) {

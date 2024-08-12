@@ -27,7 +27,7 @@ import top.tangyh.lamp.common.properties.SystemProperties;
 @Configuration
 @RequiredArgsConstructor
 @ConditionalOnWebApplication
-@EnableConfigurationProperties(SystemProperties.class)
+@EnableConfigurationProperties({SystemProperties.class, IgnoreProperties.class})
 public class CommonAutoConfiguration {
     private final SystemProperties systemProperties;
 

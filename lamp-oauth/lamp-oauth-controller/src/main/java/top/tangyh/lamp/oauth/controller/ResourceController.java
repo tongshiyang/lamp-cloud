@@ -5,22 +5,25 @@ import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import top.tangyh.basic.annotation.user.LoginUser;
 import top.tangyh.basic.base.R;
 import top.tangyh.basic.context.ContextUtil;
+import top.tangyh.lamp.base.service.system.BaseRoleService;
 import top.tangyh.lamp.common.properties.IgnoreProperties;
 import top.tangyh.lamp.model.entity.system.SysUser;
 import top.tangyh.lamp.oauth.biz.ResourceBiz;
+import top.tangyh.lamp.oauth.biz.StpInterfaceBiz;
 import top.tangyh.lamp.oauth.vo.result.VisibleResourceVO;
 import top.tangyh.lamp.system.enumeration.system.ClientTypeEnum;
 
-import java.util.Collections;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 
 /**
@@ -34,14 +37,15 @@ import java.util.List;
  */
 @Slf4j
 @RestController
-@RequestMapping("/anyone")
+@RequestMapping
 @AllArgsConstructor
 @Tag(name = "资源-菜单-应用")
-@EnableConfigurationProperties({IgnoreProperties.class})
 public class ResourceController {
     private final IgnoreProperties ignoreProperties;
     private final ResourceBiz oauthResourceBiz;
 
+    private final BaseRoleService baseRoleService;
+    private final StpInterfaceBiz stpInterfaceBiz;
 
     /**
      * 查询用户可用的所有资源
@@ -52,7 +56,7 @@ public class ResourceController {
      * @param employeeId    当前登录人id
      */
     @Operation(summary = "查询用户可用的所有资源", description = "根据员工ID和应用ID查询员工在某个应用下可用的资源")
-    @GetMapping("/visible/resource")
+    @GetMapping("/anyone/visible/resource")
     public R<VisibleResourceVO> visible(@Parameter(hidden = true) @LoginUser SysUser sysUser,
                                         @RequestParam(value = "type", required = false) ClientTypeEnum type,
                                         @RequestParam(value = "employeeId", required = false) Long employeeId,
@@ -65,7 +69,7 @@ public class ResourceController {
         return R.success(VisibleResourceVO.builder()
                 .enabled(ignoreProperties.getAuthEnabled())
                 .caseSensitive(ignoreProperties.getCaseSensitive())
-                .roleList(Collections.singletonList("PT_ADMIN"))
+                .roleList(baseRoleService.findRoleCodeByEmployeeId(employeeId))
                 .resourceList(oauthResourceBiz.findVisibleResource(employeeId, applicationId))
                 .routerList(
                         applicationId == null ? oauthResourceBiz.findAllVisibleRouter(employeeId, subGroup, type) : oauthResourceBiz.findVisibleRouter(applicationId, employeeId, subGroup, type)
@@ -74,7 +78,7 @@ public class ResourceController {
     }
 
     @Operation(summary = "查询用户可用的所有资源", description = "查询用户可用的所有资源")
-    @GetMapping("/findVisibleResource")
+    @GetMapping("/anyone/findVisibleResource")
     public R<List<String>> visibleResource(@RequestParam(value = "employeeId") Long employeeId,
                                            @RequestParam(value = "applicationId", required = false) Long applicationId) {
         return R.success(oauthResourceBiz.findVisibleResource(employeeId, applicationId));
@@ -87,7 +91,7 @@ public class ResourceController {
      * @param method 请求方法
      */
     @Operation(summary = "检查员工是否有指定uri的访问权限", description = "检查员工是否有指定uri的访问权限")
-    @GetMapping("/checkUri")
+    @GetMapping("/anyone/checkUri")
     public R<Boolean> checkUri(@RequestParam String path, @RequestParam String method) {
         long apiStart = System.currentTimeMillis();
         Boolean check = oauthResourceBiz.checkUri(path, method);
@@ -96,14 +100,36 @@ public class ResourceController {
         return R.success(check);
     }
 
+    @Operation(summary = "检查指定接口是否有访问权限", description = "检查指定接口是否有访问权限")
+    @PostMapping("/anyTenant/findAllApi")
+    public R<Map<String, Set<String>>> findAllApi() {
+        long appStart = System.currentTimeMillis();
+        Map<String, Set<String>> allApi = oauthResourceBiz.findAllApi();
+        long appEnd = System.currentTimeMillis();
+        log.info("controller 获取api，耗时:{}", (appEnd - appStart));
+        return R.success(allApi);
+    }
+
     /**
      * 检测员工是否拥有指定应用的权限
      *
      * @param applicationId 应用id
      */
     @Operation(summary = "检测员工是否拥有指定应用的权限", description = "检测员工是否拥有指定应用的权限")
-    @GetMapping("/checkEmployeeHaveApplication")
+    @GetMapping("/anyone/checkEmployeeHaveApplication")
     public R<Boolean> checkEmployeeHaveApplication(@RequestParam Long applicationId) {
         return R.success(oauthResourceBiz.checkEmployeeHaveApplication(ContextUtil.getEmployeeId(), applicationId));
+    }
+
+    @Operation(summary = "查询用户的资源权限列表", description = "查询用户的资源权限列表")
+    @GetMapping("/anyone/getPermissionList")
+    public R<List<String>> getPermissionList() {
+        return R.success(stpInterfaceBiz.getPermissionList());
+    }
+
+    @Operation(summary = "查询用户的角色列表", description = "查询用户的角色列表")
+    @GetMapping("/anyone/getRoleList")
+    public R<List<String>> getRoleList() {
+        return R.success(stpInterfaceBiz.getRoleList());
     }
 }

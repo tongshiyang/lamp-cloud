@@ -11,13 +11,14 @@ import com.wf.captcha.base.Captcha;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.http.HttpHeaders;
 import org.springframework.stereotype.Service;
 import top.tangyh.basic.base.R;
 import top.tangyh.basic.cache.redis2.CacheResult;
 import top.tangyh.basic.cache.repository.CacheOps;
-import top.tangyh.basic.context.ContextUtil;
 import top.tangyh.basic.exception.BizException;
 import top.tangyh.basic.model.cache.CacheKey;
 import top.tangyh.basic.utils.ArgumentAssert;
@@ -47,7 +48,9 @@ public class CaptchaServiceImpl implements CaptchaService {
 
     private final CacheOps cacheOps;
     private final CaptchaProperties captchaProperties;
-    private final MsgApi msgApi;
+    @Lazy
+    @Autowired
+    private MsgApi msgApi;
     private final DefUserService defUserService;
 
     /**

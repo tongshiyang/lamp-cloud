@@ -21,6 +21,7 @@ import top.tangyh.lamp.common.cache.tenant.application.ApplicationResourceCacheK
 import top.tangyh.lamp.common.cache.tenant.application.ResourceResourceApiCacheKeyBuilder;
 import top.tangyh.lamp.common.constant.DefValConstants;
 import top.tangyh.lamp.model.enumeration.system.ResourceTypeEnum;
+import top.tangyh.lamp.model.vo.result.ResourceApiVO;
 import top.tangyh.lamp.system.entity.application.DefResource;
 import top.tangyh.lamp.system.entity.application.DefResourceApi;
 import top.tangyh.lamp.system.manager.application.DefResourceApiManager;
@@ -56,7 +57,10 @@ import java.util.stream.Collectors;
 
 public class DefResourceServiceImpl extends SuperCacheServiceImpl<DefResourceManager, Long, DefResource> implements DefResourceService {
     private final DefResourceApiManager defResourceApiManager;
-
+    @Override
+    public List<ResourceApiVO> findAllApi() {
+        return defResourceApiManager.findAllApi();
+    }
     @Override
     public Map<Long, Collection<Long>> findResource() {
         List<DefResource> list = super.list(Wraps.<DefResource>lbQ().eq(DefResource::getState, true));

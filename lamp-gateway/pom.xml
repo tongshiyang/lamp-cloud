@@ -16,7 +16,7 @@
     <description>网关服务</description>
 
     <modules>
-        <!--        <module>lamp-gateway-biz</module>-->
+        <module>lamp-gateway-biz</module>
         <module>lamp-gateway-server</module>
     </modules>
 </project>

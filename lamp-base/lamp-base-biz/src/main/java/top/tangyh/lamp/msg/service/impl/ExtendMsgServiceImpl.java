@@ -5,6 +5,8 @@ import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.map.MapUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import top.tangyh.basic.base.service.impl.SuperServiceImpl;
@@ -54,9 +56,13 @@ import java.util.Map;
 @Service
 @Transactional(readOnly = true)
 public class ExtendMsgServiceImpl extends SuperServiceImpl<ExtendMsgManager, Long, ExtendMsg> implements ExtendMsgService {
-    private final ExtendMsgRecipientManager recipientManager;
-    private final ExtendNoticeManager extendNoticeManager;
-    private final JobApi jobApi;
+    @Autowired
+    private ExtendMsgRecipientManager recipientManager;
+    @Autowired
+    private ExtendNoticeManager extendNoticeManager;
+    @Autowired
+    @Lazy
+    private JobApi jobApi;
 
     @Override
     public ExtendMsgResultVO getResultById(Long id) {

@@ -17,8 +17,10 @@ import top.tangyh.basic.converter.String2DateConverter;
 import top.tangyh.basic.converter.String2LocalDateConverter;
 import top.tangyh.basic.converter.String2LocalDateTimeConverter;
 import top.tangyh.basic.converter.String2LocalTimeConverter;
+import top.tangyh.basic.interfaces.echo.EchoService;
 import top.tangyh.basic.jackson.LampJacksonModule;
 import top.tangyh.basic.utils.SpringUtils;
+import top.tangyh.lamp.gateway.service.GarbageEchoServiceImpl;
 
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
@@ -37,6 +39,17 @@ import static top.tangyh.basic.utils.DateUtils.DEFAULT_DATE_TIME_FORMAT;
  */
 @Configuration
 public class GatewayWebConfig {
+    /**
+     * 这个类仅仅是为了防止在gateway启动报错
+     * @return
+     */
+    @Bean
+    @Primary
+    public EchoService getGarbageEchoServiceImpl() {
+        return new GarbageEchoServiceImpl();
+    }
+
+
     /**
      * Spring 工具类
      *

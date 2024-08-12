@@ -9,20 +9,18 @@ import org.springframework.util.AntPathMatcher;
 import top.tangyh.basic.context.ContextUtil;
 import top.tangyh.basic.database.mybatis.conditions.Wraps;
 import top.tangyh.basic.jackson.JsonUtil;
-import top.tangyh.basic.utils.ArgumentAssert;
 import top.tangyh.basic.utils.BeanPlusUtil;
 import top.tangyh.basic.utils.CollHelper;
 import top.tangyh.basic.utils.StrPool;
 import top.tangyh.basic.utils.TreeUtil;
-import top.tangyh.lamp.base.entity.user.BaseEmployee;
 import top.tangyh.lamp.base.service.system.BaseRoleService;
-import top.tangyh.lamp.base.service.user.BaseEmployeeService;
 import top.tangyh.lamp.base.vo.result.user.RouterMeta;
 import top.tangyh.lamp.base.vo.result.user.VueRouter;
 import top.tangyh.lamp.common.constant.BizConstant;
 import top.tangyh.lamp.common.constant.RoleConstant;
 import top.tangyh.lamp.model.enumeration.HttpMethod;
 import top.tangyh.lamp.model.enumeration.system.ResourceTypeEnum;
+import top.tangyh.lamp.model.vo.result.ResourceApiVO;
 import top.tangyh.lamp.system.entity.application.DefApplication;
 import top.tangyh.lamp.system.entity.application.DefResource;
 import top.tangyh.lamp.system.entity.application.DefResourceApi;
@@ -33,7 +31,12 @@ import top.tangyh.lamp.system.service.application.DefResourceService;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashSet;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 /**
  * 资源大业务
@@ -49,7 +52,6 @@ public class ResourceBiz {
     private final DefResourceService defResourceService;
     private final BaseRoleService baseRoleService;
     private final DefApplicationService defApplicationService;
-    private final BaseEmployeeService baseEmployeeService;
 
     /**
      * 是否所有的子都是视图
@@ -409,6 +411,25 @@ public class ResourceBiz {
             return true;
         }
         return CollUtil.isNotEmpty(baseRoleService.findResourceIdByEmployeeId(applicationId, employeeId));
+    }
+
+    public Map<String, Set<String>> findAllApi() {
+        // 查询系统中配置的URI和权限关系
+        List<ResourceApiVO> list = defResourceService.findAllApi();
+        return list.stream()
+                .collect(Collectors.toMap(
+                        item -> item.getUri() + "###" + item.getRequestMethod(),
+                        resourceApiVO -> {
+                            Set<String> codes = new HashSet<>();
+                            codes.add(resourceApiVO.getCode());
+                            return codes;
+                        },
+                        (existingCodes, newCodes) -> {
+                            existingCodes.addAll(newCodes);
+                            return existingCodes;
+                        },
+                        LinkedHashMap::new
+                ));
     }
 
 }
