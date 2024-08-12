@@ -1,6 +1,7 @@
 package top.tangyh.lamp.test.controller;
 
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -63,7 +64,7 @@ public class DefGenTestTreeController extends SuperController<DefGenTestTreeServ
     }
 
     @PostMapping("/anyone/test")
-    public R<Object> test(@LoginUser(isFull = true) SysUser user) {
+    public R<Object> test(@Parameter(hidden = true) @LoginUser(isFull = true) SysUser user) {
         return success(user);
     }
 }

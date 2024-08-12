@@ -30,7 +30,7 @@ public interface FileApi {
      * @param storageType 存储类型
      * @return 文件信息
      */
-    @PostMapping(value = "/file/anyone/upload", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    @PostMapping(value = "/anyone/file/upload", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     R<FileResultVO> upload(
             @RequestPart(value = "file") MultipartFile file,
             @RequestParam(value = "bizType") String bizType,
