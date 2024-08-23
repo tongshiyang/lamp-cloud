@@ -29,7 +29,7 @@ import top.tangyh.lamp.base.vo.save.system.BaseOperationLogSaveVO;
 @Slf4j
 @Validated
 @RestController
-@RequestMapping("/optLog")
+@RequestMapping
 @Tag(name = "系统访问日志")
 @AllArgsConstructor
 @Hidden
@@ -43,7 +43,7 @@ public class WebLogController {
      * @param data 保存对象
      * @return 保存结果
      */
-    @PostMapping
+    @PostMapping("/anyUser/optLog")
     @Operation(summary = "保存系统日志", description = "保存系统日志不为空的字段")
     public R<Boolean> save(@RequestBody OptLogDTO data) {
         baseOperationLogService.save(BeanPlusUtil.toBean(data, BaseOperationLogSaveVO.class));

@@ -23,7 +23,7 @@ public interface LogApi {
      * @param log 操作日志
      * @return 操作日志
      */
-    @RequestMapping(value = "/optLog", method = RequestMethod.POST)
+    @RequestMapping(value = "/anyUser/optLog", method = RequestMethod.POST)
     R<Boolean> save(@RequestBody OptLogDTO log);
 
 }
