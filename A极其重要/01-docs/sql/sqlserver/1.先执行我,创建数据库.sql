@@ -14,6 +14,6 @@ CREATE DATABASE lamp_sw COLLATE Chinese_PRC_CI_AS;
 GO
 
 
--- lamp-cloud-pro-none 和 lamp-boot-pro-none 数据库
+-- lamp-none 数据库
 CREATE DATABASE lamp_none COLLATE Chinese_PRC_CI_AS;
 GO

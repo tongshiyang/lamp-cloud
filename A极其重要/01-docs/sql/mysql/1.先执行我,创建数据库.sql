@@ -6,7 +6,7 @@ CREATE DATABASE IF NOT EXISTS `lamp_nacos` CHARACTER SET utf8mb4 COLLATE utf8mb4
 -- SkyWalking 数据库
 CREATE DATABASE IF NOT EXISTS `lamp_sw` CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci;
 
--- lamp-cloud-none 和 lamp-boot-none 数据库
+-- lamp-none 数据库
 CREATE DATABASE IF NOT EXISTS `lamp_none` CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci;
 
 

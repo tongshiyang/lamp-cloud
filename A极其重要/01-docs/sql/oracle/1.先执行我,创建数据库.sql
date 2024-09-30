@@ -14,7 +14,7 @@ GO
 CREATE DATABASE lamp_sw COLLATE Chinese_PRC_CI_AS;
 GO
 
--- lamp-cloud-pro-none 和 lamp-boot-pro-none 数据库
+-- lamp-none 和 lamp-none 数据库
 create user lamp_none identified by lamp_none;
 
 -- 给用户授权
