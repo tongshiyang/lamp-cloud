@@ -1,14 +1,12 @@
 package top.tangyh.lamp.system.mapper.application;
 
 import com.baomidou.mybatisplus.annotation.InterceptorIgnore;
-import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
 import org.springframework.stereotype.Repository;
 import top.tangyh.basic.base.mapper.SuperMapper;
 import top.tangyh.lamp.model.vo.result.ResourceApiVO;
 import top.tangyh.lamp.system.entity.application.DefResourceApi;
 
-import java.util.Collection;
 import java.util.List;
 
 /**
@@ -23,18 +21,6 @@ import java.util.List;
 @Repository
 @InterceptorIgnore(tenantLine = "true", dynamicTableName = "true")
 public interface DefResourceApiMapper extends SuperMapper<DefResourceApi> {
-    /**
-     * 查询指定租户下指定应用和指定资源类型的 接口
-     *
-     * @param applicationIdList 应用ID
-     * @param resourceTypes     资源类型
-     * @return java.util.List<top.tangyh.lamp.system.entity.application.DefResourceApi>
-     * @author tangyh
-     * @date 2023/5/19 3:26 PM
-     * @create [2023/5/19 3:26 PM ] [tangyh] [初始创建]
-     */
-    List<DefResourceApi> findResourceApi(@Param("applicationIdList") List<Long> applicationIdList,
-                                         @Param("resourceTypes") Collection<String> resourceTypes);
 
     /** 查询系统中配置的所有API与资源编码 */
     @Select("""

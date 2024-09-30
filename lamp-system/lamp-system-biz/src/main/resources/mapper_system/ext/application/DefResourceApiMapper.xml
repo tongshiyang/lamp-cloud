@@ -10,18 +10,4 @@
     </sql>
 
 
-    <select id="findResourceApi" parameterType="java.util.Map" resultMap="BaseResultMap">
-        SELECT
-        <include refid="Ra_Column_List"/>
-        FROM def_resource_api ra left join def_resource r on ra.resource_id = r.id
-        WHERE 1=1
-        <if test="resourceTypes != null and resourceTypes.size() > 0">
-            and r.resource_type in
-            <foreach close=")" collection="resourceTypes" item="id" open="(" separator=",">
-                #{id}
-            </foreach>
-        </if>
-        and r.state = 1
-        order by r.sort_value asc
-    </select>
 </mapper>

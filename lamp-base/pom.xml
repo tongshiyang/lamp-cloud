@@ -16,7 +16,7 @@
     <packaging>pom</packaging>
 
     <modules>
-        <module>lamp-base-api</module>
+        <module>lamp-base-facade</module>
         <module>lamp-base-server</module>
         <module>lamp-base-entity</module>
         <module>lamp-base-biz</module>

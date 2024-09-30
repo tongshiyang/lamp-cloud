@@ -22,12 +22,11 @@ import top.tangyh.basic.log.event.SysLogListener;
 import top.tangyh.basic.utils.DateUtils;
 import top.tangyh.basic.utils.StrPool;
 import top.tangyh.basic.validator.annotation.EnableFormValidator;
-import top.tangyh.lamp.base.service.system.BaseOperationLogService;
-import top.tangyh.lamp.common.api.LogApi;
 import top.tangyh.lamp.common.constant.BizConstant;
 import top.tangyh.lamp.datascope.interceptor.DataScopeInnerInterceptor;
 import top.tangyh.lamp.generator.enumeration.ProjectTypeEnum;
 import top.tangyh.lamp.generator.vo.save.ProjectGeneratorVO;
+import top.tangyh.lamp.oauth.facade.LogFacade;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
@@ -107,11 +106,7 @@ public class ProjectUtils {
         applicationImport.add(BizConstant.class.getCanonicalName());
 
         Set<String> webConfigurationImport = new TreeSet<>();
-        if (ProjectTypeEnum.CLOUD.eq(vo.getType())) {
-            webConfigurationImport.add(LogApi.class.getCanonicalName());
-        } else {
-            webConfigurationImport.add(BaseOperationLogService.class.getCanonicalName());
-        }
+        webConfigurationImport.add(LogFacade.class.getCanonicalName());
         webConfigurationImport.add(BaseConfig.class.getCanonicalName());
         webConfigurationImport.add(SysLogListener.class.getCanonicalName());
 
@@ -219,10 +214,10 @@ public class ProjectUtils {
 
             // 增量追加 application.yml 文件
             String swaggerStr = StrUtil.format("{}:\n" +
-                    "        title: {}\n" +
-                    "        base-package: {}", serviceName, vo.getDescription(), vo.getParent() + StrPool.DOT + vo.getModuleName());
+                                               "        title: {}\n" +
+                                               "        base-package: {}", serviceName, vo.getDescription(), vo.getParent() + StrPool.DOT + vo.getModuleName());
             String pathStr = StrUtil.format("{}:\n" +
-                    "        base-path: /api/base", serviceName);
+                                            "        base-path: /api/base", serviceName);
             Map<String, String> applicationMap = MapUtil.newHashMap();
             applicationMap.put("docket.swagger", swaggerStr);
 

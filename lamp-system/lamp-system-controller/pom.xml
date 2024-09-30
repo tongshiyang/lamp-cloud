@@ -21,7 +21,7 @@
         </dependency>
         <dependency>
             <groupId>top.tangyh.lamp</groupId>
-            <artifactId>lamp-oauth-userinfo</artifactId>
+            <artifactId>lamp-login-user-resolver</artifactId>
             <version>${lamp-project.version}</version>
         </dependency>
         <dependency>

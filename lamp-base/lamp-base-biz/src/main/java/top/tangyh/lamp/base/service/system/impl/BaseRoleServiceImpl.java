@@ -13,6 +13,7 @@ import top.tangyh.basic.base.service.impl.SuperCacheServiceImpl;
 import top.tangyh.basic.context.ContextUtil;
 import top.tangyh.basic.database.mybatis.conditions.Wraps;
 import top.tangyh.basic.database.mybatis.conditions.query.LbQueryWrap;
+import top.tangyh.basic.exception.BizException;
 import top.tangyh.basic.model.cache.CacheKey;
 import top.tangyh.basic.utils.ArgumentAssert;
 import top.tangyh.basic.utils.CollHelper;
@@ -95,6 +96,11 @@ public class BaseRoleServiceImpl extends SuperCacheServiceImpl<BaseRoleManager, 
     public boolean removeByIds(Collection<Long> idList) {
         if (idList.isEmpty()) {
             return true;
+        }
+        List<BaseRole> baseRoles = superManager.listByIds(idList);
+        long count = baseRoles.stream().filter(item -> item.getReadonly() != null && item.getReadonly()).count();
+        if (count > 0) {
+            throw new BizException("内置角色不允许删除");
         }
         // 员工的角色
         baseEmployeeRoleRelManager.deleteByRole(idList);

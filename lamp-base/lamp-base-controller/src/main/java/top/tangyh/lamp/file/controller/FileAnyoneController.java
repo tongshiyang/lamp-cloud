@@ -1,6 +1,5 @@
 package top.tangyh.lamp.file.controller;
 
-import cn.hutool.core.util.StrUtil;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.Parameters;
@@ -22,7 +21,6 @@ import org.springframework.web.multipart.MultipartFile;
 import top.tangyh.basic.annotation.log.WebLog;
 import top.tangyh.basic.base.R;
 import top.tangyh.basic.utils.ArgumentAssert;
-import top.tangyh.lamp.file.properties.FileServerProperties;
 import top.tangyh.lamp.file.service.FileService;
 import top.tangyh.lamp.file.vo.param.FileUploadVO;
 import top.tangyh.lamp.file.vo.result.FileResultVO;
@@ -30,7 +28,6 @@ import top.tangyh.lamp.file.vo.result.FileResultVO;
 import java.util.List;
 import java.util.Map;
 
-import static top.tangyh.basic.exception.code.ExceptionCode.BASE_VALID_PARAM;
 import static top.tangyh.lamp.common.constant.SwaggerConstants.DATA_TYPE_MULTIPART_FILE;
 
 /**
@@ -51,7 +48,6 @@ import static top.tangyh.lamp.common.constant.SwaggerConstants.DATA_TYPE_MULTIPA
 @Tag(name = "文件上传")
 public class FileAnyoneController {
     private final FileService fileService;
-    private final FileServerProperties fileServerProperties;
 
 
     /**
@@ -68,21 +64,6 @@ public class FileAnyoneController {
     @WebLog("上传小文件到租户库")
     public R<FileResultVO> upload(@RequestParam(value = "file") MultipartFile file,
                                   @Validated FileUploadVO fileUploadVO) {
-        // 忽略路径字段,只处理文件类型
-        if (file.isEmpty()) {
-            return R.validFail(BASE_VALID_PARAM.build("请上传有效文件"));
-        }
-
-        if (!fileServerProperties.validSuffix(file.getOriginalFilename())) {
-            return R.validFail(BASE_VALID_PARAM.build("文件后缀不支持"));
-        }
-        if (StrUtil.containsAny(file.getOriginalFilename(), "../", "./")) {
-            return R.validFail(BASE_VALID_PARAM.build("文件名不能含有特殊字符"));
-        }
-
-//        if (ContextUtil.isEmptyTenantId()) {
-//            return R.validFail(BASE_VALID_PARAM.build("请携带租户信息"));
-//        }
         return R.success(fileService.upload(file, fileUploadVO));
     }
 

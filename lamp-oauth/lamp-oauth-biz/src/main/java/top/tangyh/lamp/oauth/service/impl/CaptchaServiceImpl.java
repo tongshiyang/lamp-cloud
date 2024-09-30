@@ -11,9 +11,7 @@ import com.wf.captcha.base.Captcha;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
-import org.springframework.context.annotation.Lazy;
 import org.springframework.http.HttpHeaders;
 import org.springframework.stereotype.Service;
 import top.tangyh.basic.base.R;
@@ -24,7 +22,6 @@ import top.tangyh.basic.model.cache.CacheKey;
 import top.tangyh.basic.utils.ArgumentAssert;
 import top.tangyh.lamp.common.cache.common.CaptchaCacheKeyBuilder;
 import top.tangyh.lamp.model.enumeration.base.MsgTemplateCodeEnum;
-import top.tangyh.lamp.msg.api.MsgApi;
 import top.tangyh.lamp.msg.vo.update.ExtendMsgSendVO;
 import top.tangyh.lamp.oauth.granter.CaptchaTokenGranter;
 import top.tangyh.lamp.oauth.properties.CaptchaProperties;
@@ -35,6 +32,7 @@ import java.io.IOException;
 
 import static top.tangyh.basic.exception.code.ExceptionCode.CAPTCHA_ERROR;
 
+import top.tangyh.lamp.msg.facade.MsgFacade;
 /**
  * 验证码服务
  *
@@ -48,9 +46,7 @@ public class CaptchaServiceImpl implements CaptchaService {
 
     private final CacheOps cacheOps;
     private final CaptchaProperties captchaProperties;
-    @Lazy
-    @Autowired
-    private MsgApi msgApi;
+    private final MsgFacade msgFacade;
     private final DefUserService defUserService;
 
     /**
@@ -108,7 +104,7 @@ public class CaptchaServiceImpl implements CaptchaService {
         ExtendMsgSendVO msgSendVO = ExtendMsgSendVO.builder().code(templateCode).build();
         msgSendVO.addParam("code", code);
         msgSendVO.addRecipient(mobile);
-        return msgApi.sendByTemplate(msgSendVO);
+        return R.success(msgFacade.sendByTemplate(msgSendVO));
     }
 
     @Override
@@ -133,7 +129,7 @@ public class CaptchaServiceImpl implements CaptchaService {
         ExtendMsgSendVO msgSendVO = ExtendMsgSendVO.builder().code(templateCode).build();
         msgSendVO.addParam("code", code);
         msgSendVO.addRecipient(email);
-        return msgApi.sendByTemplate(msgSendVO);
+        return R.success(msgFacade.sendByTemplate(msgSendVO));
     }
 
     @Override

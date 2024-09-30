@@ -13,6 +13,7 @@ import top.tangyh.basic.utils.DbPlusUtil;
 import top.tangyh.lamp.generator.entity.DefGenTable;
 import top.tangyh.lamp.generator.manager.DefGenTableManager;
 import top.tangyh.lamp.generator.mapper.DefGenTableMapper;
+import top.tangyh.lamp.generator.mapper.GenDefDatasourceConfigMapper;
 import top.tangyh.lamp.system.entity.tenant.DefDatasourceConfig;
 import top.tangyh.lamp.system.manager.tenant.DefDatasourceConfigManager;
 
@@ -35,7 +36,7 @@ import java.util.Map;
 @RequiredArgsConstructor
 public class DefGenTableManagerImpl extends SuperManagerImpl<DefGenTableMapper, DefGenTable> implements DefGenTableManager {
 
-    private final DefDatasourceConfigManager defDatasourceConfigManager;
+    private final GenDefDatasourceConfigMapper defDatasourceConfigManager;
     @Value("${spring.datasource.druid.validation-query}")
     private String validationQuery;
     private final DataSource dataSource;
@@ -49,7 +50,7 @@ public class DefGenTableManagerImpl extends SuperManagerImpl<DefGenTableMapper, 
     @Override
     public DataSource getDs(Long dsId) {
         ArgumentAssert.notNull(dsId, "请先选择数据源:{}", dsId);
-        DefDatasourceConfig defDatasourceConfig = defDatasourceConfigManager.getById(dsId);
+        DefDatasourceConfig defDatasourceConfig = defDatasourceConfigManager.selectById(dsId);
         ArgumentAssert.notNull(defDatasourceConfig, "请先配置数据源:{}", dsId);
 
         String key = defDatasourceConfig.getUrl() + defDatasourceConfig.getDriverClassName() + defDatasourceConfig.getUsername() + defDatasourceConfig.getPassword();

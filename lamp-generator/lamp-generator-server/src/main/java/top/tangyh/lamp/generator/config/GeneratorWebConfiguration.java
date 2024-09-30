@@ -5,7 +5,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import top.tangyh.basic.boot.config.BaseConfig;
 import top.tangyh.basic.log.event.SysLogListener;
-import top.tangyh.lamp.common.api.LogApi;
+import top.tangyh.lamp.oauth.facade.LogFacade;
 
 /**
  * 在线代码生成器模块-Web配置
@@ -21,7 +21,7 @@ public class GeneratorWebConfiguration extends BaseConfig {
      */
     @Bean
     @ConditionalOnExpression("${lamp.log.enabled:true} && 'DB'.equals('${lamp.log.type:LOGGER}')")
-    public SysLogListener sysLogListener(LogApi logApi) {
+    public SysLogListener sysLogListener(LogFacade logApi) {
         return new SysLogListener(logApi::save);
     }
 }

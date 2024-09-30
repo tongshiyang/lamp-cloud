@@ -25,14 +25,28 @@
             <artifactId>lamp-database-mode</artifactId>
             <version>${lamp-project.version}</version>
         </dependency>
+        <!-- 用户信息注入 - 微服务版实现类 -->
+        <dependency>
+            <groupId>top.tangyh.lamp</groupId>
+            <artifactId>lamp-login-user-cloud-impl</artifactId>
+            <version>${lamp-project.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>top.tangyh.lamp</groupId>
+            <artifactId>lamp-sa-token-ext</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+
+        <!-- 基础服务相关接口 - 微服务版实现类 -->
+        <dependency>
+            <groupId>top.tangyh.lamp</groupId>
+            <artifactId>lamp-base-cloud-impl</artifactId>
+            <version>${lamp-project.version}</version>
+        </dependency>
 
         <dependency>
             <groupId>top.tangyh.basic</groupId>
             <artifactId>lamp-all</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>cn.dev33</groupId>
-            <artifactId>sa-token-spring-boot3-starter</artifactId>
         </dependency>
     </dependencies>
 

@@ -4,7 +4,6 @@ import top.tangyh.basic.base.manager.SuperCacheManager;
 import top.tangyh.lamp.model.vo.result.ResourceApiVO;
 import top.tangyh.lamp.system.entity.application.DefResourceApi;
 
-import java.util.Collection;
 import java.util.List;
 
 /**
@@ -21,6 +20,7 @@ import java.util.List;
 public interface DefResourceApiManager extends SuperCacheManager<DefResourceApi> {
     /** 查询系统中配置的所有API与资源编码 */
     List<ResourceApiVO> findAllApi();
+
     /**
      * 根据资源id 删除资源的接口
      *
@@ -41,25 +41,4 @@ public interface DefResourceApiManager extends SuperCacheManager<DefResourceApi>
      * @create [2021/9/20 6:49 下午 ] [tangyh] [初始创建]
      */
     List<DefResourceApi> findByResourceId(Long resourceId);
-
-    /**
-     * 根据资源id查询资源 api id
-     *
-     * @param resourceIdList
-     * @return
-     */
-    List<DefResourceApi> findApiByResourceId(List<Long> resourceIdList);
-
-    /**
-     * 查询指定租户下指定应用和指定资源类型的 接口
-     *
-     * @param applicationIdList 应用ID
-     * @param resourceTypes     资源类型
-     * @return java.util.List<top.tangyh.lamp.system.entity.application.DefResourceApi>
-     * @author tangyh
-     * @date 2023/5/19 3:26 PM
-     * @create [2023/5/19 3:26 PM ] [tangyh] [初始创建]
-     */
-    List<DefResourceApi> findResourceApi(List<Long> applicationIdList,
-                                         Collection<String> resourceTypes);
 }

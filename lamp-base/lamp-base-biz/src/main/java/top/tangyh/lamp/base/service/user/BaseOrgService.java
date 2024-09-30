@@ -39,13 +39,14 @@ public interface BaseOrgService extends SuperCacheService<Long, BaseOrg> {
      */
     boolean check(String name, Long parentId, Long id);
 
+
     /**
-     * 查询机构树
+     * 查询机构
      *
      * @param query 参数
      * @return 机构树
      */
-    List<BaseOrgResultVO> tree(BaseOrgPageQuery query);
+    List<BaseOrgResultVO> list(BaseOrgPageQuery query);
 
     /**
      * 给机构分配角色

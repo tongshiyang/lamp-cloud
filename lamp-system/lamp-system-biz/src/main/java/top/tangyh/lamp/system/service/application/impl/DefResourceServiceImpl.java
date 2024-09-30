@@ -81,15 +81,6 @@ public class DefResourceServiceImpl extends SuperCacheServiceImpl<DefResourceMan
         return superManager.findByIdsAndType(idList, types);
     }
 
-    @Override
-    public List<DefResourceApi> findApiByResourceId(List<Long> resourceIdList) {
-        return defResourceApiManager.findApiByResourceId(resourceIdList);
-    }
-
-    @Override
-    public List<DefResourceApi> findResourceApi(List<Long> applicationIdList, Collection<String> resourceTypes) {
-        return defResourceApiManager.findResourceApi(applicationIdList, resourceTypes);
-    }
 
     @Override
     public Boolean check(Long id, String code) {

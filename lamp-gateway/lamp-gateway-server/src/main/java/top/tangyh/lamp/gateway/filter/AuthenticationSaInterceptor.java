@@ -43,7 +43,7 @@ import java.util.Set;
 @Slf4j
 @RequiredArgsConstructor
 public class AuthenticationSaInterceptor implements WebFilter, Ordered {
-    private final AuthService authService;
+    private final DefResourceFacade defResourceFacade;
     private final IgnoreProperties ignoreProperties;
 
     @Override
@@ -110,7 +110,7 @@ public class AuthenticationSaInterceptor implements WebFilter, Ordered {
 
             // 接口权限
             Map<String, Set<String>> anyone = ignoreProperties.buildAnyone();
-            Map<String, Set<String>> allApi = this.authService.findAllApi();
+            Map<String, Set<String>> allApi = this.defResourceFacade.listAllApi();
 
             allApi.forEach((api, auth) -> {
                 List<String> list = StrUtil.split(api, "###");

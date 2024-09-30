@@ -20,6 +20,31 @@
             <artifactId>lamp-gateway-biz</artifactId>
             <version>${lamp-project.version}</version>
         </dependency>
+        <dependency>
+            <groupId>top.tangyh.lamp</groupId>
+            <artifactId>lamp-system-api</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>top.tangyh.lamp</groupId>
+            <artifactId>lamp-base-cloud-impl</artifactId>
+            <version>${lamp-project.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>top.tangyh.lamp</groupId>
+            <artifactId>lamp-system-cloud-impl</artifactId>
+            <version>${lamp-project.version}</version>
+            <exclusions>
+                <exclusion>
+                    <artifactId>lamp-validator-starter</artifactId>
+                    <groupId>top.tangyh.basic</groupId>
+                </exclusion>
+                <exclusion>
+                    <artifactId>spring-webmvc</artifactId>
+                    <groupId>org.springframework</groupId>
+                </exclusion>
+            </exclusions>
+        </dependency>
 
         <dependency>
             <groupId>top.tangyh.lamp</groupId>

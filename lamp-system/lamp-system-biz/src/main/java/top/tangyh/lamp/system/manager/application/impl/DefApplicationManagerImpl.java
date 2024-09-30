@@ -7,6 +7,7 @@ import top.tangyh.basic.database.mybatis.conditions.Wraps;
 import top.tangyh.basic.model.cache.CacheKeyBuilder;
 import top.tangyh.basic.utils.CollHelper;
 import top.tangyh.lamp.common.cache.tenant.application.ApplicationCacheKeyBuilder;
+import top.tangyh.lamp.model.constant.EchoApi;
 import top.tangyh.lamp.system.entity.application.DefApplication;
 import top.tangyh.lamp.system.manager.application.DefApplicationManager;
 import top.tangyh.lamp.system.mapper.application.DefApplicationMapper;
@@ -28,7 +29,7 @@ import java.util.Set;
  * @create [2021/9/29 1:26 下午 ] [tangyh] [初始创建]
  */
 @RequiredArgsConstructor
-@Service
+@Service(EchoApi.DEF_APPLICATION_SERVICE_IMPL_CLASS)
 public class DefApplicationManagerImpl extends SuperCacheManagerImpl<DefApplicationMapper, DefApplication> implements DefApplicationManager {
 
     @Override

@@ -4,14 +4,12 @@ import cn.hutool.core.util.StrUtil;
 import jakarta.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnWebApplication;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import top.tangyh.basic.constant.Constants;
 import top.tangyh.lamp.common.aspect.LampLogAspect;
 import top.tangyh.lamp.common.cache.CacheKeyModular;
 import top.tangyh.lamp.common.properties.IgnoreProperties;
@@ -46,18 +44,5 @@ public class CommonAutoConfiguration {
         }
     }
 
-    @ConditionalOnProperty(prefix = Constants.PROJECT_PREFIX + ".webmvc", name = "header", havingValue = "true", matchIfMissing = true)
-    public static class InnerConfig {
-        public InnerConfig() {
-            log.info("加载：{}", InnerConfig.class.getName());
-        }
-
-        @Bean
-        @ConditionalOnClass
-        public GlobalMvcConfigurer getGlobalMvcConfigurer(SystemProperties systemProperties, IgnoreProperties ignoreProperties) {
-            return new GlobalMvcConfigurer(ignoreProperties, systemProperties);
-        }
-
-    }
 
 }

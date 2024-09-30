@@ -5,8 +5,6 @@ import cn.hutool.core.util.StrUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
-import org.springframework.util.AntPathMatcher;
-import top.tangyh.basic.context.ContextUtil;
 import top.tangyh.basic.database.mybatis.conditions.Wraps;
 import top.tangyh.basic.jackson.JsonUtil;
 import top.tangyh.basic.utils.BeanPlusUtil;
@@ -18,12 +16,9 @@ import top.tangyh.lamp.base.vo.result.user.RouterMeta;
 import top.tangyh.lamp.base.vo.result.user.VueRouter;
 import top.tangyh.lamp.common.constant.BizConstant;
 import top.tangyh.lamp.common.constant.RoleConstant;
-import top.tangyh.lamp.model.enumeration.HttpMethod;
 import top.tangyh.lamp.model.enumeration.system.ResourceTypeEnum;
-import top.tangyh.lamp.model.vo.result.ResourceApiVO;
 import top.tangyh.lamp.system.entity.application.DefApplication;
 import top.tangyh.lamp.system.entity.application.DefResource;
-import top.tangyh.lamp.system.entity.application.DefResourceApi;
 import top.tangyh.lamp.system.enumeration.system.ClientTypeEnum;
 import top.tangyh.lamp.system.enumeration.tenant.ResourceOpenWithEnum;
 import top.tangyh.lamp.system.service.application.DefApplicationService;
@@ -31,12 +26,7 @@ import top.tangyh.lamp.system.service.application.DefResourceService;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.HashSet;
-import java.util.LinkedHashMap;
 import java.util.List;
-import java.util.Map;
-import java.util.Set;
-import java.util.stream.Collectors;
 
 /**
  * 资源大业务
@@ -48,7 +38,6 @@ import java.util.stream.Collectors;
 @Slf4j
 @RequiredArgsConstructor
 public class ResourceBiz {
-    private static final AntPathMatcher PATH_MATCHER = new AntPathMatcher();
     private final DefResourceService defResourceService;
     private final BaseRoleService baseRoleService;
     private final DefApplicationService defApplicationService;
@@ -203,71 +192,6 @@ public class ResourceBiz {
         return tree;
     }
 
-    /**
-     * 检查指定接口是否有访问权限
-     *
-     * @param path   请求路径
-     * @param method 请求方法
-     * @return 是否有权限
-     */
-    public Boolean checkUri(String path, String method) {
-        Long employeeId = ContextUtil.getEmployeeId();
-        Long applicationId = ContextUtil.getApplicationId();
-        log.info("path={}, method={}, employeeId={}, applicationId={}", path, method, employeeId, applicationId);
-        if (StrUtil.isEmpty(path) || StrUtil.isEmpty(method)) {
-            return false;
-        }
-        long isAdminStart = System.currentTimeMillis();
-        boolean isAdmin = baseRoleService.checkRole(employeeId, RoleConstant.TENANT_ADMIN);
-        long isAdminEnd = System.currentTimeMillis();
-        log.info("biz isAdmin 校验api权限:{} - {}  耗时:{}", path, method, (isAdminEnd - isAdminStart));
-
-        List<DefResourceApi> apiList;
-        if (isAdmin) {
-            // 方案2 查db
-            long queryResStart = System.currentTimeMillis();
-            apiList = defResourceService.findResourceApi(Collections.emptyList(), Collections.emptyList());
-            long queryResEnd = System.currentTimeMillis();
-            log.info("biz query 校验api权限:{} - {}  耗时:{}", path, method, (queryResEnd - queryResStart));
-        } else {
-            // 普通用户 需要校验 uri + method 的权限
-            long queryResStart = System.currentTimeMillis();
-            List<Long> resourceIdList = baseRoleService.findResourceIdByEmployeeId(null, employeeId);
-            if (resourceIdList.isEmpty()) {
-                return false;
-            }
-            long queryResEnd = System.currentTimeMillis();
-            apiList = defResourceService.findApiByResourceId(resourceIdList);
-            long queryApiEnd = System.currentTimeMillis();
-            log.info("biz query 校验api权限:{} - {}  耗时:{}, {}", path, method, (queryResEnd - queryResStart), (queryApiEnd - queryResEnd));
-        }
-
-        if (apiList.isEmpty()) {
-            return false;
-        }
-
-        long apiStart = System.currentTimeMillis();
-        boolean flag = apiList.parallelStream().distinct().anyMatch(item -> {
-            String uri = item.getUri();
-            if (StrUtil.equalsIgnoreCase(uri, path)) {
-                if (StrUtil.equalsIgnoreCase(method, item.getRequestMethod()) || HttpMethod.ALL.name().equalsIgnoreCase(item.getRequestMethod())) {
-                    return true;
-                }
-            }
-
-            boolean matchUri = PATH_MATCHER.match(StrUtil.trim(uri), StrUtil.trim(path));
-
-            log.debug("path={}, uri={}, matchUri={}, method={} apiId={}", path, uri, matchUri, item.getRequestMethod(), item.getId());
-            if (HttpMethod.ALL.name().equalsIgnoreCase(item.getRequestMethod())) {
-                return matchUri;
-            }
-            return matchUri && StrUtil.equalsIgnoreCase(method, item.getRequestMethod());
-        });
-        long apiEnd = System.currentTimeMillis();
-        log.info("biz list 校验api权限:{} - {}  耗时:{}", path, method, (apiEnd - apiStart));
-        return flag;
-    }
-
     private void forEachTree(List<VueRouter> tree, int level) {
         if (CollUtil.isEmpty(tree)) {
             return;
@@ -412,24 +336,4 @@ public class ResourceBiz {
         }
         return CollUtil.isNotEmpty(baseRoleService.findResourceIdByEmployeeId(applicationId, employeeId));
     }
-
-    public Map<String, Set<String>> findAllApi() {
-        // 查询系统中配置的URI和权限关系
-        List<ResourceApiVO> list = defResourceService.findAllApi();
-        return list.stream()
-                .collect(Collectors.toMap(
-                        item -> item.getUri() + "###" + item.getRequestMethod(),
-                        resourceApiVO -> {
-                            Set<String> codes = new HashSet<>();
-                            codes.add(resourceApiVO.getCode());
-                            return codes;
-                        },
-                        (existingCodes, newCodes) -> {
-                            existingCodes.addAll(newCodes);
-                            return existingCodes;
-                        },
-                        LinkedHashMap::new
-                ));
-    }
-
 }

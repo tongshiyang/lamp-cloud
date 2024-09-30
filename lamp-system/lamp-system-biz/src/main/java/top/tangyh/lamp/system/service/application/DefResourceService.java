@@ -3,7 +3,6 @@ package top.tangyh.lamp.system.service.application;
 import top.tangyh.basic.base.service.SuperCacheService;
 import top.tangyh.lamp.model.vo.result.ResourceApiVO;
 import top.tangyh.lamp.system.entity.application.DefResource;
-import top.tangyh.lamp.system.entity.application.DefResourceApi;
 import top.tangyh.lamp.system.vo.result.application.DefResourceResultVO;
 import top.tangyh.lamp.system.vo.save.application.DefResourceSaveVO;
 import top.tangyh.lamp.system.vo.update.application.DefResourceUpdateVO;
@@ -28,6 +27,7 @@ public interface DefResourceService extends SuperCacheService<Long, DefResource>
      * @return API与资源编码
      */
     List<ResourceApiVO> findAllApi();
+
     /**
      * 查找租户拥有的资源
      *
@@ -150,14 +150,6 @@ public interface DefResourceService extends SuperCacheService<Long, DefResource>
      */
     DefResourceResultVO getResourceById(Long id);
 
-    /**
-     * 根据 资源id 查询 资源api
-     *
-     * @param resourceIdList
-     * @return
-     */
-    List<DefResourceApi> findApiByResourceId(List<Long> resourceIdList);
-
 
     /**
      * 查找所有可用的资源
@@ -169,15 +161,4 @@ public interface DefResourceService extends SuperCacheService<Long, DefResource>
      */
     Map<Long, Collection<Long>> findResource();
 
-    /**
-     * 查询指定租户下指定应用和指定资源类型的 接口
-     *
-     * @param applicationIdList 应用ID
-     * @param resourceTypes     资源类型
-     * @return java.util.List<top.tangyh.lamp.system.entity.application.DefResourceApi>
-     * @author tangyh
-     * @date 2023/5/19 3:26 PM
-     * @create [2023/5/19 3:26 PM ] [tangyh] [初始创建]
-     */
-    List<DefResourceApi> findResourceApi(List<Long> applicationIdList, Collection<String> resourceTypes);
 }

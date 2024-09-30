@@ -19,6 +19,7 @@ import top.tangyh.basic.annotation.log.WebLog;
 import top.tangyh.basic.base.R;
 import top.tangyh.basic.base.controller.SuperCacheController;
 import top.tangyh.basic.interfaces.echo.EchoService;
+import top.tangyh.basic.utils.TreeUtil;
 import top.tangyh.lamp.base.entity.user.BaseOrg;
 import top.tangyh.lamp.base.service.user.BaseOrgService;
 import top.tangyh.lamp.base.vo.query.user.BaseOrgPageQuery;
@@ -79,7 +80,9 @@ public class BaseOrgController extends SuperCacheController<BaseOrgService, Long
     @PostMapping("/tree")
     @WebLog("级联查询地区")
     public R<List<BaseOrgResultVO>> tree(@RequestBody BaseOrgPageQuery pageQuery) {
-        return success(superService.tree(pageQuery));
+        List<BaseOrgResultVO> treeList = superService.list(pageQuery);
+        echoService.action(treeList);
+        return success(TreeUtil.buildTree(treeList));
     }
 
     /**

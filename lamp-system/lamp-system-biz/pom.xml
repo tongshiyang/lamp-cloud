@@ -21,12 +21,6 @@
         </dependency>
         <dependency>
             <groupId>top.tangyh.lamp</groupId>
-            <artifactId>lamp-common-api</artifactId>
-            <version>${lamp-project.version}</version>
-        </dependency>
-
-        <dependency>
-            <groupId>top.tangyh.lamp</groupId>
             <artifactId>lamp-file-sdk</artifactId>
             <version>${lamp-project.version}</version>
         </dependency>

@@ -1,7 +1,7 @@
 package top.tangyh.lamp.msg.strategy.impl.sms;
 
 import cn.hutool.core.bean.BeanUtil;
-import com.alibaba.fastjson.JSONObject;
+import cn.hutool.json.JSONUtil;
 import com.baidubce.auth.DefaultBceCredentials;
 import com.baidubce.services.sms.SmsClient;
 import com.baidubce.services.sms.SmsClientConfiguration;
@@ -74,7 +74,7 @@ public class BaiduSmsMsgStrategyImpl implements MsgStrategy {
         // 发送请求
         SendMessageV3Response response = smsClient.sendMessage(request);
 
-        log.info("百度发送短信返回值={}", JSONObject.toJSONString(response));
+        log.info("百度发送短信返回值={}", JSONUtil.toJsonStr(response));
 
         return MsgResult.builder().result(response).build();
     }

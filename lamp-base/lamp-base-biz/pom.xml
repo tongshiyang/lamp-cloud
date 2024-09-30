@@ -20,12 +20,17 @@
             <artifactId>lamp-base-entity</artifactId>
             <version>${lamp-project.version}</version>
         </dependency>
-
         <dependency>
             <groupId>top.tangyh.lamp</groupId>
             <artifactId>lamp-system-biz</artifactId>
             <version>${lamp-project.version}</version>
         </dependency>
+        <dependency>
+            <groupId>top.tangyh.lamp</groupId>
+            <artifactId>lamp-base-api</artifactId>
+            <version>${lamp-project.version}</version>
+        </dependency>
+
         <dependency>
             <groupId>top.tangyh.lamp</groupId>
             <artifactId>lamp-file-sdk</artifactId>

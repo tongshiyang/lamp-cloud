@@ -14,21 +14,20 @@ public interface EchoApi {
     // @lamp.generator auto insert EchoApi
 
     /**
-     * lamp-cloud 数据字典项 feign查询类 全类名
+     * 字典 回显实现类
      */
-    String DICTIONARY_ITEM_FEIGN_CLASS = "top.tangyh.lamp.common.api.DictApi";
+    String DICTIONARY_ITEM_FEIGN_CLASS = "dictFacadeImpl";
     /**
-     * lamp-cloud 数据字典项 feign查询类 全类名
+     * 组织 回显实现类
      */
-//    String DICTIONARY_ITEM_FEIGN_CLASS = "dictServiceImpl";
+    String ORG_ID_CLASS = "orgFacadeImpl";
     /**
-     * 组织 service查询类
+     * 岗位 回显实现类
      */
-    String ORG_ID_CLASS = "baseOrgManagerImpl";
-    /**
-     * 岗位 service查询类
-     */
-    String POSITION_ID_CLASS = "basePositionManagerImpl";
+    String POSITION_ID_CLASS = "positionFacadeImpl";
+    /** 用户 回显实现类 */
+    String DEF_USER_ID_CLASS = "defUserFacadeImpl";
+
     String DEF_TENANT_SERVICE_IMPL_CLASS = "defTenantManagerImpl";
     String DEF_APPLICATION_SERVICE_IMPL_CLASS = "defApplicationManagerImpl";
 

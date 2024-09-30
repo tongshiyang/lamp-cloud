@@ -6,17 +6,13 @@ import cn.hutool.core.map.MapUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import top.tangyh.basic.base.service.impl.SuperServiceImpl;
-import top.tangyh.basic.context.ContextConstants;
-import top.tangyh.basic.context.ContextUtil;
 import top.tangyh.basic.database.mybatis.conditions.Wraps;
 import top.tangyh.basic.jackson.JsonUtil;
 import top.tangyh.basic.utils.ArgumentAssert;
 import top.tangyh.basic.utils.SpringUtils;
-import top.tangyh.lamp.common.api.JobApi;
 import top.tangyh.lamp.common.dto.XxlJobInfoVO;
 import top.tangyh.lamp.model.entity.system.SysUser;
 import top.tangyh.lamp.msg.entity.DefMsgTemplate;
@@ -57,19 +53,18 @@ import java.util.Map;
 @Transactional(readOnly = true)
 public class ExtendMsgServiceImpl extends SuperServiceImpl<ExtendMsgManager, Long, ExtendMsg> implements ExtendMsgService {
     @Autowired
-    private ExtendMsgRecipientManager recipientManager;
+    private ExtendMsgRecipientManager extendMsgRecipientManager;
     @Autowired
     private ExtendNoticeManager extendNoticeManager;
     @Autowired
-    @Lazy
-    private JobApi jobApi;
+    private JobFacade jobFacde;
 
     @Override
     public ExtendMsgResultVO getResultById(Long id) {
         ExtendMsg msg = superManager.getById(id);
         ExtendMsgResultVO result = BeanUtil.toBean(msg, ExtendMsgResultVO.class);
         if (result != null) {
-            List<ExtendMsgRecipient> list = recipientManager.listByMsgId(id);
+            List<ExtendMsgRecipient> list = extendMsgRecipientManager.listByMsgId(id);
             result.setRecipientList(list.stream().map(ExtendMsgRecipient::getRecipient).toList());
         }
         return result;
@@ -92,7 +87,7 @@ public class ExtendMsgServiceImpl extends SuperServiceImpl<ExtendMsgManager, Lon
             superManager.save(extendMsg);
         } else {
             superManager.updateById(extendMsg);
-            recipientManager.remove(Wraps.<ExtendMsgRecipient>lbQ().eq(ExtendMsgRecipient::getMsgId, extendMsg.getId()));
+            extendMsgRecipientManager.remove(Wraps.<ExtendMsgRecipient>lbQ().eq(ExtendMsgRecipient::getMsgId, extendMsg.getId()));
         }
         List<ExtendMsgRecipient> recipientList = data.getRecipientList().stream().map((item) -> {
             ExtendMsgRecipient recipient = new ExtendMsgRecipient();
@@ -100,7 +95,7 @@ public class ExtendMsgServiceImpl extends SuperServiceImpl<ExtendMsgManager, Lon
             recipient.setRecipient(item);
             return recipient;
         }).toList();
-        recipientManager.saveBatch(recipientList);
+        extendMsgRecipientManager.saveBatch(recipientList);
 
         if (data.getSendTime() == null) {
             List<ExtendNotice> noticeList = data.getRecipientList().stream().map((item) -> {
@@ -132,7 +127,7 @@ public class ExtendMsgServiceImpl extends SuperServiceImpl<ExtendMsgManager, Lon
 
             XxlJobInfoVO xxlJobInfoVO = XxlJobInfoVO.create("lamp-none-executor",
                     "【发送消息】" + extendMsg.getTitle(), extendMsg.getSendTime(), "publishMsg", JsonUtil.toJson(param));
-            jobApi.addTimingTask(xxlJobInfoVO);
+            jobFacde.addTimingTask(xxlJobInfoVO);
         }
         return true;
     }
@@ -142,7 +137,7 @@ public class ExtendMsgServiceImpl extends SuperServiceImpl<ExtendMsgManager, Lon
     public void publishNotice(Long msgId) {
         ExtendMsg extendMsg = superManager.getById(msgId);
         ArgumentAssert.notNull(extendMsg, "消息不存在");
-        List<ExtendMsgRecipient> recipientList = recipientManager.listByMsgId(extendMsg.getId());
+        List<ExtendMsgRecipient> recipientList = extendMsgRecipientManager.listByMsgId(extendMsg.getId());
         ArgumentAssert.notEmpty(recipientList, "消息接收人为空");
 
         List<ExtendNotice> noticeList = recipientList.stream().map((item) -> {
@@ -188,7 +183,7 @@ public class ExtendMsgServiceImpl extends SuperServiceImpl<ExtendMsgManager, Lon
             superManager.save(extendMsg);
         } else {
             superManager.updateById(extendMsg);
-            recipientManager.remove(Wraps.<ExtendMsgRecipient>lbQ().eq(ExtendMsgRecipient::getMsgId, extendMsg.getId()));
+            extendMsgRecipientManager.remove(Wraps.<ExtendMsgRecipient>lbQ().eq(ExtendMsgRecipient::getMsgId, extendMsg.getId()));
         }
 
         List<ExtendMsgRecipient> recipientList = data.getRecipientList().stream().map((item) -> {
@@ -198,7 +193,7 @@ public class ExtendMsgServiceImpl extends SuperServiceImpl<ExtendMsgManager, Lon
             recipient.setExt(item.getExt());
             return recipient;
         }).toList();
-        recipientManager.saveBatch(recipientList);
+        extendMsgRecipientManager.saveBatch(recipientList);
 
         //3, 判断是否立即发送
         if (data.getSendTime() == null) {
@@ -211,7 +206,7 @@ public class ExtendMsgServiceImpl extends SuperServiceImpl<ExtendMsgManager, Lon
 
             XxlJobInfoVO xxlJobInfoVO = XxlJobInfoVO.create("lamp-none-executor",
                     "【发送消息】" + extendMsg.getTitle(), extendMsg.getSendTime(), "sendMsg", JsonUtil.toJson(param));
-            jobApi.addTimingTask(xxlJobInfoVO);
+            jobFacde.addTimingTask(xxlJobInfoVO);
         }
         return true;
     }

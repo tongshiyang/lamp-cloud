@@ -6,7 +6,6 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -22,8 +21,6 @@ import top.tangyh.lamp.oauth.vo.result.VisibleResourceVO;
 import top.tangyh.lamp.system.enumeration.system.ClientTypeEnum;
 
 import java.util.List;
-import java.util.Map;
-import java.util.Set;
 
 
 /**
@@ -82,32 +79,6 @@ public class ResourceController {
     public R<List<String>> visibleResource(@RequestParam(value = "employeeId") Long employeeId,
                                            @RequestParam(value = "applicationId", required = false) Long applicationId) {
         return R.success(oauthResourceBiz.findVisibleResource(employeeId, applicationId));
-    }
-
-    /**
-     * 检查员工是否有指定uri的访问权限
-     *
-     * @param path   请求路径
-     * @param method 请求方法
-     */
-    @Operation(summary = "检查员工是否有指定uri的访问权限", description = "检查员工是否有指定uri的访问权限")
-    @GetMapping("/anyone/checkUri")
-    public R<Boolean> checkUri(@RequestParam String path, @RequestParam String method) {
-        long apiStart = System.currentTimeMillis();
-        Boolean check = oauthResourceBiz.checkUri(path, method);
-        long apiEnd = System.currentTimeMillis();
-        log.info("controller 校验api权限:{} - {}  耗时:{}", path, method, (apiEnd - apiStart));
-        return R.success(check);
-    }
-
-    @Operation(summary = "检查指定接口是否有访问权限", description = "检查指定接口是否有访问权限")
-    @PostMapping("/anyTenant/findAllApi")
-    public R<Map<String, Set<String>>> findAllApi() {
-        long appStart = System.currentTimeMillis();
-        Map<String, Set<String>> allApi = oauthResourceBiz.findAllApi();
-        long appEnd = System.currentTimeMillis();
-        log.info("controller 获取api，耗时:{}", (appEnd - appStart));
-        return R.success(allApi);
     }
 
     /**

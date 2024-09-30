@@ -13,7 +13,6 @@ import org.springframework.transaction.annotation.Transactional;
 import top.tangyh.basic.base.service.impl.SuperCacheServiceImpl;
 import top.tangyh.basic.database.mybatis.conditions.Wraps;
 import top.tangyh.basic.database.mybatis.conditions.query.LbQueryWrap;
-import top.tangyh.basic.interfaces.echo.EchoService;
 import top.tangyh.basic.utils.ArgumentAssert;
 import top.tangyh.basic.utils.TreeUtil;
 import top.tangyh.lamp.base.entity.user.BaseEmployeeOrgRel;
@@ -59,7 +58,6 @@ public class BaseOrgServiceImpl extends SuperCacheServiceImpl<BaseOrgManager, Lo
         implements BaseOrgService {
     private final BaseEmployeeOrgRelManager baseEmployeeOrgRelManager;
     private final BaseOrgRoleRelManager baseOrgRoleRelManager;
-    private final EchoService echoService;
 
     @Override
     public Map<Serializable, Object> findByIds(Set<Serializable> ids) {
@@ -125,13 +123,11 @@ public class BaseOrgServiceImpl extends SuperCacheServiceImpl<BaseOrgManager, Lo
     }
 
     @Override
-    public List<BaseOrgResultVO> tree(BaseOrgPageQuery query) {
-        List<BaseOrg> list = superManager.list(Wraps.<BaseOrg>lbQ()
-                .like(BaseOrg::getName, query.getName()).eq(BaseOrg::getState, query.getState()).orderByAsc(BaseOrg::getSortValue));
-        List<BaseOrgResultVO> treeList = BeanUtil.copyToList(list, BaseOrgResultVO.class);
-        echoService.action(treeList);
-        return TreeUtil.buildTree(treeList);
+    public List<BaseOrgResultVO> list(BaseOrgPageQuery query) {
+        List<BaseOrg> list = superManager.list(Wraps.<BaseOrg>lbQ().like(BaseOrg::getName, query.getName()).eq(BaseOrg::getState, query.getState()).orderByAsc(BaseOrg::getSortValue));
+        return BeanUtil.copyToList(list, BaseOrgResultVO.class);
     }
+
 
     @Override
     @Transactional(rollbackFor = Exception.class)

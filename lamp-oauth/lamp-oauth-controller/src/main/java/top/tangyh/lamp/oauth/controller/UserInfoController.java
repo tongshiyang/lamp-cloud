@@ -1,13 +1,11 @@
 package top.tangyh.lamp.oauth.controller;
 
-import io.swagger.v3.oas.annotations.Hidden;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -18,8 +16,6 @@ import top.tangyh.basic.base.R;
 import top.tangyh.basic.context.ContextUtil;
 import top.tangyh.basic.exception.BizException;
 import top.tangyh.lamp.base.entity.user.BaseOrg;
-import top.tangyh.lamp.model.entity.system.SysUser;
-import top.tangyh.lamp.model.vo.result.UserQuery;
 import top.tangyh.lamp.oauth.biz.OauthUserBiz;
 import top.tangyh.lamp.oauth.service.CaptchaService;
 import top.tangyh.lamp.oauth.service.UserInfoService;
@@ -31,7 +27,6 @@ import top.tangyh.lamp.system.vo.update.tenant.DefUserBaseInfoUpdateVO;
 import top.tangyh.lamp.system.vo.update.tenant.DefUserEmailUpdateVO;
 import top.tangyh.lamp.system.vo.update.tenant.DefUserMobileUpdateVO;
 import top.tangyh.lamp.system.vo.update.tenant.DefUserPasswordUpdateVO;
-import top.tangyh.lamp.userinfo.biz.EmployeeHelperBiz;
 
 import java.util.List;
 
@@ -52,20 +47,6 @@ public class UserInfoController {
     private final UserInfoService userInfoService;
     private final DefUserService defUserService;
     private final CaptchaService captchaService;
-    private final EmployeeHelperBiz employeeHelperBiz;
-
-    /**
-     * 单体查询用户
-     *
-     * @param query 参数
-     * @return 查询结果
-     */
-    @Operation(summary = "查询用户详细", description = "查询用户详细：@LoginUser 注解专用")
-    @PostMapping(value = "/getSysUserById")
-    @Hidden
-    public R<SysUser> getSysUserById(@RequestBody UserQuery query) {
-        return R.success(employeeHelperBiz.getSysUserById(query));
-    }
 
     /**
      * 获取当前登录的用户信息
@@ -78,7 +59,6 @@ public class UserInfoController {
         }
         return R.success(oauthUserBiz.getUserById(userId));
     }
-
 
     /**
      * 修改头像

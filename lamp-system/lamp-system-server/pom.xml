@@ -5,7 +5,7 @@
     <parent>
         <artifactId>lamp-system</artifactId>
         <groupId>top.tangyh.lamp</groupId>
-        <version>4.22.1-java17</version>
+        <version>4.22.0-java17</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
     <modelVersion>4.0.0</modelVersion>
@@ -27,14 +27,30 @@
         </dependency>
 
         <dependency>
+            <groupId>top.tangyh.lamp</groupId>
+            <artifactId>lamp-oauth-api</artifactId>
+            <version>${lamp-project.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>top.tangyh.lamp</groupId>
+            <artifactId>lamp-oauth-cloud-impl</artifactId>
+            <version>${lamp-project.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>top.tangyh.lamp</groupId>
+            <artifactId>lamp-base-cloud-impl</artifactId>
+            <version>${lamp-project.version}</version>
+        </dependency>
+
+        <dependency>
             <groupId>top.tangyh.basic</groupId>
             <artifactId>lamp-all</artifactId>
         </dependency>
         <dependency>
-            <groupId>cn.dev33</groupId>
-            <artifactId>sa-token-spring-boot3-starter</artifactId>
+            <groupId>top.tangyh.lamp</groupId>
+            <artifactId>lamp-sa-token-ext</artifactId>
+            <version>${project.version}</version>
         </dependency>
-
         <!-- 测试 -->
         <dependency>
             <groupId>org.springframework.boot</groupId>

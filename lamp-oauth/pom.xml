@@ -15,7 +15,7 @@
     <description>认证服务</description>
     <packaging>pom</packaging>
     <modules>
-        <module>lamp-oauth-api</module>
+        <module>lamp-oauth-facade</module>
         <module>lamp-oauth-entity</module>
         <module>lamp-oauth-controller</module>
         <module>lamp-oauth-biz</module>
