@@ -27,8 +27,8 @@ import org.springframework.web.server.WebFilterChain;
 import reactor.core.publisher.Mono;
 import top.tangyh.basic.base.R;
 import top.tangyh.lamp.common.properties.IgnoreProperties;
-import top.tangyh.lamp.gateway.service.AuthService;
 import top.tangyh.lamp.model.vo.result.ResourceApiVO;
+import top.tangyh.lamp.system.facade.DefResourceFacade;
 
 import java.util.List;
 import java.util.Map;

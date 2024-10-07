@@ -15,7 +15,6 @@ import top.tangyh.lamp.generator.manager.DefGenTableManager;
 import top.tangyh.lamp.generator.mapper.DefGenTableMapper;
 import top.tangyh.lamp.generator.mapper.GenDefDatasourceConfigMapper;
 import top.tangyh.lamp.system.entity.tenant.DefDatasourceConfig;
-import top.tangyh.lamp.system.manager.tenant.DefDatasourceConfigManager;
 
 import javax.sql.DataSource;
 import java.util.HashMap;

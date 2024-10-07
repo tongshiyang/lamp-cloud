@@ -26,7 +26,7 @@
         </dependency>
         <dependency>
             <groupId>top.tangyh.basic</groupId>
-            <artifactId>lamp-boot</artifactId>
+            <artifactId>lamp-webmvc</artifactId>
         </dependency>
 
         <dependency>

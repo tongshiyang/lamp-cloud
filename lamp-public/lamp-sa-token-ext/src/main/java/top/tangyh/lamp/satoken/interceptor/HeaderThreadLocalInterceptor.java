@@ -2,7 +2,6 @@ package top.tangyh.lamp.satoken.interceptor;
 
 import cn.dev33.satoken.session.SaSession;
 import cn.dev33.satoken.stp.StpUtil;
-import cn.hutool.core.util.StrUtil;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
@@ -47,15 +46,6 @@ public class HeaderThreadLocalInterceptor implements AsyncHandlerInterceptor {
         }
         log.info("HeaderThreadLocalInterceptor url={}, method={}", request.getRequestURI(), request.getMethod());
         ContextUtil.setPath(WebUtils.getHeader(request, ContextConstants.PATH_HEADER));
-        ContextUtil.setTenantId(WebUtils.getHeader(request, ContextConstants.TENANT_ID_HEADER));
-        String basePoolName = WebUtils.getHeader(request, ContextConstants.TENANT_BASE_POOL_NAME_HEADER);
-        if (StrUtil.isNotEmpty(basePoolName)) {
-            ContextUtil.setTenantBasePoolName(basePoolName);
-        }
-        String extendPoolName = WebUtils.getHeader(request, ContextConstants.TENANT_EXTEND_POOL_NAME_HEADER);
-        if (StrUtil.isNotEmpty(extendPoolName)) {
-            ContextUtil.setTenantExtendPoolName(extendPoolName);
-        }
 
         ContextUtil.setApplicationId(WebUtils.getHeader(request, ContextConstants.APPLICATION_ID_HEADER));
         ContextUtil.setClientId(WebUtils.getHeader(request, ContextConstants.CLIENT_ID_HEADER));
