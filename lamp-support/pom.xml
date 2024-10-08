@@ -18,6 +18,10 @@
     <modules>
         <!-- 监控和全链路调用监控 开发环境可以不用启动 -->
         <module>lamp-monitor</module>
+        <!-- 定时任务执行器，启动该项目时，需要先启动 lamp-job（开源版） 或 lamp-job-pro（赞助版） -->
+        <module>lamp-job-executor</module>
+        <!-- 单体版 -->
+        <module>lamp-boot-server</module>
     </modules>
 
 </project>
