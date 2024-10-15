@@ -45,10 +45,9 @@
 
 ## 后端
 
-| 项目         | gitee                                                  | github           | gitcode                                             | 备注                |
-|------------|--------------------------------------------------------|--------------------------------------------------------|-----------------------------------------------------|-------------------|
-| lamp-cloud | [lamp-cloud](https://gitee.com/dromara/lamp-cloud)     | [lamp-cloud](https://github.com/dromara/lamp-cloud)  | [lamp-cloud](https://gitcode.com/zuihou/lamp-cloud) | SpringCloud(微服务)版 |
-| lamp-boot  | [lamp-boot](https://gitee.com/zuihou111/lamp-boot)     | [lamp-boot](https://github.com/zuihou/lamp-boot)    | [lamp-boot](https://gitcode.com/zuihou/lamp-boot)    | SpringBoot(单体)版   |
+| 项目         | gitee                                                  | github           | gitcode                                             | 备注          |
+|------------|--------------------------------------------------------|--------------------------------------------------------|-----------------------------------------------------|-------------|
+| lamp-cloud | [lamp-cloud](https://gitee.com/dromara/lamp-cloud)     | [lamp-cloud](https://github.com/dromara/lamp-cloud)  | [lamp-cloud](https://gitcode.com/zuihou/lamp-cloud) | 微服务和单体模式融合版 |
 
 ## 前端
 
