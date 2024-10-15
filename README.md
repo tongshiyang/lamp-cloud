@@ -73,10 +73,6 @@
 lamp-cloud 代码简洁，注释齐全，架构清晰，非常适合个人学习以及中小企业作为基础框架使用。采用Spring Cloud
 Alibaba、SpringBoot、Mybatis、Seata、Sentinel、RabbitMQ、FastDFS/MinIO、SkyWalking等主要框架和中间件。 本项目旨在实现基础框架能力，不涉及具体业务。
 
-> 开源版的 4.x_java17 分支仅支持 **无租户隔离** 模式，开源版完全免费，**大租户嵌套小租户隔离**、**数据库隔离** 和 **字段隔离** 需要购买赞助版方可使用。
-> 
-> 开源版的 master、java17 分支 支持 **无租户隔离** 模式，**数据库隔离** 和 **字段隔离**， 完全免费。
-
 ![架构图.png](A极其重要/01-docs/image/架构图/lamp-cloud架构图.png)
 
 # 演示地址
