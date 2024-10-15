@@ -57,10 +57,10 @@
 
 ## 注意：
 
-- lamp-cloud 和 lamp-boot 依赖 lamp-util
-- lamp-job 依赖 lamp-cloud 或 lamp-boot
+- lamp-cloud 依赖 lamp-util
+- lamp-job 依赖 lamp-cloud
 
-所以，项目的编译顺序是：lamp-util -> lamp-cloud/lamp-boot -> lamp-job ！
+所以，项目的编译顺序是：lamp-util -> lamp-cloud -> lamp-job ！
 
 # lamp-cloud 简介
 
