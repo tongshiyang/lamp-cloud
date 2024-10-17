@@ -28,7 +28,7 @@ import java.util.Map;
  * @date 2019-06-21 18:22
  */
 @Controller
-public class GeneratorController {
+public class GateController {
 
     @Value("${server.servlet.context-path:}")
     private String contextPath;

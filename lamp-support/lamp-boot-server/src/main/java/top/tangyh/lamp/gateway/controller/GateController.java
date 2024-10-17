@@ -21,7 +21,7 @@ import java.util.Map;
  * @date 2019-06-21 18:22
  */
 @Controller
-public class GeneratorController {
+public class GateController {
 
     @Value("${spring.application.name:}")
     private String application;
