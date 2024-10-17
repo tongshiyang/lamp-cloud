@@ -22,6 +22,7 @@ import top.tangyh.basic.log.event.SysLogListener;
 import top.tangyh.basic.utils.DateUtils;
 import top.tangyh.basic.utils.StrPool;
 import top.tangyh.basic.validator.annotation.EnableFormValidator;
+import top.tangyh.lamp.common.ServerApplication;
 import top.tangyh.lamp.common.constant.BizConstant;
 import top.tangyh.lamp.datascope.interceptor.DataScopeInnerInterceptor;
 import top.tangyh.lamp.generator.enumeration.ProjectTypeEnum;
@@ -50,9 +51,12 @@ import static top.tangyh.lamp.generator.utils.GenCodeConstant.APPLICATION_SUFFIX
 import static top.tangyh.lamp.generator.utils.GenCodeConstant.BIZ_SERVICE_SUFFIX;
 import static top.tangyh.lamp.generator.utils.GenCodeConstant.BOOTSTRAP_DEV_SUFFIX;
 import static top.tangyh.lamp.generator.utils.GenCodeConstant.BOOTSTRAP_SUFFIX;
+import static top.tangyh.lamp.generator.utils.GenCodeConstant.BOOT_IMPL_SERVICE_SUFFIX;
+import static top.tangyh.lamp.generator.utils.GenCodeConstant.CLOUD_IMPL_SERVICE_SUFFIX;
 import static top.tangyh.lamp.generator.utils.GenCodeConstant.CONTROLLER_SERVICE_SUFFIX;
 import static top.tangyh.lamp.generator.utils.GenCodeConstant.ENTITY_SERVICE_SUFFIX;
 import static top.tangyh.lamp.generator.utils.GenCodeConstant.EXCEPTION_CONFIGURATION_SUFFIX;
+import static top.tangyh.lamp.generator.utils.GenCodeConstant.FACADE_SERVICE_SUFFIX;
 import static top.tangyh.lamp.generator.utils.GenCodeConstant.GATEWAY_SERVER_SUFFIX;
 import static top.tangyh.lamp.generator.utils.GenCodeConstant.JAVA_FORMAT;
 import static top.tangyh.lamp.generator.utils.GenCodeConstant.LOGBACK_SPRING_DEV_SUFFIX;
@@ -86,11 +90,14 @@ public class ProjectUtils {
     };
 
     private final static List<String> CLOUD_MODULE = CollUtil.newArrayList(
-            API_SERVICE_SUFFIX, ENTITY_SERVICE_SUFFIX, BIZ_SERVICE_SUFFIX,
+            ENTITY_SERVICE_SUFFIX, BIZ_SERVICE_SUFFIX,
             CONTROLLER_SERVICE_SUFFIX, SERVER_SERVICE_SUFFIX
     );
     private final static List<String> BOOT_MODULE = CollUtil.newArrayList(
             ENTITY_SERVICE_SUFFIX, BIZ_SERVICE_SUFFIX, CONTROLLER_SERVICE_SUFFIX
+    );
+    private final static List<String> FACADE_MODULE = CollUtil.newArrayList(
+            API_SERVICE_SUFFIX, BOOT_IMPL_SERVICE_SUFFIX, CLOUD_IMPL_SERVICE_SUFFIX
     );
     private final static Map<ProjectTypeEnum, List<String>> TYPE_MODULE_MAP = new HashMap();
 
@@ -104,9 +111,15 @@ public class ProjectUtils {
         Set<String> applicationImport = new TreeSet<>();
         applicationImport.add(EnableFormValidator.class.getCanonicalName());
         applicationImport.add(BizConstant.class.getCanonicalName());
+        applicationImport.add(ServerApplication.class.getCanonicalName());
 
         Set<String> webConfigurationImport = new TreeSet<>();
         webConfigurationImport.add(LogFacade.class.getCanonicalName());
+//        if (ProjectTypeEnum.CLOUD.eq(vo.getType())) {
+//            webConfigurationImport.add(LogFacade.class.getCanonicalName());
+//        } else {
+//            webConfigurationImport.add(BaseOperationLogService.class.getCanonicalName());
+//        }
         webConfigurationImport.add(BaseConfig.class.getCanonicalName());
         webConfigurationImport.add(SysLogListener.class.getCanonicalName());
 
@@ -161,6 +174,27 @@ public class ProjectUtils {
             // lamp-base-entity
             String module = service + StrUtil.DASHED + moduleName;
             String modulePath = Paths.get(outputDir, service, module).toString();
+
+            // 创建 maven 结构
+            mkMaven(modulePath);
+            // 创建 基础包
+            mkBasePackage(modulePath, parentPath);
+            // 生成 pom.xml
+            writePom(objectMap, StrUtil.format(POM_FORMAT, moduleName), modulePath);
+        }
+
+        // facade层
+        String facadeModule = service + StrUtil.DASHED + FACADE_SERVICE_SUFFIX;
+        String facadeModulePath = Paths.get(outputDir, service, facadeModule).toString();
+        // 创建目录
+        mkdir(facadeModulePath);
+        // 生成 pom.xml
+        writePom(objectMap, StrUtil.format(POM_FORMAT, FACADE_SERVICE_SUFFIX), facadeModulePath);
+
+        for (String moduleName : FACADE_MODULE) {
+            // lamp-base-entity
+            String module = service + StrUtil.DASHED + moduleName;
+            String modulePath = Paths.get(outputDir, service, facadeModule, module).toString();
 
             // 创建 maven 结构
             mkMaven(modulePath);
@@ -272,16 +306,17 @@ public class ProjectUtils {
     private static void mkMaven(String modulePath) {
         for (String maven : MAVEN_PATH) {
             String mavenPath = Paths.get(modulePath, maven).toString();
-            File file = new File(mavenPath);
-            if (!file.exists()) {
-                file.mkdirs();
-            }
+            mkdir(mavenPath);
         }
     }
 
     private static void mkBasePackage(String modulePath, String parent) {
         String basePackage = Paths.get(modulePath, SRC_MAIN_JAVA, parent).toString();
-        File file = new File(basePackage);
+        mkdir(basePackage);
+    }
+
+    private static void mkdir(String path) {
+        File file = new File(path);
         if (!file.exists()) {
             file.mkdirs();
         }

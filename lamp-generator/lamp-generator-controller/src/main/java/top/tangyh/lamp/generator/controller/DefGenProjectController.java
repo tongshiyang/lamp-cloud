@@ -72,7 +72,7 @@ public class DefGenProjectController implements DownloadController<Long, DefGenT
 
     @Operation(summary = "生成项目", description = "生成项目")
     @PostMapping("/generator")
-    @WebLog(value = "'生成项目")
+    @WebLog(value = "生成项目")
     public R<Boolean> generator(@RequestBody @Validated ProjectGeneratorVO projectGenerator) {
         defGenTableService.generator(projectGenerator);
         return R.success(true);
