@@ -9,7 +9,7 @@
         <version>5.0.1</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
-    <artifactId>lamp-job-executor</artifactId>
+    <artifactId>lamp-job-executor-none</artifactId>
     <packaging>jar</packaging>
 
     <name>${project.artifactId}</name>
