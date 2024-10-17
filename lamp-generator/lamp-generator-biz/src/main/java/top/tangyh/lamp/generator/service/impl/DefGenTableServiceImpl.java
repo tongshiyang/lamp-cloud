@@ -726,6 +726,7 @@ public class DefGenTableServiceImpl extends SuperServiceImpl<DefGenTableManager,
         vo.setUtilGroupId(generatorConfig.getPackageInfoConfig().getUtilParent());
         vo.setServerPort(8080);
         vo.setVersion(version);
+        vo.setSeata(false);
         return vo;
     }
 
