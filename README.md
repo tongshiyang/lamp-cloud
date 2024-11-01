@@ -58,7 +58,7 @@
 ## 注意：
 
 - lamp-cloud 依赖 lamp-util
-- lamp-job 依赖 lamp-cloud
+- lamp-job 依赖 lamp-util
 
 所以，项目的编译顺序是：lamp-util -> lamp-cloud -> lamp-job ！
 
