@@ -103,7 +103,7 @@ Alibaba、SpringBoot、Mybatis、Seata、Sentinel、RabbitMQ、FastDFS/MinIO、S
 | ![预览.png](A极其重要/01-docs/image/业务/nacos.jpg)          | ![预览.png](A极其重要/01-docs/image/业务/工作流.png)     |
 | ![预览.png](A极其重要/01-docs/image/业务/基础平台.png)          | ![预览.png](A极其重要/01-docs/image/业务/开发运营系统.png)   |
 | ![预览.png](A极其重要/01-docs/image/监控/sw拓扑图.png)          | ![预览.png](A极其重要/01-docs/image/监控/sw追踪列表.png)  |
-| ![预览.png](A极其重要/01-docs/image/1000star.png)          | ![预览.png](A极其重要/01-docs/image/软著V2.5.0.jpg)   |
+| ![预览.png](A极其重要/01-docs/image/1000star.png)          | ![预览.png](A极其重要/01-docs/image/灯灯软著证书.png)   |
 
 # 推广
 
