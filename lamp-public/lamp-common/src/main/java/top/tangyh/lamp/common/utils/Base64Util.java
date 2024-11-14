@@ -29,7 +29,7 @@ public class Base64Util {
      */
     public static String[] getClient(String basicHeader) {
         if (StrUtil.isEmpty(basicHeader)) {
-            throw BizException.wrap(JWT_BASIC_INVALID);
+            throw BizException.wrap("客户端参数尚未传递");
         }
 
         return extractClient(basicHeader);

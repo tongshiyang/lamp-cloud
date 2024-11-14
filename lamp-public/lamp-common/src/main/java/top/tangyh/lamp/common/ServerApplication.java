@@ -20,6 +20,7 @@ public class ServerApplication {
         ConfigurableApplicationContext application = SpringApplication.run(primarySource, args);
         Environment env = application.getEnvironment();
         String msg = """
+                
                 ----------------------------------------------------------
                 应用 '{}' 启动成功， JDK版本号：{} ！
                 knife4j文档（支持gateway服务聚合文档）: http://{}:{}{}/doc.html
