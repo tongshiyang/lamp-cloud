@@ -352,15 +352,23 @@ public abstract class AbstractTokenGranter implements TokenGranter {
         tokenSession.setLoginId(defUser.getId());
         if (org.getCurrentTopCompanyId() != null) {
             tokenSession.set(JWT_KEY_TOP_COMPANY_ID, org.getCurrentTopCompanyId());
+        } else {
+            tokenSession.delete(JWT_KEY_TOP_COMPANY_ID);
         }
         if (org.getCurrentCompanyId() != null) {
             tokenSession.set(JWT_KEY_COMPANY_ID, org.getCurrentCompanyId());
+        } else {
+            tokenSession.delete(JWT_KEY_COMPANY_ID);
         }
         if (org.getCurrentDeptId() != null) {
             tokenSession.set(JWT_KEY_DEPT_ID, org.getCurrentDeptId());
+        } else {
+            tokenSession.delete(JWT_KEY_DEPT_ID);
         }
         if (employee.getEmployeeId() != null) {
             tokenSession.set(JWT_KEY_EMPLOYEE_ID, employee.getEmployeeId());
+        } else {
+            tokenSession.delete(JWT_KEY_EMPLOYEE_ID);
         }
 
         LoginResultVO resultVO = new LoginResultVO();

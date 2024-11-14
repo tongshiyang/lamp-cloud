@@ -151,10 +151,10 @@ public class AuthenticationSaInterceptor extends SaInterceptor {
         }
         SaSession tokenSession = StpUtil.getTokenSession();
         Long userId = (Long) tokenSession.getLoginId();
-        long topCompanyId = tokenSession.getLong(JWT_KEY_TOP_COMPANY_ID);
-        long companyId = tokenSession.getLong(JWT_KEY_COMPANY_ID);
-        long deptId = tokenSession.getLong(JWT_KEY_DEPT_ID);
-        long employeeId = tokenSession.getLong(JWT_KEY_EMPLOYEE_ID);
+        Long topCompanyId = (Long) tokenSession.get(JWT_KEY_TOP_COMPANY_ID);
+        Long companyId = (Long) tokenSession.get(JWT_KEY_COMPANY_ID);
+        Long deptId = (Long) tokenSession.get(JWT_KEY_DEPT_ID);
+        Long employeeId = (Long) tokenSession.get(JWT_KEY_EMPLOYEE_ID);
 
         //6, 转换，将 token 解析出来的用户身份 和 解码后的tenant、Authorization 重新封装到请求头
         ContextUtil.setUserId(userId);
