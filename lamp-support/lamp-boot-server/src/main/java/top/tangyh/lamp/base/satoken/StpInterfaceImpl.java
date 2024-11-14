@@ -34,7 +34,7 @@ public class StpInterfaceImpl implements StpInterface {
 
     @Override
     public List<String> getPermissionList(Object loginId, String loginType) {
-        SaSession tokenSession = StpUtil.getSession();
+        SaSession tokenSession = StpUtil.getTokenSession();
         long employeeId = tokenSession.getLong(JWT_KEY_EMPLOYEE_ID);
         // 超管 返回 *
         List<DefResource> list;
@@ -56,7 +56,7 @@ public class StpInterfaceImpl implements StpInterface {
 
     @Override
     public List<String> getRoleList(Object loginId, String loginType) {
-        SaSession tokenSession = StpUtil.getSession();
+        SaSession tokenSession = StpUtil.getTokenSession();
         long employeeId = tokenSession.getLong(JWT_KEY_EMPLOYEE_ID);
         boolean isAdmin = baseRoleService.checkRole(employeeId, RoleConstant.TENANT_ADMIN);
         if (isAdmin) {

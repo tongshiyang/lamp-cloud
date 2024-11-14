@@ -31,7 +31,7 @@ public class StpInterfaceBiz {
     private final BaseRoleService baseRoleService;
 
     public List<String> getPermissionList() {
-        SaSession tokenSession = StpUtil.getSession();
+        SaSession tokenSession = StpUtil.getTokenSession();
         long employeeId = tokenSession.getLong(JWT_KEY_EMPLOYEE_ID);
         // 超管 返回 *
 
@@ -53,7 +53,7 @@ public class StpInterfaceBiz {
     }
 
     public List<String> getRoleList() {
-        SaSession tokenSession = StpUtil.getSession();
+        SaSession tokenSession = StpUtil.getTokenSession();
         long employeeId = tokenSession.getLong(JWT_KEY_EMPLOYEE_ID);
         boolean isAdmin = baseRoleService.checkRole(employeeId, RoleConstant.TENANT_ADMIN);
         if (isAdmin) {

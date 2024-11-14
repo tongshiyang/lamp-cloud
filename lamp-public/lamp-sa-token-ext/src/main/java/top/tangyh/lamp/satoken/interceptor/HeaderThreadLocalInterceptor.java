@@ -60,8 +60,8 @@ public class HeaderThreadLocalInterceptor implements AsyncHandlerInterceptor {
             log.debug("access filter not execute");
             return true;
         }
-//        SaSession tokenSession = StpUtil.getTokenSession();
-        SaSession tokenSession = StpUtil.getSession();
+        SaSession tokenSession = StpUtil.getTokenSession();
+//        SaSession tokenSession = StpUtil.getSession();
 
         if (tokenSession != null) {
             Long userId = (Long) tokenSession.getLoginId();

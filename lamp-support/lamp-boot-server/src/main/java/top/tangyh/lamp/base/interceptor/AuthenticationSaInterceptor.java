@@ -149,7 +149,7 @@ public class AuthenticationSaInterceptor extends SaInterceptor {
             log.debug("access filter not execute");
             return;
         }
-        SaSession tokenSession = StpUtil.getSession();
+        SaSession tokenSession = StpUtil.getTokenSession();
         Long userId = (Long) tokenSession.getLoginId();
         long topCompanyId = tokenSession.getLong(JWT_KEY_TOP_COMPANY_ID);
         long companyId = tokenSession.getLong(JWT_KEY_COMPANY_ID);

@@ -348,7 +348,7 @@ public abstract class AbstractTokenGranter implements TokenGranter {
     protected LoginResultVO buildResult(Employee employee, Org org, DefUser defUser) {
         //此登录接口登录web端
         StpUtil.login(defUser.getId(), "PC");
-        SaSession tokenSession = StpUtil.getSession();
+        SaSession tokenSession = StpUtil.getTokenSession();
         tokenSession.setLoginId(defUser.getId());
         if (org.getCurrentTopCompanyId() != null) {
             tokenSession.set(JWT_KEY_TOP_COMPANY_ID, org.getCurrentTopCompanyId());
