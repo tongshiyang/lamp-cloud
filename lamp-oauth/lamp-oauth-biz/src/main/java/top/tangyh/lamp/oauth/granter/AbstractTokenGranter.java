@@ -442,9 +442,9 @@ public abstract class AbstractTokenGranter implements TokenGranter {
                 }
             }
 
-            employee.setLastCompanyId(companyId);
-            employee.setLastDeptId(deptId);
-            baseEmployeeService.updateAllById(employee);
+            baseEmployeeService.updateOrgInfo(employee.getId(), companyId, deptId);
+        } else {
+            baseEmployeeService.updateOrgInfo(employee.getId(), companyId, deptId);
         }
 
 

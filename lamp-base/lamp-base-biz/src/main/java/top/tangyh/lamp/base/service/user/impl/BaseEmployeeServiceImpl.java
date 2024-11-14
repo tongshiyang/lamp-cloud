@@ -54,7 +54,12 @@ import java.util.List;
 public class BaseEmployeeServiceImpl extends SuperCacheServiceImpl<BaseEmployeeManager, Long, BaseEmployee> implements BaseEmployeeService {
     private final BaseEmployeeRoleRelManager baseEmployeeRoleRelManager;
     private final BaseEmployeeOrgRelManager baseEmployeeOrgRelManager;
-
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public void updateOrgInfo(Long id, Long lastCompanyId, Long lastDeptId) {
+        superManager.update(Wrappers.<BaseEmployee>lambdaUpdate().set(BaseEmployee::getLastCompanyId, lastCompanyId)
+                .set(BaseEmployee::getLastDeptId, lastDeptId).eq(BaseEmployee::getId, id));
+    }
     @Override
     @Transactional(rollbackFor = Exception.class)
     public boolean saveBatch(Collection<BaseEmployee> entityList) {

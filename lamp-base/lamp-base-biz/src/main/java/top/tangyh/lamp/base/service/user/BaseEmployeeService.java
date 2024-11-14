@@ -105,4 +105,12 @@ public interface BaseEmployeeService extends SuperCacheService<Long, BaseEmploye
      * @return
      */
     List<BaseEmployeeResultVO> listEmployeeByUserId(Long userId);
+
+    /**
+     * 修改员工的上次登录单位和部门id
+     * @param id 员工id
+     * @param lastCompanyId 上次登录单位id
+     * @param lastDeptId 上次登录部门id
+     */
+    void updateOrgInfo(Long id, Long lastCompanyId, Long lastDeptId);
 }
