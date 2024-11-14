@@ -384,6 +384,31 @@ public class ProjectUtils {
             writeZip(objectMap, zip, StrUtil.format(POM_FORMAT, moduleName), Paths.get(outputDir, modulePath, POM_NAME).toString());
         }
 
+        // facade层
+        String facadeModule = service + StrUtil.DASHED + FACADE_SERVICE_SUFFIX;
+        String facadeModulePath = Paths.get(outputDir, service, facadeModule).toString();
+        writeDir(zip, facadeModulePath);
+        // 生成 pom.xml
+        writeZip(objectMap, zip, StrUtil.format(POM_FORMAT, FACADE_SERVICE_SUFFIX), Paths.get(facadeModulePath, POM_NAME).toString());
+        for (String moduleName : FACADE_MODULE) {
+            // lamp-base-entity
+            String module = service + StrUtil.DASHED + moduleName;
+            String modulePath = Paths.get(outputDir, service, facadeModule, module).toString();
+
+            // 创建 maven 结构
+            for (String maven : MAVEN_PATH) {
+                String mavenPath = Paths.get(modulePath, maven).toString();
+                writeDir(zip, mavenPath);
+            }
+
+            // 创建 基础包
+            String basePackage = Paths.get(modulePath, SRC_MAIN_JAVA, StrUtil.replace(parent, StrUtil.DOT, File.separator)).toString();
+            writeDir(zip, basePackage);
+
+            // 生成 pom.xml
+            writeZip(objectMap, zip, StrUtil.format(POM_FORMAT, moduleName), Paths.get(modulePath, POM_NAME).toString());
+        }
+
         // 服务根 pom
         writeZip(objectMap, zip, StrUtil.format(POM_FORMAT, ROOT), Paths.get(outputDir, service, POM_NAME).toString());
 
