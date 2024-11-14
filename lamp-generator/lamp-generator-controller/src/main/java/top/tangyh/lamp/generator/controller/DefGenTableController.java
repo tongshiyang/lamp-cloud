@@ -69,21 +69,21 @@ public class DefGenTableController
 
     @Operation(summary = "导入检测", description = "导入检测")
     @PostMapping("/importCheck")
-    @WebLog(value = "'导入检测")
+    @WebLog(value = "导入检测")
     public R<Boolean> importCheck(@RequestBody @Validated List<String> tableNames) {
         return R.success(superService.importCheck(tableNames));
     }
 
     @Operation(summary = "导入表结构", description = "导入表结构")
     @PostMapping(value = "/importTable")
-    @WebLog(value = "'导入表结构", response = false)
+    @WebLog(value = "导入表结构", response = false)
     public R<Boolean> importTable(@RequestBody @Validated DefGenTableImportVO importVO) {
         return R.success(superService.importTable(importVO));
     }
 
     @Operation(summary = "同步表的字段", description = "同步表的字段,新增或删除，不修改原来就存在的字段")
     @PostMapping("/syncField")
-    @WebLog(value = "'同步表的字段")
+    @WebLog(value = "同步表的字段")
     public R<Boolean> syncField(@RequestParam Long id) {
         superService.syncField(id);
         return R.success(true);
@@ -91,21 +91,21 @@ public class DefGenTableController
 
     @Operation(summary = "批量查询", description = "批量查询")
     @PostMapping("/findTableList")
-    @WebLog(value = "'批量查询")
+    @WebLog(value = "批量查询")
     public R<List<DefGenTableResultVO>> findTableList(@RequestBody List<Long> idList) {
         return R.success(superService.findTableList(idList));
     }
 
     @Operation(summary = "预览", description = "预览")
     @PostMapping("/previewCode")
-    @WebLog(value = "'预览")
+    @WebLog(value = "预览")
     public R<Map<String, String>> previewCode(@RequestParam Long id, @RequestParam TemplateEnum template) {
         return R.success(superService.previewCode(id, template));
     }
 
     @Operation(summary = "批量生成代码", description = "批量生成代码")
     @PostMapping("/generatorCode")
-    @WebLog(value = "'批量生成代码")
+    @WebLog(value = "批量生成代码")
     public R<Boolean> generatorCode(@RequestBody @Validated DefGenVO defGenVO) {
         superService.generatorCode(defGenVO);
         return R.success(true);
@@ -113,7 +113,7 @@ public class DefGenTableController
 
     @Operation(summary = "批量下载代码", description = "批量下载代码")
     @GetMapping(value = "/downloadZip", produces = "application/octet-stream")
-    @WebLog(value = "'批量下载代码")
+    @WebLog(value = "批量下载代码")
     public void downloadZip(HttpServletResponse response, @RequestParam List<Long> ids, @RequestParam TemplateEnum template) {
         DownloadVO download = superService.downloadZip(ids, template);
         write(download.getData(), download.getFileName(), response);
@@ -129,14 +129,14 @@ public class DefGenTableController
 
     @Operation(summary = "获取字段模板映射", description = "获取字段模板映射")
     @GetMapping("/getFieldTemplate")
-    @WebLog(value = "'获取字段模板映射")
+    @WebLog(value = "获取字段模板映射")
     public R<Map<String, String>> getFieldTemplate() {
         return R.success(superService.getFieldTemplate());
     }
 
     @Operation(summary = "获取生成代码是否覆盖的默认配置", description = "获取生成代码是否覆盖的默认配置")
     @GetMapping("/getDefFileOverrideStrategy")
-    @WebLog(value = "'获取生成代码是否覆盖的默认配置")
+    @WebLog(value = "获取生成代码是否覆盖的默认配置")
     public R<Map<String, FileOverrideStrategyEnum>> getDefFileOverrideStrategy() {
         return R.success(superService.getDefFileOverrideStrategy());
     }

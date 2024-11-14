@@ -64,7 +64,7 @@ public class DefGenProjectController implements DownloadController<Long, DefGenT
 
     @Operation(summary = "下载项目", description = "下载项目")
     @PostMapping(value = "/download", produces = "application/octet-stream")
-    @WebLog(value = "'下载项目")
+    @WebLog(value = "下载项目")
     public void download(@RequestBody @Validated ProjectGeneratorVO projectGenerator, HttpServletResponse response) {
         DownloadVO download = defGenTableService.download(projectGenerator);
         write(download.getData(), download.getFileName(), response);

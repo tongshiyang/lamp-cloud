@@ -135,14 +135,14 @@ public class DefUserController extends SuperExcelController<DefUserService, Long
 
     @Operation(summary = "查询所有的用户id", description = "查询所有的用户id")
     @PostMapping(value = "/findAllUserId")
-    @WebLog("'查询所有的用户id")
+    @WebLog("查询所有的用户id")
     public R<List<Long>> findAllUserId() {
         return R.success(superService.findUserIdList(null));
     }
 
     @Operation(summary = "查找同一企业下的用户", description = "查找同一企业下的用户")
     @PostMapping(value = "/pageUser")
-    @WebLog("'查找同一企业下的用户")
+    @WebLog("查找同一企业下的用户")
     public R<IPage<DefUserResultVO>> pageUser(@RequestBody @Validated PageParams<DefUserPageQuery> params) {
         IPage<DefUserResultVO> page = superService.pageUser(params);
         echoService.action(page);
@@ -151,7 +151,7 @@ public class DefUserController extends SuperExcelController<DefUserService, Long
 
     @Operation(summary = "邀请员工进入企业前精确查询用户", description = "邀请员工进入企业前精确查询用户")
     @PostMapping(value = "/queryUser")
-    @WebLog("'邀请员工进入企业前精确查询用户")
+    @WebLog("邀请员工进入企业前精确查询用户")
     public R<List<DefUserResultVO>> queryUser(@RequestBody DefUserPageQuery params) {
         return R.success(superService.queryUser(params));
     }
