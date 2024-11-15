@@ -98,4 +98,5 @@ public class ProjectGeneratorVO implements Serializable {
     private Integer serverPort;
     @NotNull(message = "接入Seata")
     private Boolean seata;
+    private String applicationName;
 }

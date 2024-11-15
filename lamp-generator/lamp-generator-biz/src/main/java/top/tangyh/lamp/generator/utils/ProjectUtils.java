@@ -158,6 +158,7 @@ public class ProjectUtils {
         String serviceName = vo.getServiceName();
         String serviceNameUpper = StrUtil.upperFirst(serviceName);
 
+        vo.setApplicationName(StrUtil.format("{}-{}-server", vo.getProjectPrefix(), serviceName));
         Map<String, Object> objectMap = buildObjectMap(vo, databaseProperties, serviceName, serviceNameUpper);
 
         ProjectTypeEnum type = vo.getType();
@@ -285,6 +286,7 @@ public class ProjectUtils {
         objectMap.put("pg", vo);
         objectMap.put("moduleName", vo.getModuleName());
         objectMap.put("serviceName", serviceName);
+        objectMap.put("applicationName", vo.getApplicationName());
         objectMap.put("serviceNameUpper", serviceNameUpper);
         objectMap.put("projectPrefix", vo.getProjectPrefix());
         objectMap.put("datetime", LocalDateTime.now().format(DateTimeFormatter.ofPattern(DateUtils.DEFAULT_DATE_TIME_FORMAT)));
@@ -353,6 +355,7 @@ public class ProjectUtils {
         String serviceName = vo.getServiceName();
         String serviceNameUpper = StrUtil.upperFirst(serviceName);
 
+        vo.setApplicationName(StrUtil.format("{}-{}-server", vo.getProjectPrefix(), serviceName));
         Map<String, Object> objectMap = buildObjectMap(vo, databaseProperties, serviceName, serviceNameUpper);
 
         ProjectTypeEnum type = vo.getType();
