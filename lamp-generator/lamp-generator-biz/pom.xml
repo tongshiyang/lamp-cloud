@@ -39,15 +39,15 @@
         </dependency>
         <dependency>
             <groupId>top.tangyh.basic</groupId>
-            <artifactId>lamp-all</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>top.tangyh.basic</groupId>
             <artifactId>lamp-echo-starter</artifactId>
         </dependency>
         <dependency>
             <groupId>top.tangyh.basic</groupId>
             <artifactId>lamp-mvc</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>top.tangyh.basic</groupId>
+            <artifactId>lamp-log-starter</artifactId>
         </dependency>
         <dependency>
             <groupId>org.freemarker</groupId>
