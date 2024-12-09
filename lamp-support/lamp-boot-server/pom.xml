@@ -143,6 +143,10 @@
     </dependencies>
 
     <build>
+        <filters>
+            <filter>../../src/main/filters/config-${profile.active}.properties</filter>
+        </filters>
+
         <plugins>
             <plugin>
                 <groupId>org.springframework.boot</groupId>

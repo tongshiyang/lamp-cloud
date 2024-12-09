@@ -1,5 +1,0 @@
-logging:
-  file:
-    path: /data_prod/logs
-    name: ${logging.file.path}/${spring.application.name}/root.log
-  config: classpath:logback-spring.xml
