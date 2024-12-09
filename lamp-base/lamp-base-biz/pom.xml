@@ -86,7 +86,7 @@
 
         <dependency>
             <groupId>com.baomidou</groupId>
-            <artifactId>mybatis-plus</artifactId>
+            <artifactId>mybatis-plus-extension</artifactId>
         </dependency>
 
         <!-- 第三方文件存储：华为云存储 -->

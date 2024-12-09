@@ -55,7 +55,7 @@
 
         <dependency>
             <groupId>com.baomidou</groupId>
-            <artifactId>mybatis-plus</artifactId>
+            <artifactId>mybatis-plus-extension</artifactId>
         </dependency>
     </dependencies>
 </project>
