@@ -67,21 +67,21 @@
             <artifactId>spring-cloud-starter-alibaba-seata</artifactId>
             <exclusions>
                 <exclusion>
-                    <groupId>io.seata</groupId>
+                    <groupId>org.apache.seata</groupId>
                     <artifactId>seata-all</artifactId>
                 </exclusion>
                 <exclusion>
-                    <groupId>io.seata</groupId>
+                    <groupId>org.apache.seata</groupId>
                     <artifactId>seata-spring-boot-starter</artifactId>
                 </exclusion>
             </exclusions>
         </dependency>
         <dependency>
-            <groupId>io.seata</groupId>
+            <groupId>org.apache.seata</groupId>
             <artifactId>seata-all</artifactId>
         </dependency>
         <dependency>
-            <groupId>io.seata</groupId>
+            <groupId>org.apache.seata</groupId>
             <artifactId>seata-spring-boot-starter</artifactId>
         </dependency>
         </#if>
