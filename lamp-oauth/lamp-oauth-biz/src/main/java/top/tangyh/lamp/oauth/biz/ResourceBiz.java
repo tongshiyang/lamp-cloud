@@ -282,6 +282,7 @@ public class ResourceBiz {
                 item.setName(parent.getName() + "_" + item.getName());
             }
 
+            meta.setI18nKey(item.getName());
 
             item.setMeta(meta);
 
