@@ -19,6 +19,12 @@
             <groupId>top.tangyh.lamp</groupId>
             <artifactId>lamp-gateway-biz</artifactId>
             <version>${lamp-project.version}</version>
+            <exclusions>
+                <exclusion>
+                    <artifactId>spring-boot-starter-undertow</artifactId>
+                    <groupId>org.springframework.boot</groupId>
+                </exclusion>
+            </exclusions>
         </dependency>
         <dependency>
             <groupId>top.tangyh.lamp</groupId>
