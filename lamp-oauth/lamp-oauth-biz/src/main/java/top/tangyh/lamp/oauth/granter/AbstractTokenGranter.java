@@ -12,11 +12,14 @@
  */
 package top.tangyh.lamp.oauth.granter;
 
+import cn.dev33.satoken.config.SaTokenConfig;
 import cn.dev33.satoken.session.SaSession;
 import cn.dev33.satoken.stp.StpUtil;
+import cn.dev33.satoken.temp.SaTempUtil;
 import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.convert.Convert;
 import cn.hutool.extra.servlet.JakartaServletUtil;
+import cn.hutool.json.JSONObject;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -59,6 +62,7 @@ import static top.tangyh.basic.context.ContextConstants.JWT_KEY_COMPANY_ID;
 import static top.tangyh.basic.context.ContextConstants.JWT_KEY_DEPT_ID;
 import static top.tangyh.basic.context.ContextConstants.JWT_KEY_EMPLOYEE_ID;
 import static top.tangyh.basic.context.ContextConstants.JWT_KEY_TOP_COMPANY_ID;
+import static top.tangyh.basic.context.ContextConstants.JWT_KEY_USER_ID;
 
 /**
  * 验证码TokenGranter
@@ -78,6 +82,8 @@ public abstract class AbstractTokenGranter implements TokenGranter {
     protected BaseEmployeeService baseEmployeeService;
     @Autowired
     protected BaseOrgService baseOrgService;
+    @Autowired
+    protected SaTokenConfig saTokenConfig;
 
 
     @Override
@@ -374,6 +380,16 @@ public abstract class AbstractTokenGranter implements TokenGranter {
         LoginResultVO resultVO = new LoginResultVO();
         resultVO.setToken(StpUtil.getTokenValue());
         resultVO.setExpire(StpUtil.getTokenTimeout());
+
+        JSONObject obj = new JSONObject();
+        obj.set(JWT_KEY_USER_ID, defUser.getId());
+        obj.set(JWT_KEY_TOP_COMPANY_ID, tokenSession.get(JWT_KEY_TOP_COMPANY_ID));
+        obj.set(JWT_KEY_COMPANY_ID, tokenSession.get(JWT_KEY_COMPANY_ID));
+        obj.set(JWT_KEY_DEPT_ID, tokenSession.get(JWT_KEY_DEPT_ID));
+        obj.set(JWT_KEY_EMPLOYEE_ID, tokenSession.get(JWT_KEY_EMPLOYEE_ID));
+
+        resultVO.setRefreshToken(SaTempUtil.createToken(obj.toString(), 2 * saTokenConfig.getTimeout()));
+
 
         log.info("用户：{}  {} 登录成功", defUser.getUsername(), defUser.getNickName());
         return resultVO;

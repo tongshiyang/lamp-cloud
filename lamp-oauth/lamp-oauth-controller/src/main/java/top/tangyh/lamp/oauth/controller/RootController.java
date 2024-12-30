@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 import top.tangyh.basic.base.R;
 import top.tangyh.basic.exception.BizException;
 import top.tangyh.lamp.oauth.enumeration.GrantType;
+import top.tangyh.lamp.oauth.granter.RefreshTokenGranter;
 import top.tangyh.lamp.oauth.granter.TokenGranterBuilder;
 import top.tangyh.lamp.oauth.service.UserInfoService;
 import top.tangyh.lamp.oauth.vo.param.LoginParamVO;
@@ -39,6 +40,7 @@ import top.tangyh.lamp.system.service.tenant.DefUserService;
 public class RootController {
 
     private final TokenGranterBuilder tokenGranterBuilder;
+    private final RefreshTokenGranter refreshTokenGranter;
     private final DefUserService defUserService;
     private final UserInfoService userInfoService;
 
@@ -72,6 +74,12 @@ public class RootController {
     @PostMapping(value = "/anyTenant/login")
     public R<LoginResultVO> login(@Validated @RequestBody LoginParamVO login) throws BizException {
         return tokenGranterBuilder.getGranter(login.getGrantType()).login(login);
+    }
+
+    @Operation(summary = "刷新token[前端 vben5版本 有效]", description = "token过期时，刷新token使用")
+    @PostMapping(value = "/anyTenant/refresh")
+    public R<LoginResultVO> refresh(@RequestParam String refreshToken) throws BizException {
+        return R.success(refreshTokenGranter.refresh(refreshToken));
     }
 
     @Operation(summary = "切换部门")

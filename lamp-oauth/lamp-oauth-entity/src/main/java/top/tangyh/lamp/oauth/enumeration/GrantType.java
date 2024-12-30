@@ -34,10 +34,6 @@ public enum GrantType implements BaseEnum {
      * 手机登录
      */
     MOBILE,
-    /**
-     * 自动刷新token
-     */
-    REFRESH_TOKEN,
     ;
 
     @Schema(description = "描述")
