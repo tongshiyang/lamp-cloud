@@ -115,11 +115,6 @@ public class ProjectUtils {
 
         Set<String> webConfigurationImport = new TreeSet<>();
         webConfigurationImport.add(LogFacade.class.getCanonicalName());
-//        if (ProjectTypeEnum.CLOUD.eq(vo.getType())) {
-//            webConfigurationImport.add(LogFacade.class.getCanonicalName());
-//        } else {
-//            webConfigurationImport.add(BaseOperationLogService.class.getCanonicalName());
-//        }
         webConfigurationImport.add(BaseConfig.class.getCanonicalName());
         webConfigurationImport.add(SysLogListener.class.getCanonicalName());
 
@@ -145,7 +140,23 @@ public class ProjectUtils {
     }
 
     /**
-     * 生成项目结构
+     * 生成项目结构，仅仅生成项目结构和pom.xml，不会生成代码。
+     *
+     * 1. 单体版
+     * - lamp-xx-entity
+     * - lamp-xx-biz
+     * - lamp-xx-controller
+     *
+     * 2. 微服务版
+     * - lamp-xx-entity
+     * - lamp-xx-biz
+     * - lamp-xx-controller
+     * - lamp-xx-facade
+     * - lamp-xx-api
+     * - lamp-xx-boot-impl
+     * - lamp-xx-cloud-impl
+     * - lamp-xx-server
+     *
      *
      * @param vo                 vo
      * @param databaseProperties databaseProperties
@@ -157,7 +168,6 @@ public class ProjectUtils {
     public static void generator(ProjectGeneratorVO vo, DatabaseProperties databaseProperties) {
         String serviceName = vo.getServiceName();
         String serviceNameUpper = StrUtil.upperFirst(serviceName);
-
         vo.setApplicationName(StrUtil.format("{}-{}-server", vo.getProjectPrefix(), serviceName));
         Map<String, Object> objectMap = buildObjectMap(vo, databaseProperties, serviceName, serviceNameUpper);
 
@@ -184,25 +194,27 @@ public class ProjectUtils {
             writePom(objectMap, StrUtil.format(POM_FORMAT, moduleName), modulePath);
         }
 
-        // facade层
-        String facadeModule = service + StrUtil.DASHED + FACADE_SERVICE_SUFFIX;
-        String facadeModulePath = Paths.get(outputDir, service, facadeModule).toString();
-        // 创建目录
-        mkdir(facadeModulePath);
-        // 生成 pom.xml
-        writePom(objectMap, StrUtil.format(POM_FORMAT, FACADE_SERVICE_SUFFIX), facadeModulePath);
-
-        for (String moduleName : FACADE_MODULE) {
-            // lamp-base-entity
-            String module = service + StrUtil.DASHED + moduleName;
-            String modulePath = Paths.get(outputDir, service, facadeModule, module).toString();
-
-            // 创建 maven 结构
-            mkMaven(modulePath);
-            // 创建 基础包
-            mkBasePackage(modulePath, parentPath);
+        if (ProjectTypeEnum.CLOUD.eq(type.getCode())) {
+            // facade层
+            String facadeModule = service + StrUtil.DASHED + FACADE_SERVICE_SUFFIX;
+            String facadeModulePath = Paths.get(outputDir, service, facadeModule).toString();
+            // 创建目录
+            mkdir(facadeModulePath);
             // 生成 pom.xml
-            writePom(objectMap, StrUtil.format(POM_FORMAT, moduleName), modulePath);
+            writePom(objectMap, StrUtil.format(POM_FORMAT, FACADE_SERVICE_SUFFIX), facadeModulePath);
+
+            for (String moduleName : FACADE_MODULE) {
+                // lamp-base-entity
+                String module = service + StrUtil.DASHED + moduleName;
+                String modulePath = Paths.get(outputDir, service, facadeModule, module).toString();
+
+                // 创建 maven 结构
+                mkMaven(modulePath);
+                // 创建 基础包
+                mkBasePackage(modulePath, parentPath);
+                // 生成 pom.xml
+                writePom(objectMap, StrUtil.format(POM_FORMAT, moduleName), modulePath);
+            }
         }
 
         // 服务根 pom
@@ -243,32 +255,27 @@ public class ProjectUtils {
                     vo.getGroupId(), projectPrefix, vo.getServiceName(), projectPrefix);
             Map<String, String> map = MapUtil.of("server.pom.xml", dependencyStr);
             // 项目 lamp-boot-server/pom.xml 的存放位置
-            String zipOutputFile = Paths.get(outputDir, StrUtil.format("{}-boot-server/pom.xml", projectPrefix)).toString();
+            String zipOutputFile = Paths.get(outputDir, StrUtil.format("{}-support/{}-boot-server/pom.xml", projectPrefix, projectPrefix)).toString();
             FileInsertUtil.of(zipOutputFile, map).writeFile();
             log.info("成功覆盖文件={}, 需要执行mvn clean package后,重新启动项目才生效", zipOutputFile);
 
             // 增量追加 application.yml 文件
-            String swaggerStr = StrUtil.format("{}:\n" +
-                                               "        title: {}\n" +
-                                               "        base-package: {}", serviceName, vo.getDescription(), vo.getParent() + StrPool.DOT + vo.getModuleName());
-            String pathStr = StrUtil.format("{}:\n" +
-                                            "        base-path: /api/base", serviceName);
-            Map<String, String> applicationMap = MapUtil.newHashMap();
-            applicationMap.put("docket.swagger", swaggerStr);
-
-            String applicationOutFile = Paths.get(outputDir, StrUtil.format("{}-boot-server/{}/application.yml", projectPrefix, SRC_MAIN_RESOURCE)).toString();
-            FileInsertUtil.of(applicationOutFile, "    ", applicationMap).writeFile();
-
-            applicationMap = MapUtil.newHashMap();
-            pathStr = StrUtil.format(
+            String swaggerStr = StrUtil.format(
                     """
-                                {}:
-                                    base-path: /api/base
-                            """,
-                    serviceName);
-            applicationMap.put("docket.path", pathStr);
-            FileInsertUtil.of(applicationOutFile, "      ", applicationMap).writeFile();
+                                - group: '{}'
+                                  displayName: '{}'
+                                  paths-to-match: '/**'
+                                  packages-to-scan:
+                                    - {}
+                            """
+                    , serviceName, vo.getDescription(), vo.getParent() + StrPool.DOT + vo.getModuleName());
+            Map<String, String> applicationMap = MapUtil.newHashMap();
+            applicationMap.put("springdoc.groupconfigs", swaggerStr);
+
+            String applicationOutFile = Paths.get(outputDir, StrUtil.format("{}-support/{}-boot-server/{}/config/dev/doc.yml", projectPrefix, projectPrefix, SRC_MAIN_RESOURCE)).toString();
+            FileInsertUtil.of(applicationOutFile, "    ", applicationMap).writeFile();
             log.info("成功覆盖文件={}", applicationOutFile);
+
         }
 
         // 增量追加 根pom文件
@@ -388,28 +395,30 @@ public class ProjectUtils {
         }
 
         // facade层
-        String facadeModule = service + StrUtil.DASHED + FACADE_SERVICE_SUFFIX;
-        String facadeModulePath = Paths.get(outputDir, service, facadeModule).toString();
-        writeDir(zip, facadeModulePath);
-        // 生成 pom.xml
-        writeZip(objectMap, zip, StrUtil.format(POM_FORMAT, FACADE_SERVICE_SUFFIX), Paths.get(facadeModulePath, POM_NAME).toString());
-        for (String moduleName : FACADE_MODULE) {
-            // lamp-base-entity
-            String module = service + StrUtil.DASHED + moduleName;
-            String modulePath = Paths.get(outputDir, service, facadeModule, module).toString();
-
-            // 创建 maven 结构
-            for (String maven : MAVEN_PATH) {
-                String mavenPath = Paths.get(modulePath, maven).toString();
-                writeDir(zip, mavenPath);
-            }
-
-            // 创建 基础包
-            String basePackage = Paths.get(modulePath, SRC_MAIN_JAVA, StrUtil.replace(parent, StrUtil.DOT, File.separator)).toString();
-            writeDir(zip, basePackage);
-
+        if (ProjectTypeEnum.CLOUD.eq(type.getCode())) {
+            String facadeModule = service + StrUtil.DASHED + FACADE_SERVICE_SUFFIX;
+            String facadeModulePath = Paths.get(outputDir, service, facadeModule).toString();
+            writeDir(zip, facadeModulePath);
             // 生成 pom.xml
-            writeZip(objectMap, zip, StrUtil.format(POM_FORMAT, moduleName), Paths.get(modulePath, POM_NAME).toString());
+            writeZip(objectMap, zip, StrUtil.format(POM_FORMAT, FACADE_SERVICE_SUFFIX), Paths.get(facadeModulePath, POM_NAME).toString());
+            for (String moduleName : FACADE_MODULE) {
+                // lamp-base-entity
+                String module = service + StrUtil.DASHED + moduleName;
+                String modulePath = Paths.get(outputDir, service, facadeModule, module).toString();
+
+                // 创建 maven 结构
+                for (String maven : MAVEN_PATH) {
+                    String mavenPath = Paths.get(modulePath, maven).toString();
+                    writeDir(zip, mavenPath);
+                }
+
+                // 创建 基础包
+                String basePackage = Paths.get(modulePath, SRC_MAIN_JAVA, StrUtil.replace(parent, StrUtil.DOT, File.separator)).toString();
+                writeDir(zip, basePackage);
+
+                // 生成 pom.xml
+                writeZip(objectMap, zip, StrUtil.format(POM_FORMAT, moduleName), Paths.get(modulePath, POM_NAME).toString());
+            }
         }
 
         // 服务根 pom
@@ -452,7 +461,7 @@ public class ProjectUtils {
                             """
                     , vo.getGroupId(), projectPrefix, vo.getServiceName(), projectPrefix);
 
-            tips.append("1. 请在 lamp-boot-server/pom.xml 中加入以下 代码：\n");
+            tips.append("1. 请在 lamp-boot-server/pom.xml 中加入以下代码：\n");
             tips.append(dependencyStr);
 
             // 增量追加 application.yml 文件
@@ -465,26 +474,17 @@ public class ProjectUtils {
                                     - {}
                             """
                     , serviceName, vo.getDescription(), vo.getParent() + StrPool.DOT + vo.getModuleName());
-            String pathStr = StrUtil.format(
-                    """
-                                {}:
-                                    base-path: /api/base
-                            """
-                    , serviceName);
-
-            tips.append("\n 2. 请在 application.yml 中加入以下 代码：\n");
+            tips.append("\n 2. 请在 doc.yml 中加入以下代码：\n");
             tips.append(swaggerStr);
-            tips.append("\n 3. 请在 application.yml 中加入以下 代码：\n");
-            tips.append(pathStr);
 
         }
 
         // 增量追加 根pom文件
         String moduleStr = StrUtil.format("<module>{}-{}</module>", projectPrefix, serviceName);
-        tips.append("\n 4. 请在 pom.xml 中加入以下 代码：\n");
+        tips.append("\n 3. 请在 pom.xml 中加入以下代码：\n");
         tips.append(moduleStr);
 
-        tips.append("\n 5. 若不知道如何执行上面步骤，请本地启动后直接生成，程序可以直接覆盖文件。无需任何手动操作\n");
+        tips.append("\n 4. 若不知道如何执行上面步骤，请本地启动后直接生成，程序可以直接覆盖文件。无需任何手动操作\n");
 
         try (StringWriter sw = new StringWriter()) {
             sw.append(tips);
