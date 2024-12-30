@@ -56,8 +56,8 @@
             <artifactId>${projectPrefix}-all</artifactId>
         </dependency>
         <dependency>
-            <groupId>top.tangyh.lamp</groupId>
-            <artifactId>lamp-sa-token-ext</artifactId>
+            <groupId>${pg.utilGroupId}</groupId>
+            <artifactId>${projectPrefix}-sa-token-ext</artifactId>
             <version>${r"${"}${projectPrefix}-project.version${r"}"}</version>
         </dependency>
         <#if pg.seata?? && pg.seata>
