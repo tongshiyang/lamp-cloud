@@ -25,7 +25,11 @@
             <artifactId>lamp-system-controller</artifactId>
             <version>${lamp-project.version}</version>
         </dependency>
-
+        <dependency>
+            <groupId>top.tangyh.lamp</groupId>
+            <artifactId>lamp-login-user-cloud-impl</artifactId>
+            <version>${lamp-project.version}</version>
+        </dependency>
         <dependency>
             <groupId>top.tangyh.lamp</groupId>
             <artifactId>lamp-oauth-api</artifactId>
