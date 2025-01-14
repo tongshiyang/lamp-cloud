@@ -15,13 +15,11 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import top.tangyh.basic.boot.config.BaseConfig;
 import top.tangyh.basic.constant.Constants;
 import top.tangyh.basic.log.event.SysLogListener;
-import top.tangyh.basic.utils.BeanPlusUtil;
 import top.tangyh.lamp.base.interceptor.AuthenticationSaInterceptor;
 import top.tangyh.lamp.base.interceptor.TokenContextFilter;
-import top.tangyh.lamp.base.service.system.BaseOperationLogService;
-import top.tangyh.lamp.base.vo.save.system.BaseOperationLogSaveVO;
 import top.tangyh.lamp.common.properties.IgnoreProperties;
 import top.tangyh.lamp.common.properties.SystemProperties;
+import top.tangyh.lamp.oauth.facade.LogFacade;
 import top.tangyh.lamp.system.facade.DefResourceFacade;
 
 /**
@@ -120,8 +118,7 @@ public class BootWebConfiguration extends BaseConfig implements WebMvcConfigurer
      */
     @Bean
     @ConditionalOnExpression("${" + Constants.PROJECT_PREFIX + ".log.enabled:true} && 'DB'.equals('${" + Constants.PROJECT_PREFIX + ".log.type:LOGGER}')")
-
-    public SysLogListener sysLogListener(BaseOperationLogService logApi) {
-        return new SysLogListener(data -> logApi.save(BeanPlusUtil.toBean(data, BaseOperationLogSaveVO.class)));
+    public SysLogListener sysLogListener(LogFacade logApi) {
+        return new SysLogListener(logApi::save);
     }
 }

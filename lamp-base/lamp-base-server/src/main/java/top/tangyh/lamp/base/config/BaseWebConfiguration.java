@@ -6,9 +6,7 @@ import org.springframework.context.annotation.Configuration;
 import top.tangyh.basic.boot.config.BaseConfig;
 import top.tangyh.basic.constant.Constants;
 import top.tangyh.basic.log.event.SysLogListener;
-import top.tangyh.basic.utils.BeanPlusUtil;
-import top.tangyh.lamp.base.service.system.BaseOperationLogService;
-import top.tangyh.lamp.base.vo.save.system.BaseOperationLogSaveVO;
+import top.tangyh.lamp.oauth.facade.LogFacade;
 
 /**
  * 基础服务-Web配置
@@ -24,7 +22,7 @@ public class BaseWebConfiguration extends BaseConfig {
      */
     @Bean
     @ConditionalOnExpression("${" + Constants.PROJECT_PREFIX + ".log.enabled:true} && 'DB'.equals('${" + Constants.PROJECT_PREFIX + ".log.type:LOGGER}')")
-    public SysLogListener sysLogListener(BaseOperationLogService logApi) {
-        return new SysLogListener(data -> logApi.save(BeanPlusUtil.toBean(data, BaseOperationLogSaveVO.class)));
+    public SysLogListener sysLogListener(LogFacade logApi) {
+        return new SysLogListener(logApi::save);
     }
 }
