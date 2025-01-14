@@ -20,7 +20,7 @@ lamp:
     # 密码错误锁定用户时间  除了0表示锁定到今天结束，还支持m、h、d、w、M、y等单位
     passwordErrorLockUserTime: '0'
     # 缓存Key前缀
-    cachePrefix: lc
+    cachePrefix: lb
     # oauth 服务扫描枚举类的包路径
     enumPackage: "top.tangyh"
     # 演示环境启用
