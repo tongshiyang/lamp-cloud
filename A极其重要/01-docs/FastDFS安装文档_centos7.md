@@ -130,7 +130,7 @@ http.tracker_server_port=6080 # tracker 服务器的 http 端口号，必须和t
 执行：`/usr/bin/fdfs_upload_file /etc/fdfs/client.conf /home/zuihou/tools/fastdfs/logo.jpg`
 一切成功的话，会返回一个url，但你访问：
 http://123.249.76.119:6080/group1/M00/00/00/e_lMd1kgST-AQAodAAATIDVcVxc531.jpg
-却无法访问，因为FastDFS目前已不支持http协议，我们在FastDFS 5.0.5的版本更新日志中可以看到这样一条信息：
+却无法访问，因为FastDFS目前已不支持http协议，我们在FastDFS 5.0.6的版本更新日志中可以看到这样一条信息：
 ​    
 * remove embed HTTP support
 所以余大提供了nginx上使用FastDFS的模块fastdfs-nginx-module
@@ -263,7 +263,7 @@ group_count = 1 #设置组的个数，事实上这次只使用了group1
 1. 打开 /etc/fdfs 文件夹，编辑 client.conf 文件，编辑内容如下:
    a. base_path=/home/zuihou/fastdfs/tracker #存放路径
    b. tracker_server=123.249.76.119:22122 #tracker服务器IP地址和端口号
-   c. http.tracker_server_port=6080 #tracker服务器的http端口号，注意，这个配置在fastdfs5.0.5中已经没有用了
+   c. http.tracker_server_port=6080 #tracker服务器的http端口号，注意，这个配置在fastdfs5.0.6中已经没有用了
 
 2. 模拟上传文件，执行如下命令: /usr/bin/fdfs_upload_file /etc/fdfs/client.conf /home/zuihou/tools/fastdfs/logo.jpg
 
