@@ -31,10 +31,11 @@ public class Option {
     private String label;
     private String text;
     private String value;
+    private String color;
 
 
     public static List<Option> mapOptions(BaseEnum[] values) {
         return Arrays.stream(values).map(item -> Option.builder().label(item.getDesc())
-                .text(item.getDesc()).value(item.getCode()).build()).toList();
+                .text(item.getDesc()).value(item.getCode()).color(item.getExtra()).build()).toList();
     }
 }

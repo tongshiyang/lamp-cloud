@@ -1,6 +1,8 @@
 package top.tangyh.lamp.oauth.service;
 
 import top.tangyh.basic.interfaces.echo.LoadService;
+import top.tangyh.lamp.model.vo.result.Option;
+import top.tangyh.lamp.oauth.vo.param.CodeQueryVO;
 import top.tangyh.lamp.system.vo.result.system.DefDictItemResultVO;
 
 import java.util.List;
@@ -22,5 +24,13 @@ public interface DictService extends LoadService {
      * @param dictKeys 字典key
      * @return key： 字典key  value: item list
      */
-    Map<String, List<DefDictItemResultVO>> findDictMapItemListByKey(List<String> dictKeys);
+    Map<String, List<DefDictItemResultVO>> findDictMapByType(List<String> dictKeys);
+
+    List<Option> findEnumByType(CodeQueryVO type);
+
+    Map<String, List<Option>> findEnumMapByType(List<CodeQueryVO> types);
+
+    Map<String, List<Option>> mapOptionByDict(Map<String, List<DefDictItemResultVO>> map, List<CodeQueryVO> codeQueryVO);
+
+    List<Option> mapOptionByDict(Map<String, List<DefDictItemResultVO>> map, CodeQueryVO codeQueryVO);
 }
