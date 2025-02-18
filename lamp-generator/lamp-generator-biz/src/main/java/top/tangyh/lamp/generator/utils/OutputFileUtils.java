@@ -181,49 +181,49 @@ public class OutputFileUtils {
                 modular = getModular(projectPrefix, serviceName, subModularSuffixName);
                 packagePath = buildPath(basePackagePath, packageConfig.getEnumeration(), childPackageName);
                 fileName = enumName + GenCodeConstant.JAVA_SUFFIX;
-                return buildPath(outputDir, service, modular, mavenPath, packagePath, fileName);
+                return buildPath2(outputDir, service, modular, mavenPath, packagePath, fileName);
             case GenCodeConstant.TEMPLATE_PAGE_QUERY:
                 subModularSuffixName = GenCodeConstant.ENTITY_SERVICE_SUFFIX;
                 // 模块
                 modular = getModular(projectPrefix, serviceName, subModularSuffixName);
                 packagePath = buildPath(basePackagePath, packageConfig.getPageQuery(), childPackageName);
                 fileName = getName(genTable.getEntityName(), entityConfig.getFormatPageQueryFileName(), GenCodeConstant.PAGE_QUERY) + GenCodeConstant.JAVA_SUFFIX;
-                return buildPath(outputDir, service, modular, mavenPath, packagePath, fileName);
+                return buildPath2(outputDir, service, modular, mavenPath, packagePath, fileName);
             case GenCodeConstant.TEMPLATE_SAVE_VO:
                 subModularSuffixName = GenCodeConstant.ENTITY_SERVICE_SUFFIX;
                 // 模块
                 modular = getModular(projectPrefix, serviceName, subModularSuffixName);
                 packagePath = buildPath(basePackagePath, packageConfig.getSaveVo(), childPackageName);
                 fileName = getName(genTable.getEntityName(), entityConfig.getFormatSaveVoFileName(), GenCodeConstant.SAVE_VO) + GenCodeConstant.JAVA_SUFFIX;
-                return buildPath(outputDir, service, modular, mavenPath, packagePath, fileName);
+                return buildPath2(outputDir, service, modular, mavenPath, packagePath, fileName);
             case GenCodeConstant.TEMPLATE_UPDATE_VO:
                 subModularSuffixName = GenCodeConstant.ENTITY_SERVICE_SUFFIX;
                 // 模块
                 modular = getModular(projectPrefix, serviceName, subModularSuffixName);
                 packagePath = buildPath(basePackagePath, packageConfig.getUpdateVo(), childPackageName);
                 fileName = getName(genTable.getEntityName(), entityConfig.getFormatUpdateVoFileName(), GenCodeConstant.UPDATE_VO) + GenCodeConstant.JAVA_SUFFIX;
-                return buildPath(outputDir, service, modular, mavenPath, packagePath, fileName);
+                return buildPath2(outputDir, service, modular, mavenPath, packagePath, fileName);
             case GenCodeConstant.TEMPLATE_RESULT_VO:
                 subModularSuffixName = GenCodeConstant.ENTITY_SERVICE_SUFFIX;
                 // 模块
                 modular = getModular(projectPrefix, serviceName, subModularSuffixName);
                 packagePath = buildPath(basePackagePath, packageConfig.getResultVo(), childPackageName);
                 fileName = getName(genTable.getEntityName(), entityConfig.getFormatResultVoFileName(), GenCodeConstant.RESULT_VO) + GenCodeConstant.JAVA_SUFFIX;
-                return buildPath(outputDir, service, modular, mavenPath, packagePath, fileName);
+                return buildPath2(outputDir, service, modular, mavenPath, packagePath, fileName);
             case GenCodeConstant.TEMPLATE_ENTITY_JAVA:
                 subModularSuffixName = GenCodeConstant.ENTITY_SERVICE_SUFFIX;
                 // 模块
                 modular = getModular(projectPrefix, serviceName, subModularSuffixName);
                 packagePath = buildPath(basePackagePath, packageConfig.getEntity(), childPackageName);
                 fileName = genTable.getEntityName() + GenCodeConstant.JAVA_SUFFIX;
-                return buildPath(outputDir, service, modular, mavenPath, packagePath, fileName);
+                return buildPath2(outputDir, service, modular, mavenPath, packagePath, fileName);
             case GenCodeConstant.TEMPLATE_MAPPER:
                 subModularSuffixName = GenCodeConstant.BIZ_SERVICE_SUFFIX;
                 // 模块
                 modular = getModular(projectPrefix, serviceName, subModularSuffixName);
                 packagePath = buildPath(basePackagePath, packageConfig.getMapper(), childPackageName);
                 fileName = getName(genTable.getEntityName(), mapperConfig.getFormatMapperFileName(), GenCodeConstant.MAPPER) + GenCodeConstant.JAVA_SUFFIX;
-                return buildPath(outputDir, service, modular, mavenPath, packagePath, fileName);
+                return buildPath2(outputDir, service, modular, mavenPath, packagePath, fileName);
             case GenCodeConstant.TEMPLATE_XML:
                 mavenPath = GenCodeConstant.SRC_MAIN_RESOURCE;
                 subModularSuffixName = GenCodeConstant.BIZ_SERVICE_SUFFIX;
@@ -231,14 +231,14 @@ public class OutputFileUtils {
                 modular = getModular(projectPrefix, serviceName, subModularSuffixName);
                 packagePath = "mapper_" + modularName + File.separator + "base";
                 fileName = getName(genTable.getEntityName(), mapperConfig.getFormatXmlFileName(), GenCodeConstant.MAPPER) + GenCodeConstant.XML_SUFFIX;
-                return buildPath(outputDir, service, modular, mavenPath, packagePath, fileName);
+                return buildPath2(outputDir, service, modular, mavenPath, packagePath, fileName);
             case GenCodeConstant.TEMPLATE_MANAGER:
                 subModularSuffixName = GenCodeConstant.BIZ_SERVICE_SUFFIX;
                 // 模块
                 modular = getModular(projectPrefix, serviceName, subModularSuffixName);
                 packagePath = buildPath(basePackagePath, packageConfig.getManager(), childPackageName);
                 fileName = getName(genTable.getEntityName(), managerConfig.getFormatManagerFileName(), GenCodeConstant.MANAGER) + GenCodeConstant.JAVA_SUFFIX;
-                return buildPath(outputDir, service, modular, mavenPath, packagePath, fileName);
+                return buildPath2(outputDir, service, modular, mavenPath, packagePath, fileName);
             case GenCodeConstant.TEMPLATE_MANAGER_IMPL:
                 subModularSuffixName = GenCodeConstant.BIZ_SERVICE_SUFFIX;
                 // 模块
@@ -249,14 +249,14 @@ public class OutputFileUtils {
                     packagePath = buildPath(basePackagePath, packageConfig.getManagerImpl(), childPackageName);
                 }
                 fileName = getName(genTable.getEntityName(), managerConfig.getFormatManagerImplFileName(), GenCodeConstant.MANAGER_IMPL) + GenCodeConstant.JAVA_SUFFIX;
-                return buildPath(outputDir, service, modular, mavenPath, packagePath, fileName);
+                return buildPath2(outputDir, service, modular, mavenPath, packagePath, fileName);
             case GenCodeConstant.TEMPLATE_SERVICE:
                 subModularSuffixName = GenCodeConstant.BIZ_SERVICE_SUFFIX;
                 // 模块
                 modular = getModular(projectPrefix, serviceName, subModularSuffixName);
                 packagePath = buildPath(basePackagePath, packageConfig.getService(), childPackageName);
                 fileName = getName(genTable.getEntityName(), serviceConfig.getFormatServiceFileName(), GenCodeConstant.SERVICE) + GenCodeConstant.JAVA_SUFFIX;
-                return buildPath(outputDir, service, modular, mavenPath, packagePath, fileName);
+                return buildPath2(outputDir, service, modular, mavenPath, packagePath, fileName);
             case GenCodeConstant.TEMPLATE_SERVICE_IMPL:
                 subModularSuffixName = GenCodeConstant.BIZ_SERVICE_SUFFIX;
                 // 模块
@@ -267,24 +267,23 @@ public class OutputFileUtils {
                     packagePath = buildPath(basePackagePath, packageConfig.getServiceImpl(), childPackageName);
                 }
                 fileName = getName(genTable.getEntityName(), serviceConfig.getFormatServiceImplFileName(), GenCodeConstant.SERVICE_IMPL) + GenCodeConstant.JAVA_SUFFIX;
-                return buildPath(outputDir, service, modular, mavenPath, packagePath, fileName);
+                return buildPath2(outputDir, service, modular, mavenPath, packagePath, fileName);
             case GenCodeConstant.TEMPLATE_CONTROLLER:
                 subModularSuffixName = GenCodeConstant.CONTROLLER_SERVICE_SUFFIX;
                 // 模块
                 modular = getModular(projectPrefix, serviceName, subModularSuffixName);
                 packagePath = buildPath(basePackagePath, packageConfig.getController(), childPackageName);
                 fileName = getName(genTable.getEntityName(), controllerConfig.getFormatFileName(), GenCodeConstant.CONTROLLER) + GenCodeConstant.JAVA_SUFFIX;
-                return buildPath(outputDir, service, modular, mavenPath, packagePath, fileName);
+                return buildPath2(outputDir, service, modular, mavenPath, packagePath, fileName);
             case GenCodeConstant.TEMPLATE_SQL:
-                return buildPath(outputDir, service, "初始化SQL_" + genTable.getName() + GenCodeConstant.SQL_SUFFIX);
+                return buildPath2(outputDir, service, "初始化SQL_" + genTable.getName() + GenCodeConstant.SQL_SUFFIX);
             default:
                 break;
         }
         return outputDir;
     }
 
-    private static String buildPath(String first, String... more) {
-        String firstPath = StrUtil.replace(first, StrUtil.DOT, File.separator);
+    private static String buildPath2(String first, String... more) {
         String[] paths = new String[more.length];
         for (int i = 0; i < more.length; i++) {
             if (StrUtil.endWithAny(more[i], GenCodeConstant.JAVA_SUFFIX, GenCodeConstant.XML_SUFFIX, GenCodeConstant.SQL_SUFFIX)) {
@@ -294,7 +293,12 @@ public class OutputFileUtils {
             }
             paths[i] = paths[i] == null ? StrPool.EMPTY : paths[i];
         }
-        return Paths.get(firstPath, paths).toString();
+        return Paths.get(first, paths).toString();
+    }
+
+    private static String buildPath(String first, String... more) {
+        String firstPath = StrUtil.replace(first, StrUtil.DOT, File.separator);
+        return buildPath2(firstPath, more);
     }
 
     public static FileOverrideStrategyEnum getFileOverride(GeneratorConfig generatorConfig, Map<String, FileOverrideStrategyEnum> fileOverrideConfig, String templatePath, String enumName) {
@@ -321,8 +325,9 @@ public class OutputFileUtils {
                             fileOverrideConfig.get(GenCodeConstant.TEMPLATE_MANAGER) : defStrategy.getManagerFileOverride();
             case GenCodeConstant.TEMPLATE_MAPPER -> defStrategy.getMapperFileOverride();
             case GenCodeConstant.TEMPLATE_XML -> defStrategy.getXmlFileOverride();
-            case GenCodeConstant.TEMPLATE_ENTITY_JAVA, GenCodeConstant.TEMPLATE_SAVE_VO, GenCodeConstant.TEMPLATE_UPDATE_VO,
-                    GenCodeConstant.TEMPLATE_PAGE_QUERY, GenCodeConstant.TEMPLATE_RESULT_VO ->
+            case GenCodeConstant.TEMPLATE_ENTITY_JAVA, GenCodeConstant.TEMPLATE_SAVE_VO,
+                 GenCodeConstant.TEMPLATE_UPDATE_VO,
+                 GenCodeConstant.TEMPLATE_PAGE_QUERY, GenCodeConstant.TEMPLATE_RESULT_VO ->
                     defStrategy.getEntityFileOverride();
             case GenCodeConstant.TEMPLATE_ENUM -> {
                 Map<String, Class<?>> constantsPackage = generatorConfig.getConstantsPackage();
@@ -333,10 +338,10 @@ public class OutputFileUtils {
             case GenCodeConstant.TEMPLATE_WEB_PRO_SIMPLE_LANG_EN, GenCodeConstant.TEMPLATE_WEB_PRO_SIMPLE_LANG_ZH ->
                     defStrategy.getLangFileOverride();
             case GenCodeConstant.TEMPLATE_WEB_PRO_MAIN_EDIT, GenCodeConstant.TEMPLATE_WEB_PRO_MAIN_JUMP_EDIT,
-                    GenCodeConstant.TEMPLATE_WEB_PRO_MAIN_SUB_INDEX, GenCodeConstant.TEMPLATE_WEB_PRO_MAIN_SUB_DATA,
-                    GenCodeConstant.TEMPLATE_WEB_PRO_SIMPLE_EDIT, GenCodeConstant.TEMPLATE_WEB_PRO_SIMPLE_JUMP_EDIT,
-                    GenCodeConstant.TEMPLATE_WEB_PRO_TREE_EDIT, GenCodeConstant.TEMPLATE_WEB_PRO_TREE_TREE,
-                    GenCodeConstant.TEMPLATE_WEB_PRO_TREE_INDEX ->
+                 GenCodeConstant.TEMPLATE_WEB_PRO_MAIN_SUB_INDEX, GenCodeConstant.TEMPLATE_WEB_PRO_MAIN_SUB_DATA,
+                 GenCodeConstant.TEMPLATE_WEB_PRO_SIMPLE_EDIT, GenCodeConstant.TEMPLATE_WEB_PRO_SIMPLE_JUMP_EDIT,
+                 GenCodeConstant.TEMPLATE_WEB_PRO_TREE_EDIT, GenCodeConstant.TEMPLATE_WEB_PRO_TREE_TREE,
+                 GenCodeConstant.TEMPLATE_WEB_PRO_TREE_INDEX ->
                     CollUtil.isNotEmpty(fileOverrideConfig) && fileOverrideConfig.get(GenCodeConstant.TEMPLATE_WEB_PRO_SIMPLE_EDIT) != null ?
                             fileOverrideConfig.get(GenCodeConstant.TEMPLATE_WEB_PRO_SIMPLE_EDIT) :
                             defStrategy.getIndexEditTreeFileOverride();
