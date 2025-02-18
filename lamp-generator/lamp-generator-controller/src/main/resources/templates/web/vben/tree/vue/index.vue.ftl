@@ -15,7 +15,7 @@
   import { PageWrapper } from '/@/components/Page';
   import {ActionEnum} from '/@/enums/commonEnum';
   import ${table.entityName}Tree from './tree.vue.ftl';
-  import Edit from './edit.vue.ftl';
+  import Edit from './Edit.vue';
 
   export default defineComponent({
     // 若需要开启页面缓存，请将此参数跟菜单名保持一致

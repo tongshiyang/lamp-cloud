@@ -131,7 +131,7 @@
   </#if>
   import { columns, searchFormSchema } from './${table.entityName?uncap_first}.data';
   <#if table.popupType == POPUP_TYPE_MODAL || table.popupType == POPUP_TYPE_DRAWER >
-  import EditModal from './edit.vue.ftl';
+  import EditModal from './Edit.vue';
   </#if>
 
   export default defineComponent({
