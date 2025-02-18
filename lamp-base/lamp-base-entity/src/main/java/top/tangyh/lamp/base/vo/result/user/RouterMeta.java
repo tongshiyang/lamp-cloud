@@ -85,6 +85,25 @@ public class RouterMeta extends LinkedHashMap<String, Object> implements Seriali
         this.put(routerMetaConfig.getFrameSrcKey(), frameSrc);
         return this;
     }
+    @Schema(description = "vben5 内嵌iframe的地址")
+    public String getIframeSrc() {
+        return (String) this.get(routerMetaConfig.getIframeSrcKey());
+    }
+
+    public RouterMeta setIframeSrc(String frameSrc) {
+        this.put(routerMetaConfig.getIframeSrcKey(), frameSrc);
+        return this;
+    }
+
+    @Schema(description = "vben5 外链地址")
+    public String getLink() {
+        return (String) this.get(routerMetaConfig.getLinkKey());
+    }
+
+    public RouterMeta setLink(String frameSrc) {
+        this.put(routerMetaConfig.getLinkKey(), frameSrc);
+        return this;
+    }
 
     @Schema(description = "指定该路由切换的动画名")
     public String getTransitionName() {

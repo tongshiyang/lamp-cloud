@@ -59,4 +59,11 @@ public class RouterMetaConfig implements Serializable {
     private String multiTabKey = "multiTab";
     private String fixedIndexInTabKey = "fixedIndexInTab";
     /* soybean 专用属性 end */
+
+
+    /* vben5 专用属性 start */
+    private String iframeSrcKey = "iframeSrc";
+    private String linkKey = "link";
+//    private String hideInMenuKey = "hideInMenu";
+    /* vben5 专用属性 end */
 }

@@ -5,6 +5,7 @@ import cn.hutool.core.util.StrUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import top.tangyh.basic.context.ContextUtil;
 import top.tangyh.basic.database.mybatis.conditions.Wraps;
 import top.tangyh.basic.jackson.JsonUtil;
 import top.tangyh.basic.utils.BeanPlusUtil;
@@ -39,8 +40,8 @@ import java.util.List;
 @RequiredArgsConstructor
 public class ResourceBiz {
     private final DefResourceService defResourceService;
-    private final BaseRoleService baseRoleService;
     private final DefApplicationService defApplicationService;
+    private final BaseRoleService baseRoleService;
 
     /**
      * 是否所有的子都是视图
@@ -114,6 +115,8 @@ public class ResourceBiz {
             List<VueRouter> tree = TreeUtil.buildTree(routers);
             if (ClientTypeEnum.LAMP_WEB_PRO_SOYBEAN.eq(type)) {
                 forEachTreeBySoybean(tree, 1, null);
+            } else if (ClientTypeEnum.LAMP_WEB_PRO_VBEN5.eq(type)) {
+                forEachTreeByVben5(tree, 1);
             } else {
                 forEachTree(tree, 1);
             }
@@ -128,6 +131,7 @@ public class ResourceBiz {
             RouterMeta meta = new RouterMeta();
             meta.setTitle(defApplication.getName());
             meta.setHideMenu(false);
+            meta.setHideInMenu(false);
             // 是否所有的子都是视图
             meta.setHideChildrenInMenu(false);
 
@@ -186,6 +190,8 @@ public class ResourceBiz {
         List<VueRouter> tree = TreeUtil.buildTree(routers);
         if (ClientTypeEnum.LAMP_WEB_PRO_SOYBEAN.eq(type)) {
             forEachTreeBySoybean(tree, 1, null);
+        } else if (ClientTypeEnum.LAMP_WEB_PRO_VBEN5.eq(type)) {
+            forEachTreeByVben5(tree, 1);
         } else {
             forEachTree(tree, 1);
         }
@@ -239,6 +245,53 @@ public class ResourceBiz {
         }
     }
 
+    private void forEachTreeByVben5(List<VueRouter> tree, int level) {
+        if (CollUtil.isEmpty(tree)) {
+            return;
+        }
+        for (VueRouter item : tree) {
+            log.debug("level={}, label={}", level, item.getName());
+            RouterMeta meta = null;
+            if (StrUtil.isNotEmpty(item.getMetaJson()) && !StrPool.BRACE.equals(item.getMetaJson())) {
+                meta = JsonUtil.parse(item.getMetaJson(), RouterMeta.class);
+            }
+            if (meta == null) {
+                meta = new RouterMeta();
+            }
+            meta.setComponent(item.getComponent());
+            if (StrUtil.isEmpty(meta.getTitle())) {
+                meta.setTitle(item.getName());
+            }
+            meta.setIcon(item.getIcon());
+            if (ResourceOpenWithEnum.INNER_CHAIN.eq(item.getOpenWith())) {
+                //  是否内嵌页面
+                meta.setIframeSrc(item.getComponent());
+                item.setComponent(BizConstant.IFRAME);
+            } else if (ResourceOpenWithEnum.OUTER_CHAIN.eq(item.getOpenWith())) {
+                // 是否外链
+                meta.setLink(item.getPath());
+                item.setComponent(BizConstant.IFRAME);
+            }
+
+            // 视图需要隐藏
+            meta.setHideInMenu(item.getIsHidden() != null ? item.getIsHidden() : false);
+
+            // 是否所有的子都是视图
+            meta.setHideChildrenInMenu(hideChildrenInMenu(item.getChildren()));
+            item.setMeta(meta);
+
+            // 若当前菜单的 子菜单至少有一个菜单，将它设置为 null
+            if (CollUtil.isNotEmpty(item.getChildren()) && !hideChildrenInMenu(item.getChildren())) {
+                item.setComponent(BizConstant.LAYOUT);
+            }
+
+            if (CollUtil.isNotEmpty(item.getChildren())) {
+                forEachTreeByVben5(item.getChildren(), level + 1);
+            }
+        }
+    }
+
+
     private void forEachTreeBySoybean(List<VueRouter> tree, int level, VueRouter parent) {
         if (CollUtil.isEmpty(tree)) {
             return;
@@ -253,20 +306,12 @@ public class ResourceBiz {
                 if (meta == null) {
                     meta = new RouterMeta();
                 }
+                meta.setComponent(item.getComponent());
                 if (StrUtil.isEmpty(meta.getTitle())) {
                     meta.setTitle(item.getName());
                 }
                 meta.setIcon(item.getIcon());
-                if (ResourceOpenWithEnum.INNER_CHAIN.eq(item.getOpenWith())) {
-                    //  是否内嵌页面
-                    meta.setFrameSrc(item.getComponent());
-                    item.setComponent(BizConstant.IFRAME);
-                } else if (ResourceOpenWithEnum.OUTER_CHAIN.eq(item.getOpenWith())) {
-                    // 是否外链
-                    item.setComponent(BizConstant.IFRAME);
 
-                    meta.setHref(item.getComponent());
-                }
                 // 视图需要隐藏
                 meta.setHideInMenu(item.getIsHidden() != null ? item.getIsHidden() : false);
 
@@ -274,15 +319,29 @@ public class ResourceBiz {
                     meta.setActiveMenu(parent.getName());
                 }
 
+                if (ResourceOpenWithEnum.INNER_CHAIN.eq(item.getOpenWith())) {
+                    //  是否内嵌页面
+                    meta.setFrameSrc(item.getComponent());
+                    item.setComponent(BizConstant.IFRAME.toLowerCase());
+                    meta.setComponent("_builtin/iframe/index");
+                } else if (ResourceOpenWithEnum.OUTER_CHAIN.eq(item.getOpenWith())) {
+                    // 是否外链
+                    item.setComponent(BizConstant.IFRAME.toLowerCase());
+                    meta.setHref(item.getPath());
+
+                    item.setPath("/" + BizConstant.IFRAME);
+                }
+
             } else {
                 meta = item.getMeta();
             }
 
+            meta.setI18nKey(item.getName());
+
+
             if (parent != null) {
                 item.setName(parent.getName() + "_" + item.getName());
             }
-
-            meta.setI18nKey(item.getName());
 
             item.setMeta(meta);
 
