@@ -116,7 +116,7 @@ public class ResourceBiz {
             if (ClientTypeEnum.LAMP_WEB_PRO_SOYBEAN.eq(type)) {
                 forEachTreeBySoybean(tree, 1, null);
             } else if (ClientTypeEnum.LAMP_WEB_PRO_VBEN5.eq(type)) {
-                forEachTreeByVben5(tree, 1);
+                forEachTreeByVben5(tree, 1, null);
             } else {
                 forEachTree(tree, 1);
             }
@@ -191,7 +191,7 @@ public class ResourceBiz {
         if (ClientTypeEnum.LAMP_WEB_PRO_SOYBEAN.eq(type)) {
             forEachTreeBySoybean(tree, 1, null);
         } else if (ClientTypeEnum.LAMP_WEB_PRO_VBEN5.eq(type)) {
-            forEachTreeByVben5(tree, 1);
+            forEachTreeByVben5(tree, 1, null);
         } else {
             forEachTree(tree, 1);
         }
@@ -207,6 +207,9 @@ public class ResourceBiz {
             RouterMeta meta = null;
             if (StrUtil.isNotEmpty(item.getMetaJson()) && !StrPool.BRACE.equals(item.getMetaJson())) {
                 meta = JsonUtil.parse(item.getMetaJson(), RouterMeta.class);
+            }
+            if (meta == null && item.getMeta() != null) {
+                meta = item.getMeta();
             }
             if (meta == null) {
                 meta = new RouterMeta();
@@ -245,7 +248,7 @@ public class ResourceBiz {
         }
     }
 
-    private void forEachTreeByVben5(List<VueRouter> tree, int level) {
+    private void forEachTreeByVben5(List<VueRouter> tree, int level, VueRouter parent) {
         if (CollUtil.isEmpty(tree)) {
             return;
         }
@@ -254,6 +257,9 @@ public class ResourceBiz {
             RouterMeta meta = null;
             if (StrUtil.isNotEmpty(item.getMetaJson()) && !StrPool.BRACE.equals(item.getMetaJson())) {
                 meta = JsonUtil.parse(item.getMetaJson(), RouterMeta.class);
+            }
+            if (meta == null && item.getMeta() != null) {
+                meta = item.getMeta();
             }
             if (meta == null) {
                 meta = new RouterMeta();
@@ -276,9 +282,39 @@ public class ResourceBiz {
             // 视图需要隐藏
             meta.setHideInMenu(item.getIsHidden() != null ? item.getIsHidden() : false);
 
+            if (StrUtil.isNotEmpty(meta.getCurrentActiveMenu())) {
+                meta.setActivePath(meta.getCurrentActiveMenu());
+            } else {
+                if (meta.getHideInMenu() && StrUtil.isEmpty(meta.getActivePath()) && parent != null) {
+                    meta.setActivePath(parent.getPath());
+                }
+            }
+
             // 是否所有的子都是视图
             meta.setHideChildrenInMenu(hideChildrenInMenu(item.getChildren()));
             item.setMeta(meta);
+
+            if (CollUtil.isNotEmpty(item.getChildren())) {
+                String component = item.getComponent();
+                List<VueRouter> childrenList = item.getChildren();
+                // 是否所有的子都是视图
+                boolean allView = hideChildrenInMenu(item.getChildren());
+                item.setComponent(BizConstant.LAYOUT);
+                if (allView) {
+                    VueRouter first = new VueRouter();
+                    first.setName(meta.getTitle() + "Child");
+                    first.setPath("");
+                    first.setComponent(component);
+                    RouterMeta firstMeta = BeanPlusUtil.toBean(item.getMeta(), RouterMeta.class);
+                    firstMeta.setActivePath(item.getPath()).setHideInMenu(true).setTitle(meta.getTitle());
+                    first.setMeta(firstMeta);
+                    first.setIsHidden(true);
+                    first.setIcon(firstMeta.getIcon());
+
+                    childrenList.add(0, first);
+                    item.setChildren(childrenList);
+                }
+            }
 
             // 若当前菜单的 子菜单至少有一个菜单，将它设置为 null
             if (CollUtil.isNotEmpty(item.getChildren()) && !hideChildrenInMenu(item.getChildren())) {
@@ -286,7 +322,7 @@ public class ResourceBiz {
             }
 
             if (CollUtil.isNotEmpty(item.getChildren())) {
-                forEachTreeByVben5(item.getChildren(), level + 1);
+                forEachTreeByVben5(item.getChildren(), level + 1, item);
             }
         }
     }
@@ -302,6 +338,9 @@ public class ResourceBiz {
             if (item.getMeta() == null) {
                 if (StrUtil.isNotEmpty(item.getMetaJson()) && !StrPool.BRACE.equals(item.getMetaJson())) {
                     meta = JsonUtil.parse(item.getMetaJson(), RouterMeta.class);
+                }
+                if (meta == null && item.getMeta() != null) {
+                    meta = item.getMeta();
                 }
                 if (meta == null) {
                     meta = new RouterMeta();

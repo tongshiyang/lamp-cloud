@@ -39,6 +39,7 @@ public class RouterMetaConfig implements Serializable {
     private String carryParamKey = "carryParam";
     private String currentActiveMenuKey = "currentActiveMenu";
 
+
     private String hideTabKey = "hideTab";
     private String hideMenuKey = "hideMenu";
     private String hideChildrenInMenuKey = "hideChildrenInMenu";
@@ -64,6 +65,7 @@ public class RouterMetaConfig implements Serializable {
     /* vben5 专用属性 start */
     private String iframeSrcKey = "iframeSrc";
     private String linkKey = "link";
+    private String activePathKey = "activePath";
 //    private String hideInMenuKey = "hideInMenu";
     /* vben5 专用属性 end */
 }

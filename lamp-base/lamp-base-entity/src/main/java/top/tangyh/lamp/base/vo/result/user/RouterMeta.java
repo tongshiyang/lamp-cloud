@@ -226,6 +226,19 @@ public class RouterMeta extends LinkedHashMap<String, Object> implements Seriali
         return this;
     }
 
+
+    @Schema(description = "当前激活的菜单。用于配置详情页时左侧激活的菜单路径 By Soybean")
+    public String getActivePath() {
+        return (String) this.get(routerMetaConfig.getActivePathKey());
+    }
+
+    public RouterMeta setActivePath(String activePath) {
+        this.put(routerMetaConfig.getActivePathKey(), activePath);
+        return this;
+    }
+
+
+
     @Schema(description = "菜单标题 i18n key By Soybean")
     public String getI18nKey() {
         return (String) this.get(routerMetaConfig.getI18nKeyKey());
