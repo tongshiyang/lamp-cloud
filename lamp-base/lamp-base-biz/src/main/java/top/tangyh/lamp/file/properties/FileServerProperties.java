@@ -111,8 +111,16 @@ public class FileServerProperties {
     public static class Local {
         // 桶， 用于隔离文件存储位置
         private String bucket = "dev";
+        // 通过springboot预览时，路径前缀
+        private String pathPatterns = "";
         /**
-         * 文件访问前缀，本地存储时，通常配置为nginx的访问地址
+         * 文件访问前缀，本地存储时，可以通过springboot或者nginx代理后访问文件
+         * 1. springboot代理： 预览地址一定要以 ${pathPatterns} 结尾，可以配置为：
+         *  - http://127.0.0.1:${port}/${pathPatterns}                      # 这里的port可以填写 lamp-base-server/lamp-boot-server 的端口
+         *  - http://127.0.0.1:${port}/api/base/${pathPatterns}             # 这里的port可以填写 lamp-gateway-server的端口
+         *
+         * 2. nginx代理：通常配置为nginx的访问地址， nginx需要单独配置
+         *  - http://${nginx_ip}:${port}/${pathPatterns}                    # nginx_ip：nginx的ip   port：nginx的端口
          */
         private String urlPrefix = "https://static.tangyh.top/file/";
         /**
@@ -224,6 +232,10 @@ public class FileServerProperties {
     public static class MinIo {
         /**
          * minio地址+端口号
+         *
+         * 若你打算使用nginx 代理minio，请阅读文档：
+         * https://www.minio.org.cn/docs/minio/linux/integrations/setup-nginx-proxy-with-minio.html
+         *
          */
         private String endpoint = "http://127.0.0.1:9000";
 

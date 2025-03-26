@@ -3,6 +3,7 @@ package top.tangyh.lamp.file.strategy.impl.local;
 import cn.hutool.core.util.StrUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.io.FileUtils;
+import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
 import top.tangyh.basic.utils.CollHelper;
@@ -25,8 +26,8 @@ import java.util.Map;
  * @date 2020/11/22 5:00 下午
  */
 @Slf4j
-
 @Component("LOCAL")
+@Primary
 public class LocalFileStrategyImpl extends AbstractFileStrategy {
     public LocalFileStrategyImpl(FileServerProperties fileProperties, FileMapper fileMapper) {
         super(fileProperties, fileMapper);
