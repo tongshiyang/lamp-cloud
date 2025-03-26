@@ -56,7 +56,7 @@
             <artifactId>${projectPrefix}-all</artifactId>
         </dependency>
         <dependency>
-            <groupId>${pg.utilGroupId}</groupId>
+            <groupId>${pg.groupId}</groupId>
             <artifactId>${projectPrefix}-sa-token-ext</artifactId>
             <version>${r"${"}${projectPrefix}-project.version${r"}"}</version>
         </dependency>
