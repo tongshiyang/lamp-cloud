@@ -5,7 +5,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>top.tangyh.lamp</groupId>
     <artifactId>lamp-none</artifactId>
-    <version>5.0.6</version>
+    <version>5.0.8</version>
     <packaging>pom</packaging>
     <url>https://github.com/dromara/lamp-cloud</url>
     <name>${project.artifactId}</name>
