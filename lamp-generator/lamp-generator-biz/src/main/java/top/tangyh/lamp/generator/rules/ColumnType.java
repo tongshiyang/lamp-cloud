@@ -42,4 +42,11 @@ public interface ColumnType {
      * @return vxe 组件
      */
     String getVxeComponent();
+
+    /**
+     * soybean 组件
+     *
+     * @return soybean 组件
+     */
+    String getSoyComponent();
 }

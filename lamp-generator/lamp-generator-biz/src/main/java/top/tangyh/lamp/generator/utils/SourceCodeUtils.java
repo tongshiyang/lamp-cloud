@@ -9,7 +9,6 @@ import top.tangyh.basic.database.properties.DatabaseProperties;
 import top.tangyh.basic.utils.ArgumentAssert;
 import top.tangyh.basic.utils.DateUtils;
 import top.tangyh.basic.utils.StrHelper;
-import top.tangyh.lamp.common.constant.DefValConstants;
 import top.tangyh.lamp.generator.config.ControllerConfig;
 import top.tangyh.lamp.generator.config.GeneratorConfig;
 import top.tangyh.lamp.generator.entity.DefGenTable;
