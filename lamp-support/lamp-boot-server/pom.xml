@@ -22,6 +22,11 @@
             <version>${lamp-project.version}</version>
         </dependency>
         <dependency>
+            <groupId>com.alibaba.cloud</groupId>
+            <artifactId>spring-cloud-alibaba-commons</artifactId>
+            <version>${spring-cloud-alibaba-dependencies.version}</version>
+        </dependency>
+        <dependency>
             <groupId>top.tangyh.lamp</groupId>
             <artifactId>lamp-generator-controller</artifactId>
             <version>${lamp-project.version}</version>
@@ -39,6 +44,16 @@
         <dependency>
             <groupId>top.tangyh.lamp</groupId>
             <artifactId>lamp-system-controller</artifactId>
+            <version>${lamp-project.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>top.tangyh.lamp</groupId>
+            <artifactId>lamp-login-user-resolver</artifactId>
+            <version>${lamp-project.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>top.tangyh.lamp</groupId>
+            <artifactId>lamp-data-scope-sdk</artifactId>
             <version>${lamp-project.version}</version>
         </dependency>
 
@@ -64,17 +79,6 @@
             <artifactId>lamp-login-user-boot-impl</artifactId>
             <version>${lamp-project.version}</version>
         </dependency>
-        <dependency>
-            <groupId>top.tangyh.lamp</groupId>
-            <artifactId>lamp-login-user-resolver</artifactId>
-            <version>${lamp-project.version}</version>
-        </dependency>
-
-        <dependency>
-            <groupId>top.tangyh.lamp</groupId>
-            <artifactId>lamp-data-scope-sdk</artifactId>
-            <version>${lamp-project.version}</version>
-        </dependency>
 
         <dependency>
             <groupId>top.tangyh.basic</groupId>
@@ -91,8 +95,8 @@
             <artifactId>sa-token-spring-boot3-starter</artifactId>
             <exclusions>
                 <exclusion>
-                    <artifactId>spring-boot-starter-tomcat</artifactId>
                     <groupId>org.springframework.boot</groupId>
+                    <artifactId>spring-boot-starter-tomcat</artifactId>
                 </exclusion>
             </exclusions>
         </dependency>
@@ -100,24 +104,6 @@
             <groupId>cn.dev33</groupId>
             <artifactId>sa-token-redis-jackson</artifactId>
         </dependency>
-
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-jdbc</artifactId>
-            <exclusions>
-                <exclusion>
-                    <artifactId>HikariCP</artifactId>
-                    <groupId>com.zaxxer</groupId>
-                </exclusion>
-            </exclusions>
-        </dependency>
-
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-freemarker</artifactId>
-        </dependency>
-
-
         <!-- websocket -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -130,6 +116,7 @@
             </exclusions>
         </dependency>
 
+
         <dependency>
             <groupId>org.springframework.cloud</groupId>
             <artifactId>spring-cloud-starter-bootstrap</artifactId>
@@ -140,6 +127,25 @@
             <artifactId>spring-boot-starter-test</artifactId>
             <scope>test</scope>
         </dependency>
+
+<!--        <dependency>-->
+<!--            <groupId>org.springframework.boot</groupId>-->
+<!--            <artifactId>spring-boot-starter-jdbc</artifactId>-->
+<!--            <exclusions>-->
+<!--                <exclusion>-->
+<!--                    <artifactId>HikariCP</artifactId>-->
+<!--                    <groupId>com.zaxxer</groupId>-->
+<!--                </exclusion>-->
+<!--            </exclusions>-->
+<!--        </dependency>-->
+
+<!--        <dependency>-->
+<!--            <groupId>org.springframework.boot</groupId>-->
+<!--            <artifactId>spring-boot-starter-freemarker</artifactId>-->
+<!--        </dependency>-->
+
+
+
     </dependencies>
 
     <build>

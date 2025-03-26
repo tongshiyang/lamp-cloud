@@ -5,9 +5,6 @@ lamp:
   scan:
     enabled: true
     basePackage: top.tangyh
-  webmvc:
-    undertow: true
-    header: false
   system:
     # 登录时否验证密码有效性 （常用于开发环境快速登录）
     verifyPassword: true
@@ -19,6 +16,12 @@ lamp:
     maxPasswordErrorNum: 10
     # 密码错误锁定用户时间  除了0表示锁定到今天结束，还支持m、h、d、w、M、y等单位
     passwordErrorLockUserTime: '0'
+    # log记录 top.tangyh.lamp.controller/service/biz包下 参数
+    recordLamp: false
+    # log记录 top.tangyh.lamp.controller/service/biz包下 所有方法的参数
+    recordLampArgs: true
+    # log记录 top.tangyh.lamp.controller/service/biz包下 所有方法的返回值
+    recordLampResult: true
     # 缓存Key前缀
     cachePrefix: lb
     # oauth 服务扫描枚举类的包路径
@@ -45,6 +48,8 @@ lamp:
     authEnabled: true
     # 前端校验按钮 是否区分大小写
     caseSensitive: false
+    # 系统没有配置某个URI时，是否允许访问
+    notConfigUriAllow: false
     anyone: # 请求中 需要携带Tenant 且 需要携带Token(不需要登录)，但不需要验证uri权限
       ALL:
         - /anyone/**
@@ -74,6 +79,9 @@ lamp:
       maximumSize: 1000
       refreshWriteTime: 2
       refreshThreadPoolSize: 10
+  webmvc:
+    undertow: true
+    header: false
   log: # 详情看：OptLogProperties
     # 开启记录操作日志
     enabled: true
@@ -134,6 +142,14 @@ lamp:
       secretKey: "2"
       bucket: "zuihou_admin_cloud"
   generator:
+    outputDir: /Users/tangyh/github/lamp-cloud
+    frontOutputDir: /Users/tangyh/github/lamp-web
+    frontSoyOutputDir: /Users/tangyh/github/lamp-web-pro-soybean
+    frontVben5OutputDir: /Users/tangyh/github/lamp-web-vben-max/apps/web-antd
+    # 作者
+    author: zuihou
+    # 默认项目
+    projectType: BOOT
     #  # 去除表前缀
     #  tablePrefix:
     #    - xxx_
@@ -233,10 +249,9 @@ lamp:
       FileType: top.tangyh.lamp.model.enumeration.base.FileType
       DateType: top.tangyh.lamp.model.enumeration.base.DateType
       DictClassifyEnum: top.tangyh.lamp.model.enumeration.system.DictClassifyEnum
+      DefTenantStatusEnum: top.tangyh.lamp.model.enumeration.system.DefTenantStatusEnum
       DataTypeEnum: top.tangyh.lamp.model.enumeration.system.DataTypeEnum
-
-
-
+      TenantConnectTypeEnum: top.tangyh.lamp.model.enumeration.system.TenantConnectTypeEnum
 
 spring:
   application:
@@ -265,18 +280,6 @@ spring:
     multipart:
       max-file-size: 512MB
       max-request-size: 512MB
-  freemarker:
-    suffix: .ftl
-    cache: false
-    charset: UTF-8
-    contentType: text/html
-    requestContextAttribute: ctx
-    templateEncoding: UTF-8
-    templateLoaderPath: classpath:/
-    settings:
-      defaultEncoding: UTF-8
-      url_escaping_charset: UTF-8
-      locale: zh_CN
 
 server:
   # 优雅停机
