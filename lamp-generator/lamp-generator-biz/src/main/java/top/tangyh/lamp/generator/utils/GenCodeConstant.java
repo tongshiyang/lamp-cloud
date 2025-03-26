@@ -136,6 +136,27 @@ public interface GenCodeConstant {
 
     String TEMPLATE_WEB_SOYBEAN_MAIN_INDEX = "/templates/web/soybean/mainSub/vue/index.vue.ftl";
 
+
+    /** API请求页 */
+    String TEMPLATE_WEB_VBEN5_SIMPLE_API = "/templates/web/vben5/simple/typescript/api.ts.ftl";
+    /** API泛型Model页 */
+    String TEMPLATE_WEB_VBEN5_SIMPLE_MODEL = "/templates/web/vben5/simple/typescript/model.ts.ftl";
+    /** 多语言英文 */
+    String TEMPLATE_WEB_VBEN5_SIMPLE_LANG_EN = "/templates/web/vben5/simple/typescript/langEn.ts.ftl";
+    /** 多语言中文 */
+    String TEMPLATE_WEB_VBEN5_SIMPLE_LANG_ZH = "/templates/web/vben5/simple/typescript/langZh.ts.ftl";
+    /** 单表 tsx */
+    String TEMPLATE_WEB_VBEN5_SIMPLE_CRUD = "/templates/web/vben5/simple/typescript/crud.tsx.ftl";
+    String TEMPLATE_WEB_VBEN5_SIMPLE_INDEX = "/templates/web/vben5/simple/vue/index.vue.ftl";
+    String TEMPLATE_WEB_VBEN5_SIMPLE_JUMP_EDIT = "/templates/web/vben5/simple/vue/edit.vue.ftl";
+    String TEMPLATE_WEB_VBEN5_TREE_INDEX = "/templates/web/vben5/tree/vue/index.vue.ftl";
+    String TEMPLATE_WEB_VBEN5_TREE_TREE = "/templates/web/vben5/tree/vue/tree.vue.ftl";
+    String TEMPLATE_WEB_VBEN5_TREE_EDIT = "/templates/web/vben5/tree/vue/edit.vue.ftl";
+    String TEMPLATE_WEB_VBEN5_TREE_CRUD = "/templates/web/vben5/tree/typescript/crud.tsx.ftl";
+
+    String TEMPLATE_WEB_VBEN5_MAIN_INDEX = "/templates/web/vben5/mainSub/vue/index.vue.ftl";
+
+
     String POM_FORMAT = "/templates/project/xml/{}.pom.ftl";
     String JAVA_FORMAT = "/templates/project/java/{}.ftl";
     String RESOURCE_YML_FORMAT = "/templates/project/yml/{}.ftl";

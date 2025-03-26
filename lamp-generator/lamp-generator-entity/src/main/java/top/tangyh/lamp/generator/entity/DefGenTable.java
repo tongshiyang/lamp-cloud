@@ -178,11 +178,23 @@ public class DefGenTable extends Entity<Long> {
     @TableField(value = "output_dir", condition = LIKE)
     private String outputDir;
     /**
-     * 前端生成路径;
+     * 前端(Vben)生成路径;
      * （不填默认项目路径）
      */
     @TableField(value = "front_output_dir", condition = LIKE)
     private String frontOutputDir;
+    /**
+     * 前端(Soybean)生成路径;
+     * （不填默认项目路径）
+     */
+    @TableField(value = "front_soy_output_dir", condition = LIKE)
+    private String frontSoyOutputDir;
+    /**
+     * 前端(vben5)生成路径;
+     * （不填默认项目路径）
+     */
+    @TableField(value = "front_vben5_output_dir", condition = LIKE)
+    private String frontVben5OutputDir;
     /**
      * 使用的模板;
      * #TplEnum{SIMPLE:01,单表;TREE:02,树结构;MAIN_SUB:03,主从结构}

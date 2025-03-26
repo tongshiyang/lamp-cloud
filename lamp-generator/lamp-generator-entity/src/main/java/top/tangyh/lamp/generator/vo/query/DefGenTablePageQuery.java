@@ -190,8 +190,13 @@ public class DefGenTablePageQuery implements Serializable {
     /**
      * 前端生成路径（不填默认项目路径）
      */
-    @Schema(description = "前端生成路径")
+    @Schema(description = "前端(Vben)生成路径")
     private String frontOutputDir;
+
+    @Schema(description = "前端(Soybean)生成路径")
+    private String frontSoyOutputDir;
+    @Schema(description = "前端(vben5)生成路径")
+    private String frontVben5OutputDir;
     /**
      * 新增按钮权限编码
      */

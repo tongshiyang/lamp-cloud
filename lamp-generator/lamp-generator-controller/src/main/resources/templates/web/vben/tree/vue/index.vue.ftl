@@ -14,7 +14,7 @@
   import { defineComponent, ref, unref } from 'vue';
   import { PageWrapper } from '/@/components/Page';
   import {ActionEnum} from '/@/enums/commonEnum';
-  import ${table.entityName}Tree from './tree.vue.ftl';
+  import ${table.entityName}Tree from './Tree.vue';
   import Edit from './Edit.vue';
 
   export default defineComponent({

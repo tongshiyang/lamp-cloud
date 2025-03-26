@@ -188,6 +188,10 @@ public class DefGenTableColumnUpdateVO implements Serializable {
     @NotEmpty(message = "请填写VXE显示组件")
     private String vxeComponent;
 
+    @Schema(description = "Soybean显示类型（文本框、文本域、下拉框、复选框、单选框、日期控件）")
+    @Size(max = 255, message = "Soybean显示类型（文本框、文本域、下拉框、复选框、单选框、日期控件）长度不能超过{max}")
+    private String soyComponent;
+
     /**
      * 字典类型
      */

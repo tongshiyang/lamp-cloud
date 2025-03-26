@@ -26,13 +26,23 @@ import java.util.Map;
 public class GeneratorConfig {
     public static final String PREFIX = Constants.PROJECT_PREFIX + ".generator";
     /**
-     * 后端工程 lamp-cloud-pro-datasource-column 代码生成跟路径
+     * 后端工程 lamp-datasource-max 代码生成跟路径
      */
     public String outputDir;
     /**
-     * 前端工程lamp-web-plus 跟路径
+     * 前端工程lamp-web-pro 跟路径
      */
     public String frontOutputDir;
+    /**
+     * 前端工程lamp-web-pro-soybean 跟路径
+     */
+    public String frontSoyOutputDir;
+    /**
+     * 前端工程lamp-web-max-vben 跟路径
+     */
+    public String frontVben5OutputDir;
+
+
     /** 默认项目 */
     public ProjectTypeEnum projectType = ProjectTypeEnum.CLOUD;
 

@@ -22,6 +22,7 @@ import top.tangyh.lamp.generator.converts.TypeConverts;
 import top.tangyh.lamp.generator.entity.DefGenTable;
 import top.tangyh.lamp.generator.entity.DefGenTableColumn;
 import top.tangyh.lamp.generator.enumeration.ComponentEnum;
+import top.tangyh.lamp.generator.enumeration.SoyComponentEnum;
 import top.tangyh.lamp.generator.enumeration.SqlConditionEnum;
 import top.tangyh.lamp.generator.enumeration.VxeComponentEnum;
 import top.tangyh.lamp.generator.rules.ColumnType;
@@ -72,6 +73,8 @@ public class GenUtils {
         genTable.setGenType(generatorConfig.getGenType());
         genTable.setOutputDir(generatorConfig.getOutputDir());
         genTable.setFrontOutputDir(generatorConfig.getFrontOutputDir());
+        genTable.setFrontSoyOutputDir(generatorConfig.getFrontSoyOutputDir());
+        genTable.setFrontVben5OutputDir(generatorConfig.getFrontVben5OutputDir());
         genTable.setEntitySuperClass(entityConfig.getEntitySuperClass());
         genTable.setSuperClass(generatorConfig.getSuperClass());
 
@@ -184,6 +187,7 @@ public class GenUtils {
             tableColumn.setTsType("string");
 
             tableColumn.setComponent(ComponentEnum.PLUS_API_RADIO_GROUP.getValue());
+            tableColumn.setSoyComponent(SoyComponentEnum.DICT_RADIO.getValue());
             tableColumn.setVxeComponent(VxeComponentEnum.$RADIO.getValue());
             tableColumn.setQueryType(SqlConditionEnum.EQUAL);
         } else {
@@ -208,18 +212,23 @@ public class GenUtils {
             */
             String component = columnType.getComponent();
             String vxeComponent = columnType.getVxeComponent();
+            String soyComponent = columnType.getSoyComponent();
             if (StrUtil.containsIgnoreCase(tableColumn.getJavaField(), "password")) {
                 component = ComponentEnum.PLUS_INPUT_PASSWORD.getValue();
+                soyComponent = SoyComponentEnum.PASSWORD.getValue();
             } else if (StrUtil.containsIgnoreCase(tableColumn.getJavaField(), "remark")) {
                 component = ComponentEnum.PLUS_INPUT_TEXT_AREA.getValue();
                 vxeComponent = VxeComponentEnum.$TEXTAREA.getValue();
+                soyComponent = SoyComponentEnum.TEXTAREA.getValue();
             }
             if (StrUtil.isNotEmpty(tableColumn.getEchoStr()) || StrUtil.isNotEmpty(tableColumn.getEnumStr())) {
                 component = ComponentEnum.PLUS_API_RADIO_GROUP.getValue();
                 vxeComponent = VxeComponentEnum.$RADIO.getValue();
+                soyComponent = SoyComponentEnum.DICT_RADIO.getValue();
             }
             tableColumn.setComponent(component);
             tableColumn.setVxeComponent(vxeComponent);
+            tableColumn.setSoyComponent(soyComponent);
         }
 
         tableColumn.setTableId(genTable.getId());

@@ -134,6 +134,10 @@ public class DefGenTableColumnSaveVO implements Serializable {
     @Size(max = 255, message = "VXE显示类型（文本框、文本域、下拉框、复选框、单选框、日期控件）长度不能超过{max}")
     private String vxeComponent;
 
+    @Schema(description = "Soybean显示类型（文本框、文本域、下拉框、复选框、单选框、日期控件）")
+    @Size(max = 255, message = "Soybean显示类型（文本框、文本域、下拉框、复选框、单选框、日期控件）长度不能超过{max}")
+    private String soyComponent;
+
     /**
      * 枚举类型
      */

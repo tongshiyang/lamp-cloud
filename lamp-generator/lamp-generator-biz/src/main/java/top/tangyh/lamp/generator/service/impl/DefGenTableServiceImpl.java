@@ -529,6 +529,10 @@ public class DefGenTableServiceImpl extends SuperServiceImpl<DefGenTableManager,
             DefGenTable genTable = previewCheck(id);
             if (TemplateEnum.BACKEND.eq(template)) {
                 ArgumentAssert.notEmpty(genTable.getOutputDir(), "请先配置代码生成的绝对路径");
+            } else if (TemplateEnum.WEB_SOYBEAN.eq(template)) {
+                ArgumentAssert.notEmpty(genTable.getFrontSoyOutputDir(), "请先配置代码生成的绝对路径");
+            } else if (TemplateEnum.WEB_VBEN5.eq(template)) {
+                ArgumentAssert.notEmpty(genTable.getFrontVben5OutputDir(), "请先配置代码生成的绝对路径");
             } else {
                 ArgumentAssert.notEmpty(genTable.getFrontOutputDir(), "请先配置代码生成的绝对路径");
             }

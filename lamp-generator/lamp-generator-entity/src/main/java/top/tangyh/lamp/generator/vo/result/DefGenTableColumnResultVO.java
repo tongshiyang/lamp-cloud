@@ -155,11 +155,15 @@ public class DefGenTableColumnResultVO extends Entity<Long> implements Serializa
      * 显示组件;
      * （文本框、文本域、下拉框、复选框、单选框、日期控件）
      */
-    @Schema(description = "显示组件")
+    @Schema(description = "Vben显示组件")
     private String component;
 
     @Schema(description = "Vxe显示组件")
     private String vxeComponent;
+
+    @Schema(description = "Soybean显示组件（文本框、文本域、下拉框、复选框、单选框、日期控件）")
+    private String soyComponent;
+
     /**
      * 字典类型
      */

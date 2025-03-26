@@ -28,9 +28,14 @@ public enum TemplateEnum implements BaseEnum {
      */
     BACKEND("01", "后端"),
     /**
-     * 前端
+     * 前端 Vben版
      */
     WEB_PLUS("02", "前端"),
+    /**
+     * 前端 Soybean版
+     */
+    WEB_SOYBEAN("03", "前端(Soybean)"),
+    WEB_VBEN5("04", "前端(vben5)"),
     ;
 
     private String value;

@@ -218,9 +218,17 @@ public class DefGenTableUpdateVO implements Serializable {
      * 前端生成路径;
      * （不填默认项目路径）
      */
-    @Schema(description = "前端生成路径")
-    @Size(max = 255, message = "前端生成路径长度不能超过{max}")
+    @Schema(description = "前端(Vben)生成路径")
+    @Size(max = 255, message = "前端(Vben)生成路径长度不能超过{max}")
     private String frontOutputDir;
+
+    @Schema(description = "前端(Soybean)生成路径")
+    @Size(max = 255, message = "前端(Soybean)生成路径长度不能超过{max}")
+    private String frontSoyOutputDir;
+    @Schema(description = "前端(vben5)生成路径")
+    @Size(max = 255, message = "前端(vben5)生成路径长度不能超过{max}")
+    private String frontVben5OutputDir;
+
     /**
      * 使用的模板;
      * #TplEnum{SIMPLE:01,单表;TREE:02,树结构;MAIN_SUB:03,主从结构}

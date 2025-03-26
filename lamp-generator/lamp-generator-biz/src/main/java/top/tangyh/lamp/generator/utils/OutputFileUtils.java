@@ -48,6 +48,10 @@ public class OutputFileUtils {
     public static String getZipOutputFile(GeneratorConfig generatorConfig, DefGenTable genTable, DefGenTable subTable, String templatePath, String enumName, TemplateEnum template) {
         if (TemplateEnum.BACKEND.eq(template)) {
             return getOutputFile(generatorConfig, genTable, templatePath, false, enumName);
+        } else if (TemplateEnum.WEB_SOYBEAN.eq(template)) {
+            return getSoybeanOutputFile(genTable, subTable, templatePath, false);
+        } else if (TemplateEnum.WEB_VBEN5.eq(template)) {
+            return getVben5OutputFile(genTable, subTable, templatePath, false);
         } else {
             return getFrontOutputFile(genTable, subTable, templatePath, false);
         }
@@ -70,10 +74,116 @@ public class OutputFileUtils {
     public static String getOutputFile(GeneratorConfig generatorConfig, DefGenTable genTable, DefGenTable subTable, String templatePath, String enumName, TemplateEnum template) {
         if (TemplateEnum.BACKEND.eq(template)) {
             return getOutputFile(generatorConfig, genTable, templatePath, true, enumName);
+        } else if (TemplateEnum.WEB_SOYBEAN.eq(template)) {
+            return getSoybeanOutputFile(genTable, subTable, templatePath, true);
+        } else if (TemplateEnum.WEB_VBEN5.eq(template)) {
+            return getVben5OutputFile(genTable, subTable, templatePath, true);
         } else {
             return getFrontOutputFile(genTable, subTable, templatePath, true);
         }
     }
+
+    /**
+     * 获取 lamp-web-pro-soybean 项目的文件生成路径
+     *
+     * @param genTable     表配置
+     * @param subTable     从表配置
+     * @param templatePath 生成代码的模板路径
+     * @param isAbsolute   是否绝对地址
+     * @return
+     */
+    private static String getSoybeanOutputFile(DefGenTable genTable, DefGenTable subTable, String templatePath, boolean isAbsolute) {
+        String outputDir = genTable.getFrontSoyOutputDir();
+        String plusApplicationName = genTable.getPlusApplicationName();
+        String plusModuleName = genTable.getPlusModuleName();
+        String entityName = StrUtil.lowerFirst(genTable.getEntityName());
+
+        String frontOutputFile;
+        if (templatePath.equals(GenCodeConstant.TEMPLATE_WEB_SOYBEAN_SIMPLE_API)) {
+            frontOutputFile = StrUtil.format("src/service/fetch/{}/{}/{}.ts", plusApplicationName, plusModuleName, entityName);
+        } else if (templatePath.equals(GenCodeConstant.TEMPLATE_WEB_SOYBEAN_SIMPLE_MODEL)) {
+            frontOutputFile = StrUtil.format("src/service/fetch/{}/{}/model/{}Model.ts", plusApplicationName, plusModuleName, entityName);
+        } else if (templatePath.equals(GenCodeConstant.TEMPLATE_WEB_SOYBEAN_SIMPLE_LANG_EN)) {
+            frontOutputFile = StrUtil.format("src/locales/langs/en-US/{}/{}/{}.ts", plusApplicationName, plusModuleName, entityName);
+        } else if (templatePath.equals(GenCodeConstant.TEMPLATE_WEB_SOYBEAN_SIMPLE_LANG_ZH)) {
+            frontOutputFile = StrUtil.format("src/locales/langs/zh-CN/{}/{}/{}.ts", plusApplicationName, plusModuleName, entityName);
+        } else if (StrUtil.equalsAny(templatePath, GenCodeConstant.TEMPLATE_WEB_SOYBEAN_SIMPLE_CRUD, GenCodeConstant.TEMPLATE_WEB_SOYBEAN_TREE_CRUD)) {
+            frontOutputFile = StrUtil.format("src/views/{}/{}/{}/data/crud.tsx", plusApplicationName, plusModuleName, entityName);
+        } else if (
+                StrUtil.equalsAny(templatePath, GenCodeConstant.TEMPLATE_WEB_SOYBEAN_MAIN_INDEX, GenCodeConstant.TEMPLATE_WEB_SOYBEAN_SIMPLE_INDEX, GenCodeConstant.TEMPLATE_WEB_SOYBEAN_TREE_INDEX)
+        ) {
+            frontOutputFile = StrUtil.format("src/views/{}/{}/{}/index.vue", plusApplicationName, plusModuleName, entityName);
+        } else if (templatePath.equals(GenCodeConstant.TEMPLATE_WEB_SOYBEAN_TREE_EDIT)) {
+            frontOutputFile = StrUtil.format("src/views/{}/{}/{}/modules/Edit.vue", plusApplicationName, plusModuleName, entityName);
+        } else if (templatePath.equals(GenCodeConstant.TEMPLATE_WEB_SOYBEAN_TREE_TREE)) {
+            frontOutputFile = StrUtil.format("src/views/{}/{}/{}/modules/Tree.vue", plusApplicationName, plusModuleName, entityName);
+        } else if (templatePath.equals(GenCodeConstant.TEMPLATE_WEB_SOYBEAN_SIMPLE_JUMP_EDIT)) {
+            frontOutputFile = StrUtil.format("src/views/{}/{}/{}/modules/Edit.vue", plusApplicationName, plusModuleName, entityName);
+        }
+
+//        else if (templatePath.equals(GenCodeConstant.TEMPLATE_WEB_SOYBEAN_MAIN_EDIT) || templatePath.equals(GenCodeConstant.TEMPLATE_WEB_SOYBEAN_MAIN_JUMP_EDIT) || templatePath.equals(GenCodeConstant.TEMPLATE_WEB_SOYBEAN_SIMPLE_EDIT) || templatePath.equals(GenCodeConstant.TEMPLATE_WEB_SOYBEAN_SIMPLE_JUMP_EDIT) || templatePath.equals(GenCodeConstant.TEMPLATE_WEB_SOYBEAN_TREE_EDIT)) {
+//            frontOutputFile = StrUtil.format("src/views/{}/{}/{}/Edit.vue", plusApplicationName, plusModuleName, entityName);
+//        } else if (templatePath.equals(GenCodeConstant.TEMPLATE_WEB_SOYBEAN_MAIN_SUB_INDEX)) {
+//            String subEntityName = StrUtil.lowerFirst(subTable.getEntityName());
+//            frontOutputFile = StrUtil.format("src/views/{}/{}/{}/{}/index.vue", plusApplicationName, plusModuleName, entityName, subEntityName);
+//        } else if (templatePath.equals(GenCodeConstant.TEMPLATE_WEB_SOYBEAN_MAIN_SUB_DATA)) {
+//            String subEntityName = StrUtil.lowerFirst(subTable.getEntityName());
+//            frontOutputFile = StrUtil.format("src/views/{}/{}/{}/{}/{}.data.tsx", plusApplicationName, plusModuleName, entityName, subEntityName, subEntityName);
+//        }
+        else {
+            return outputDir;
+        }
+        if (isAbsolute) {
+            frontOutputFile = outputDir + File.separator + frontOutputFile;
+        }
+        return Paths.get(frontOutputFile).toString();
+    }
+
+    /**
+     * 获取 lamp-web-max 项目的文件生成路径
+     *
+     * @param genTable     表配置
+     * @param subTable     从表配置
+     * @param templatePath 生成代码的模板路径
+     * @param isAbsolute   是否绝对地址
+     * @return
+     */
+    private static String getVben5OutputFile(DefGenTable genTable, DefGenTable subTable, String templatePath, boolean isAbsolute) {
+        String outputDir = genTable.getFrontVben5OutputDir();
+        String plusApplicationName = genTable.getPlusApplicationName();
+        String plusModuleName = genTable.getPlusModuleName();
+        String entityName = StrUtil.lowerFirst(genTable.getEntityName());
+
+        String frontOutputFile;
+        if (templatePath.equals(GenCodeConstant.TEMPLATE_WEB_VBEN5_SIMPLE_API)) {
+            frontOutputFile = StrUtil.format("src/api/{}/{}/{}.ts", plusApplicationName, plusModuleName, entityName);
+        } else if (templatePath.equals(GenCodeConstant.TEMPLATE_WEB_VBEN5_SIMPLE_MODEL)) {
+            frontOutputFile = StrUtil.format("src/api/{}/{}/model/{}Model.ts", plusApplicationName, plusModuleName, entityName);
+        } else if (templatePath.equals(GenCodeConstant.TEMPLATE_WEB_VBEN5_SIMPLE_LANG_EN)) {
+            frontOutputFile = StrUtil.format("src/locales/langs/en-US/{}/{}/{}.json", plusApplicationName, plusModuleName, entityName);
+        } else if (templatePath.equals(GenCodeConstant.TEMPLATE_WEB_VBEN5_SIMPLE_LANG_ZH)) {
+            frontOutputFile = StrUtil.format("src/locales/langs/zh-CN/{}/{}/{}.json", plusApplicationName, plusModuleName, entityName);
+        } else if (StrUtil.equalsAny(templatePath, GenCodeConstant.TEMPLATE_WEB_VBEN5_SIMPLE_CRUD, GenCodeConstant.TEMPLATE_WEB_VBEN5_TREE_CRUD)) {
+            frontOutputFile = StrUtil.format("src/views/{}/{}/{}/data/crud.tsx", plusApplicationName, plusModuleName, entityName);
+        } else if (
+                StrUtil.equalsAny(templatePath, GenCodeConstant.TEMPLATE_WEB_VBEN5_MAIN_INDEX, GenCodeConstant.TEMPLATE_WEB_VBEN5_SIMPLE_INDEX, GenCodeConstant.TEMPLATE_WEB_VBEN5_TREE_INDEX)
+        ) {
+            frontOutputFile = StrUtil.format("src/views/{}/{}/{}/index.vue", plusApplicationName, plusModuleName, entityName);
+        } else if (templatePath.equals(GenCodeConstant.TEMPLATE_WEB_VBEN5_TREE_EDIT)) {
+            frontOutputFile = StrUtil.format("src/views/{}/{}/{}/modules/edit.vue", plusApplicationName, plusModuleName, entityName);
+        } else if (templatePath.equals(GenCodeConstant.TEMPLATE_WEB_VBEN5_TREE_TREE)) {
+            frontOutputFile = StrUtil.format("src/views/{}/{}/{}/modules/tree.vue", plusApplicationName, plusModuleName, entityName);
+        } else if (templatePath.equals(GenCodeConstant.TEMPLATE_WEB_VBEN5_SIMPLE_JUMP_EDIT)) {
+            frontOutputFile = StrUtil.format("src/views/{}/{}/{}/modules/edit.vue", plusApplicationName, plusModuleName, entityName);
+        } else {
+            return outputDir;
+        }
+        if (isAbsolute) {
+            frontOutputFile = outputDir + File.separator + frontOutputFile;
+        }
+        return Paths.get(frontOutputFile).toString();
+    }
+
 
     /**
      * 获取 lamp-web-pro 项目的文件生成路径

@@ -156,6 +156,11 @@ public class DefGenTableColumn extends Entity<Long> {
     @TableField(value = "vxe_component", condition = LIKE)
     private String vxeComponent;
     /**
+     * Soybean组件
+     */
+    @TableField(value = "soy_component", condition = LIKE)
+    private String soyComponent;
+    /**
      * 字典类型
      */
     @TableField(value = "dict_type", condition = LIKE)
