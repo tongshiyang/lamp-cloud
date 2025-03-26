@@ -26,37 +26,38 @@ public enum DefTenantStatusEnum implements BaseEnum {
     /**
      * NORMAL="正常"
      */
-    NORMAL("05", "正常"),
+    NORMAL("05", "正常", "success"),
     /**
      * WAIT_INIT_SCHEMA="待初始化表结构和数据"
      */
-    WAIT_INIT_SCHEMA("10", "待初始化结构"),
+    WAIT_INIT_SCHEMA("10", "待初始化结构", "processing"),
     /**
      * WAIT_INIT_DATASOURCE="待初始化表结构和数据"
      */
-    WAIT_INIT_DATASOURCE("15", "待初始化数据源"),
+    WAIT_INIT_DATASOURCE("15", "待初始化数据源", "warning"),
     /**
      * WITHDRAW="已撤回"
      */
-    WITHDRAW("20", "已撤回"),
+    WITHDRAW("20", "已撤回", "default"),
     /**
      * WAITING="待审核"
      */
-    WAITING("25", "待审核"),
+    WAITING("25", "待审核", "warning"),
     /**
      * REFUSE="已拒绝"
      */
-    REFUSE("30", "已拒绝"),
+    REFUSE("30", "已拒绝", "error"),
     /**
      * AGREED="已同意"
      */
-    AGREED("35", "已同意"),
+    AGREED("35", "已同意", "default"),
     ;
 
     @Schema(description = "描述")
     private String code;
     @Schema(description = "描述")
     private String desc;
+    private String extra;
 
 
     /**
