@@ -20,28 +20,28 @@ public enum LoginStatusEnum implements BaseEnum {
     /**
      * 登录成功
      */
-    SUCCESS("01", "登录成功"),
+    SUCCESS("01", "登录成功", "success"),
     /**
      * 验证码错误
      */
-    CAPTCHA_ERROR("02", "验证码错误"),
+    CAPTCHA_ERROR("02", "验证码错误", "error"),
     /**
      * 账号密码错误
      */
 
-    PASSWORD_ERROR("03", "账号密码错误"),
+    PASSWORD_ERROR("03", "账号密码错误", "error"),
     /**
      * 账号异常
      */
-    USER_ERROR("04", "账号异常"),
+    USER_ERROR("04", "账号异常", "error"),
     /**
      * 切换租户
      */
-    SWITCH("05", "切换租户"),
+    SWITCH("05", "切换租户", "processing"),
     /**
      * 短信验证码错误
      */
-    SMS_CODE_ERROR("06", "短信验证码错误"),
+    SMS_CODE_ERROR("06", "短信验证码错误", "error"),
     ;
 
     @Schema(description = "code")
@@ -49,6 +49,8 @@ public enum LoginStatusEnum implements BaseEnum {
     @Schema(description = "描述")
     private String desc;
 
+    @Schema(description = "扩展")
+    private String extra;
 
     /**
      * 根据当前枚举的name匹配
