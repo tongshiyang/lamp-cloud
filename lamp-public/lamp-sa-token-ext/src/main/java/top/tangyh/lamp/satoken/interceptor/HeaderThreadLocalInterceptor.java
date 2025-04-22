@@ -1,7 +1,6 @@
 package top.tangyh.lamp.satoken.interceptor;
 
-import cn.dev33.satoken.session.SaSession;
-import cn.dev33.satoken.stp.StpUtil;
+import cn.hutool.core.util.StrUtil;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
@@ -12,23 +11,18 @@ import org.springframework.web.servlet.AsyncHandlerInterceptor;
 import top.tangyh.basic.boot.utils.WebUtils;
 import top.tangyh.basic.context.ContextConstants;
 import top.tangyh.basic.context.ContextUtil;
-import top.tangyh.lamp.common.properties.IgnoreProperties;
 
 import java.util.Map;
 
-import static top.tangyh.basic.context.ContextConstants.JWT_KEY_COMPANY_ID;
-import static top.tangyh.basic.context.ContextConstants.JWT_KEY_DEPT_ID;
-import static top.tangyh.basic.context.ContextConstants.JWT_KEY_EMPLOYEE_ID;
-import static top.tangyh.basic.context.ContextConstants.JWT_KEY_TOP_COMPANY_ID;
-
 /**
  * 拦截器：
- * 将请求头数据，封装到BaseContextHandler(ThreadLocal)
+ * 将请求头中的数据，封装到 ContextUtil
+ *
  * <p>
- * 该拦截器要优先于系统中其他的业务拦截器
+ * 该拦截器在必须优先于系统中其他的业务拦截器。
  * <p>
- * lamp-cloud 项目启用该拦截器， 通过 lamp.webmvc.header = true
- * lamp-boot 项目禁用该拦截器， 通过 lamp.webmvc.header = false
+ * 微服务模式，必须每个服务都启用该拦截器，通过 lamp.webmvc.header = true 启用
+ * 单体模式 必须禁用该拦截器，通过 lamp.webmvc.header = false 禁用
  * <p>
  *
  * @author zuihou
@@ -37,7 +31,6 @@ import static top.tangyh.basic.context.ContextConstants.JWT_KEY_TOP_COMPANY_ID;
 @Slf4j
 @RequiredArgsConstructor
 public class HeaderThreadLocalInterceptor implements AsyncHandlerInterceptor {
-    private final IgnoreProperties ignoreProperties;
 
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) {
@@ -55,36 +48,15 @@ public class HeaderThreadLocalInterceptor implements AsyncHandlerInterceptor {
 
         ContextUtil.setGrayVersion(WebUtils.getHeader(request, ContextConstants.GRAY_VERSION));
 
-        // 不需要登录也能访问
-        if (ignoreProperties.isIgnoreUser(request.getMethod(), request.getRequestURI())) {
-            log.debug("access filter not execute");
-            return true;
-        }
-        SaSession tokenSession = StpUtil.getTokenSession();
-//        SaSession tokenSession = StpUtil.getSession();
-
-        if (tokenSession != null) {
-            Long userId = (Long) tokenSession.getLoginId();
-            long topCompanyId = tokenSession.getLong(JWT_KEY_TOP_COMPANY_ID);
-            long companyId = tokenSession.getLong(JWT_KEY_COMPANY_ID);
-            long deptId = tokenSession.getLong(JWT_KEY_DEPT_ID);
-            long employeeId = tokenSession.getLong(JWT_KEY_EMPLOYEE_ID);
-
-            //6, 转换，将 token 解析出来的用户身份 和 解码后的tenant、Authorization 重新封装到请求头
-            ContextUtil.setUserId(userId);
-            ContextUtil.setEmployeeId(employeeId);
-            ContextUtil.setCurrentCompanyId(companyId);
-            ContextUtil.setCurrentTopCompanyId(topCompanyId);
-            ContextUtil.setCurrentDeptId(deptId);
-            MDC.put(ContextConstants.USER_ID_HEADER, String.valueOf(userId));
-            MDC.put(ContextConstants.EMPLOYEE_ID_HEADER, String.valueOf(employeeId));
-        } else {
-            ContextUtil.setUserId(WebUtils.getHeader(request, ContextConstants.USER_ID_HEADER));
-            ContextUtil.setEmployeeId(WebUtils.getHeader(request, ContextConstants.EMPLOYEE_ID_HEADER));
-            ContextUtil.setCurrentCompanyId(WebUtils.getHeader(request, ContextConstants.CURRENT_COMPANY_ID_HEADER));
-            ContextUtil.setCurrentTopCompanyId(WebUtils.getHeader(request, ContextConstants.CURRENT_TOP_COMPANY_ID_HEADER));
-            ContextUtil.setCurrentDeptId(WebUtils.getHeader(request, ContextConstants.CURRENT_DEPT_ID_HEADER));
-        }
+        String userId = WebUtils.getHeader(request, ContextConstants.JWT_KEY_USER_ID);
+        String employeeId = WebUtils.getHeader(request, ContextConstants.EMPLOYEE_ID_HEADER);
+        MDC.put(ContextConstants.USER_ID_HEADER, userId);
+        MDC.put(ContextConstants.EMPLOYEE_ID_HEADER, employeeId);
+        ContextUtil.setUserId(userId);
+        ContextUtil.setEmployeeId(employeeId);
+        ContextUtil.setCurrentTopCompanyId(WebUtils.getHeader(request, ContextConstants.CURRENT_TOP_COMPANY_ID_HEADER));
+        ContextUtil.setCurrentCompanyId(WebUtils.getHeader(request, ContextConstants.CURRENT_COMPANY_ID_HEADER));
+        ContextUtil.setCurrentDeptId(WebUtils.getHeader(request, ContextConstants.CURRENT_DEPT_ID_HEADER));
         return true;
     }
 

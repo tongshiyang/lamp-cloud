@@ -3,7 +3,6 @@ package top.tangyh.lamp.satoken.config;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
-import top.tangyh.lamp.common.properties.IgnoreProperties;
 import top.tangyh.lamp.common.properties.SystemProperties;
 import top.tangyh.lamp.satoken.interceptor.HeaderThreadLocalInterceptor;
 import top.tangyh.lamp.satoken.interceptor.NotAllowWriteInterceptor;
@@ -16,12 +15,11 @@ import top.tangyh.lamp.satoken.interceptor.NotAllowWriteInterceptor;
  */
 @RequiredArgsConstructor
 public class GlobalMvcConfigurer implements WebMvcConfigurer {
-    private final IgnoreProperties ignoreProperties;
     private final SystemProperties systemProperties;
 
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
-        registry.addInterceptor(new HeaderThreadLocalInterceptor(ignoreProperties))
+        registry.addInterceptor(new HeaderThreadLocalInterceptor())
                 .addPathPatterns("/**")
                 .order(-20);
         registry.addInterceptor(new NotAllowWriteInterceptor(systemProperties))

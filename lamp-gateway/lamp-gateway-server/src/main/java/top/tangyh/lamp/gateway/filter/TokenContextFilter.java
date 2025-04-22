@@ -1,5 +1,9 @@
 package top.tangyh.lamp.gateway.filter;
 
+import cn.dev33.satoken.config.SaTokenConfig;
+import cn.dev33.satoken.exception.SaTokenException;
+import cn.dev33.satoken.session.SaSession;
+import cn.dev33.satoken.stp.StpUtil;
 import cn.hutool.core.util.StrUtil;
 import cn.hutool.core.util.URLUtil;
 import lombok.RequiredArgsConstructor;
@@ -31,6 +35,15 @@ import static top.tangyh.basic.context.ContextConstants.APPLICATION_ID_HEADER;
 import static top.tangyh.basic.context.ContextConstants.APPLICATION_ID_KEY;
 import static top.tangyh.basic.context.ContextConstants.CLIENT_ID_HEADER;
 import static top.tangyh.basic.context.ContextConstants.CLIENT_KEY;
+import static top.tangyh.basic.context.ContextConstants.CURRENT_COMPANY_ID_HEADER;
+import static top.tangyh.basic.context.ContextConstants.CURRENT_DEPT_ID_HEADER;
+import static top.tangyh.basic.context.ContextConstants.CURRENT_TOP_COMPANY_ID_HEADER;
+import static top.tangyh.basic.context.ContextConstants.EMPLOYEE_ID_HEADER;
+import static top.tangyh.basic.context.ContextConstants.JWT_KEY_COMPANY_ID;
+import static top.tangyh.basic.context.ContextConstants.JWT_KEY_DEPT_ID;
+import static top.tangyh.basic.context.ContextConstants.JWT_KEY_EMPLOYEE_ID;
+import static top.tangyh.basic.context.ContextConstants.JWT_KEY_TOP_COMPANY_ID;
+import static top.tangyh.basic.context.ContextConstants.USER_ID_HEADER;
 
 /**
  * 过滤器
@@ -43,6 +56,9 @@ import static top.tangyh.basic.context.ContextConstants.CLIENT_KEY;
 @RequiredArgsConstructor
 public class TokenContextFilter implements WebFilter, Ordered {
     private final IgnoreProperties ignoreProperties;
+    protected final SaTokenConfig saTokenConfig;
+
+
     @Value("${spring.profiles.active:dev}")
     protected String profiles;
 
@@ -103,16 +119,57 @@ public class TokenContextFilter implements WebFilter, Ordered {
             // 3, 获取 应用id
             parseApplication(request, mutate);
 
+
+            Mono<Void> token = parseToken(exchange, chain, mutate);
+            if (token != null) {
+                return token;
+            }
+
         } catch (UnauthorizedException e) {
             return errorResponse(response, e.getMessage(), e.getCode(), HttpStatus.UNAUTHORIZED);
         } catch (BizException e) {
             return errorResponse(response, e.getMessage(), e.getCode(), HttpStatus.BAD_REQUEST);
+        } catch (SaTokenException e) {
+            log.error(e.getMessage(), e);
+            return errorResponse(response, e.getMessage(), e.getCode(), HttpStatus.UNAUTHORIZED);
         } catch (Exception e) {
+            log.error(e.getMessage(), e);
             return errorResponse(response, "验证token出错", R.FAIL_CODE, HttpStatus.BAD_REQUEST);
         }
 
         ServerHttpRequest build = mutate.build();
         return chain.filter(exchange.mutate().request(build).build());
+    }
+
+    private Mono<Void> parseToken(ServerWebExchange exchange, WebFilterChain chain, ServerHttpRequest.Builder mutate) {
+        ServerHttpRequest request = exchange.getRequest();
+        ServerHttpResponse response = exchange.getResponse();
+        // 判断接口是否需要忽略token验证
+        if (isIgnoreToken(request)) {
+            log.debug("当前接口：{}, 不解析用户token", request.getPath());
+            return chain.filter(exchange);
+        }
+
+        HttpHeaders headers = request.getHeaders();
+
+        SaSession tokenSession = StpUtil.getTokenSessionByToken(headers.getFirst(saTokenConfig.getTokenName()));
+        log.info("{}", tokenSession);
+
+        if (tokenSession != null) {
+            Long userId = (Long) tokenSession.getLoginId();
+            long topCompanyId = tokenSession.getLong(JWT_KEY_TOP_COMPANY_ID);
+            long companyId = tokenSession.getLong(JWT_KEY_COMPANY_ID);
+            long deptId = tokenSession.getLong(JWT_KEY_DEPT_ID);
+            long employeeId = tokenSession.getLong(JWT_KEY_EMPLOYEE_ID);
+
+            mutate.header(USER_ID_HEADER, String.valueOf(userId));
+            mutate.header(EMPLOYEE_ID_HEADER, String.valueOf(employeeId));
+            mutate.header(CURRENT_TOP_COMPANY_ID_HEADER, String.valueOf(topCompanyId));
+            mutate.header(CURRENT_COMPANY_ID_HEADER, String.valueOf(companyId));
+            mutate.header(CURRENT_DEPT_ID_HEADER, String.valueOf(deptId));
+        }
+
+        return null;
     }
 
     private void parseClient(ServerHttpRequest request, ServerHttpRequest.Builder mutate) {

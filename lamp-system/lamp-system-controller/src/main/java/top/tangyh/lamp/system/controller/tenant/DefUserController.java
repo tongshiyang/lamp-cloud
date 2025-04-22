@@ -1,7 +1,7 @@
 package top.tangyh.lamp.system.controller.tenant;
 
 import cn.dev33.satoken.session.SaSession;
-import cn.dev33.satoken.session.TokenSign;
+import cn.dev33.satoken.session.SaTerminalInfo;
 import cn.dev33.satoken.stp.StpUtil;
 import cn.hutool.core.bean.BeanUtil;
 import cn.hutool.core.convert.Convert;
@@ -211,7 +211,7 @@ public class DefUserController extends SuperExcelController<DefUserService, Long
                 bean.setUsername(defUser.getUsername());
             }
             bean.setSessionTime(DateUtils.getDateTimeOfTimestamp(bean.getCreateTime()));
-            bean.setExpireTime(DateUtils.getDateTimeOfTimestamp(System.currentTimeMillis() + bean.getTimeout() * 1000));
+            bean.setExpireTime(DateUtils.getDateTimeOfTimestamp(System.currentTimeMillis() + bean.timeout() * 1000));
             Duration duration = Duration.between(bean.getSessionTime(), currentTime);
             bean.setSessionStr(DateUtils.tranDurationToShow(duration));
 
@@ -232,23 +232,26 @@ public class DefUserController extends SuperExcelController<DefUserService, Long
         if (session == null) {
             return R.success(new Page<>());
         }
-        List<TokenSign> tokenSignList = session.getTokenSignList();
+        List<SaTerminalInfo> tokenSignList = session.getTerminalList();
 
         List<OnlineTokenResultVO> loginUserList = new ArrayList<>(tokenSignList.size());
         LocalDateTime currentTime = LocalDateTime.now();
-        for (TokenSign tokenSign : tokenSignList) {
-            SaSession tokenSession = StpUtil.getTokenSessionByToken(tokenSign.getValue());
+        for (SaTerminalInfo tokenSign : tokenSignList) {
             OnlineTokenResultVO bean = BeanUtil.toBean(tokenSign, OnlineTokenResultVO.class);
+            try {
+                SaSession tokenSession = StpUtil.getTokenSessionByToken(tokenSign.getTokenValue());
 
-            bean.setSessionTime(DateUtils.getDateTimeOfTimestamp(tokenSession.getCreateTime()));
-            bean.setExpireTime(DateUtils.getDateTimeOfTimestamp(System.currentTimeMillis() + tokenSession.getTimeout() * 1000));
+                bean.setSessionTime(DateUtils.getDateTimeOfTimestamp(tokenSession.getCreateTime()));
+                bean.setExpireTime(DateUtils.getDateTimeOfTimestamp(System.currentTimeMillis() + tokenSession.timeout() * 1000));
 
-            Duration duration = Duration.between(bean.getSessionTime(), currentTime);
-            bean.setSessionStr(DateUtils.tranDurationToShow(duration));
+                Duration duration = Duration.between(bean.getSessionTime(), currentTime);
+                bean.setSessionStr(DateUtils.tranDurationToShow(duration));
 
-            Duration expireDuration = Duration.between(bean.getExpireTime(), currentTime);
-            bean.setExpireStr(DateUtils.tranDurationToShow(expireDuration));
-
+                Duration expireDuration = Duration.between(bean.getExpireTime(), currentTime);
+                bean.setExpireStr(DateUtils.tranDurationToShow(expireDuration));
+            } catch (Exception e) {
+                log.error(e.getMessage(), e);
+            }
             loginUserList.add(bean);
         }
         IPage<OnlineTokenResultVO> page = new Page<>(params.getCurrent(), params.getSize(), loginUserList.size());

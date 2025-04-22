@@ -1,6 +1,6 @@
 package top.tangyh.lamp.system.vo.result.system;
 
-import cn.dev33.satoken.session.TokenSign;
+import cn.dev33.satoken.session.SaTerminalInfo;
 import lombok.Data;
 
 import java.time.LocalDateTime;
@@ -11,7 +11,7 @@ import java.time.LocalDateTime;
  * @since 2024/8/1 15:40
  */
 @Data
-public class OnlineTokenResultVO extends TokenSign {
+public class OnlineTokenResultVO extends SaTerminalInfo {
 
     /** 创建时间 */
     private LocalDateTime sessionTime;

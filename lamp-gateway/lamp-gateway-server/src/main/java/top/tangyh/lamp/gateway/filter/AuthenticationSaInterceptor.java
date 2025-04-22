@@ -55,10 +55,10 @@ public class AuthenticationSaInterceptor implements WebFilter, Ordered {
     public Mono<Void> filter(ServerWebExchange exchange, WebFilterChain chain) {
 
         // 写入WebFilterChain对象
-        exchange.getAttributes().put(SaReactorHolder.CHAIN_KEY, chain);
+        exchange.getAttributes().put(SaReactorHolder.EXCHANGE_KEY, chain);
 //        if (true) {
 //            return chain.filter(exchange).contextWrite(ctx -> {
-//                ctx = ctx.put(SaReactorHolder.CONTEXT_KEY, exchange);
+//                ctx = ctx.put(SaReactorHolder.EXCHANGE_KEY, exchange);
 //                return ctx;
 //            }).doFinally(r -> {
 //                SaReactorSyncHolder.clearContext();
@@ -101,7 +101,7 @@ public class AuthenticationSaInterceptor implements WebFilter, Ordered {
             // 无需校验权限
             if (!ignoreProperties.getAuthEnabled()) {
                 return chain.filter(exchange).contextWrite(ctx -> {
-                    ctx = ctx.put(SaReactorHolder.CONTEXT_KEY, exchange);
+                    ctx = ctx.put(SaReactorHolder.EXCHANGE_KEY, exchange);
                     return ctx;
                 }).doFinally(r -> {
                     SaReactorSyncHolder.clearContext();
@@ -203,7 +203,7 @@ public class AuthenticationSaInterceptor implements WebFilter, Ordered {
         // 执行
         return chain.filter(exchange).contextWrite(ctx -> {
             // 写入全局上下文 (异步)
-            ctx = ctx.put(SaReactorHolder.CONTEXT_KEY, exchange);
+            ctx = ctx.put(SaReactorHolder.EXCHANGE_KEY, exchange);
             return ctx;
         }).doFinally(r -> {
             // 清除上下文
