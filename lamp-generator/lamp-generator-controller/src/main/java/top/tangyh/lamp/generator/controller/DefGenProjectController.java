@@ -15,6 +15,7 @@ import top.tangyh.basic.base.R;
 import top.tangyh.basic.base.controller.DownloadController;
 import top.tangyh.basic.base.request.DownloadVO;
 import top.tangyh.basic.base.service.SuperService;
+import top.tangyh.basic.validator.utils.ValidatorUtils;
 import top.tangyh.lamp.generator.entity.DefGenTable;
 import top.tangyh.lamp.generator.service.DefGenTableService;
 import top.tangyh.lamp.generator.vo.save.ProjectGeneratorVO;
@@ -65,10 +66,12 @@ public class DefGenProjectController implements DownloadController<Long, DefGenT
     @Operation(summary = "下载项目", description = "下载项目")
     @PostMapping(value = "/download", produces = "application/octet-stream")
     @WebLog(value = "下载项目")
-    public void download(@RequestBody @Validated ProjectGeneratorVO projectGenerator, HttpServletResponse response) {
+    public void download(ProjectGeneratorVO projectGenerator, HttpServletResponse response) {
+        ValidatorUtils.validateFast(projectGenerator);
         DownloadVO download = defGenTableService.download(projectGenerator);
         write(download.getData(), download.getFileName(), response);
     }
+
 
     @Operation(summary = "生成项目", description = "生成项目")
     @PostMapping("/generator")
