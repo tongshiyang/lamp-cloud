@@ -48,7 +48,7 @@ public class DefGenTableManagerImpl extends SuperManagerImpl<DefGenTableMapper, 
 
     @Override
     public DataSource getDs(Long dsId) {
-        ArgumentAssert.notNull(dsId, "请先选择数据源:{}", dsId);
+        ArgumentAssert.notNull(dsId, "请先选择数据源");
         DefDatasourceConfig defDatasourceConfig = defDatasourceConfigManager.selectById(dsId);
         ArgumentAssert.notNull(defDatasourceConfig, "请先配置数据源:{}", dsId);
 
