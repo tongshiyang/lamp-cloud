@@ -6,7 +6,7 @@
     <parent>
         <artifactId>lamp-support</artifactId>
         <groupId>top.tangyh.lamp</groupId>
-        <version>5.0.8</version>
+        <version>5.1.0</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
     <artifactId>lamp-job-executor-none</artifactId>

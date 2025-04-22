@@ -22,7 +22,7 @@ public class ProjectUtilsTest {
         vo.setParent("top.tangyh.lamp");
         vo.setGroupId("top.tangyh.lamp");
         vo.setUtilParent("top.tangyh.basic");
-        vo.setVersion("5.0.8");
+        vo.setVersion("5.1.0");
         vo.setDescription("测试服务");
         vo.setServerPort(8080);
         ProjectUtils.generator(vo, new DatabaseProperties());
