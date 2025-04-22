@@ -1,5 +1,6 @@
 package top.tangyh.lamp.base.vo.result.user;
 
+import cn.hutool.core.convert.Convert;
 import cn.hutool.core.util.ObjectUtil;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
@@ -38,7 +39,7 @@ public class RouterMeta extends LinkedHashMap<String, Object> implements Seriali
 
     @Schema(description = "标题")
     public String getTitle() {
-        return (String) this.get(routerMetaConfig.getTitleKey());
+        return Convert.toStr(this.get(routerMetaConfig.getTitleKey()));
     }
 
     public RouterMeta setTitle(String title) {
@@ -48,7 +49,7 @@ public class RouterMeta extends LinkedHashMap<String, Object> implements Seriali
 
     @Schema(description = "图标")
     public String getIcon() {
-        return (String) this.get(routerMetaConfig.getIconKey());
+        return Convert.toStr(this.get(routerMetaConfig.getIconKey()));
     }
 
     public RouterMeta setIcon(String icon) {
@@ -58,7 +59,7 @@ public class RouterMeta extends LinkedHashMap<String, Object> implements Seriali
 
     @Schema(description = "是否固定标签")
     public Boolean getAffix() {
-        return (Boolean) this.get(routerMetaConfig.getAffixKey());
+        return Convert.toBool(this.get(routerMetaConfig.getAffixKey()));
     }
 
     public RouterMeta setAffix(Boolean affix) {
@@ -68,7 +69,7 @@ public class RouterMeta extends LinkedHashMap<String, Object> implements Seriali
 
     @Schema(description = "是否忽略KeepAlive缓存")
     public Boolean getIgnoreKeepAlive() {
-        return (Boolean) this.get(routerMetaConfig.getIgnoreKeepAliveKey());
+        return Convert.toBool(this.get(routerMetaConfig.getIgnoreKeepAliveKey()));
     }
 
     public RouterMeta setIgnoreKeepAlive(Boolean ignoreKeepAlive) {
@@ -78,16 +79,17 @@ public class RouterMeta extends LinkedHashMap<String, Object> implements Seriali
 
     @Schema(description = "内嵌iframe的地址")
     public String getFrameSrc() {
-        return (String) this.get(routerMetaConfig.getFrameSrcKey());
+        return Convert.toStr(this.get(routerMetaConfig.getFrameSrcKey()));
     }
 
     public RouterMeta setFrameSrc(String frameSrc) {
         this.put(routerMetaConfig.getFrameSrcKey(), frameSrc);
         return this;
     }
+
     @Schema(description = "vben5 内嵌iframe的地址")
     public String getIframeSrc() {
-        return (String) this.get(routerMetaConfig.getIframeSrcKey());
+        return Convert.toStr(this.get(routerMetaConfig.getIframeSrcKey()));
     }
 
     public RouterMeta setIframeSrc(String frameSrc) {
@@ -97,7 +99,7 @@ public class RouterMeta extends LinkedHashMap<String, Object> implements Seriali
 
     @Schema(description = "vben5 外链地址")
     public String getLink() {
-        return (String) this.get(routerMetaConfig.getLinkKey());
+        return Convert.toStr(this.get(routerMetaConfig.getLinkKey()));
     }
 
     public RouterMeta setLink(String frameSrc) {
@@ -107,7 +109,7 @@ public class RouterMeta extends LinkedHashMap<String, Object> implements Seriali
 
     @Schema(description = "指定该路由切换的动画名")
     public String getTransitionName() {
-        return (String) this.get(routerMetaConfig.getTransitionNameKey());
+        return Convert.toStr(this.get(routerMetaConfig.getTransitionNameKey()));
     }
 
     public RouterMeta setTransitionName(String transitionName) {
@@ -117,7 +119,7 @@ public class RouterMeta extends LinkedHashMap<String, Object> implements Seriali
 
     @Schema(description = "隐藏该路由在面包屑上面的显示")
     public Boolean getHideBreadcrumb() {
-        return (Boolean) this.get(routerMetaConfig.getHideBreadcrumbKey());
+        return Convert.toBool(this.get(routerMetaConfig.getHideBreadcrumbKey()));
     }
 
     public RouterMeta setHideBreadcrumb(Boolean hideBreadcrumb) {
@@ -127,7 +129,7 @@ public class RouterMeta extends LinkedHashMap<String, Object> implements Seriali
 
     @Schema(description = "如果该路由会携带参数，且需要在tab页上面显示。则需要设置为true")
     public Boolean getCarryParam() {
-        return (Boolean) this.get(routerMetaConfig.getCarryParamKey());
+        return Convert.toBool(this.get(routerMetaConfig.getCarryParamKey()));
     }
 
     public RouterMeta setCarryParam(Boolean carryParam) {
@@ -137,7 +139,7 @@ public class RouterMeta extends LinkedHashMap<String, Object> implements Seriali
 
     @Schema(description = "当前激活的菜单。用于配置详情页时左侧激活的菜单路径")
     public String getCurrentActiveMenu() {
-        return (String) this.get(routerMetaConfig.getCurrentActiveMenuKey());
+        return Convert.toStr(this.get(routerMetaConfig.getCurrentActiveMenuKey()));
     }
 
     public RouterMeta setCurrentActiveMenu(String currentActiveMenu) {
@@ -147,7 +149,7 @@ public class RouterMeta extends LinkedHashMap<String, Object> implements Seriali
 
     @Schema(description = "当前路由不再标签页显示")
     public Boolean getHideTab() {
-        return (Boolean) this.get(routerMetaConfig.getHideTabKey());
+        return Convert.toBool(this.get(routerMetaConfig.getHideTabKey()));
     }
 
     public RouterMeta setHideTab(Boolean hideTab) {
@@ -157,7 +159,7 @@ public class RouterMeta extends LinkedHashMap<String, Object> implements Seriali
 
     @Schema(description = "当前路由不再菜单显示")
     public Boolean getHideMenu() {
-        return (Boolean) this.get(routerMetaConfig.getHideMenuKey());
+        return Convert.toBool(this.get(routerMetaConfig.getHideMenuKey()));
     }
 
     public RouterMeta setHideMenu(Boolean hideMenu) {
@@ -167,7 +169,7 @@ public class RouterMeta extends LinkedHashMap<String, Object> implements Seriali
 
     @Schema(description = "用于隐藏子菜单")
     public Boolean getHideChildrenInMenu() {
-        return (Boolean) this.get(routerMetaConfig.getHideChildrenInMenuKey());
+        return Convert.toBool(this.get(routerMetaConfig.getHideChildrenInMenuKey()));
     }
 
     public RouterMeta setHideChildrenInMenu(Boolean hideChildrenInMenu) {
@@ -177,7 +179,7 @@ public class RouterMeta extends LinkedHashMap<String, Object> implements Seriali
 
     @Schema(description = "菜单小圆点类型")
     public String getType() {
-        return (String) this.get(routerMetaConfig.getTypeKey());
+        return Convert.toStr(this.get(routerMetaConfig.getTypeKey()));
     }
 
     public RouterMeta setType(String type) {
@@ -187,7 +189,7 @@ public class RouterMeta extends LinkedHashMap<String, Object> implements Seriali
 
     @Schema(description = "是否显示内容")
     public String getContent() {
-        return (String) this.get(routerMetaConfig.getContentKey());
+        return Convert.toStr(this.get(routerMetaConfig.getContentKey()));
     }
 
     public RouterMeta setContent(String content) {
@@ -197,7 +199,7 @@ public class RouterMeta extends LinkedHashMap<String, Object> implements Seriali
 
     @Schema(description = "是否显示小圆点")
     public Boolean getDot() {
-        return (Boolean) this.get(routerMetaConfig.getDotKey());
+        return Convert.toBool(this.get(routerMetaConfig.getDotKey()));
     }
 
     @Schema(description = "是否显示小圆点")
@@ -208,7 +210,7 @@ public class RouterMeta extends LinkedHashMap<String, Object> implements Seriali
 
     @Schema(description = "当前路由不再菜单显示 By Soybean")
     public Boolean getHideInMenu() {
-        return (Boolean) this.get(routerMetaConfig.getHideInMenuKey());
+        return Convert.toBool(this.get(routerMetaConfig.getHideInMenuKey()));
     }
 
     public RouterMeta setHideInMenu(Boolean hideMenu) {
@@ -218,7 +220,7 @@ public class RouterMeta extends LinkedHashMap<String, Object> implements Seriali
 
     @Schema(description = "当前激活的菜单。用于配置详情页时左侧激活的菜单路径 By Soybean")
     public String getActiveMenu() {
-        return (String) this.get(routerMetaConfig.getActiveMenuKey());
+        return Convert.toStr(this.get(routerMetaConfig.getActiveMenuKey()));
     }
 
     public RouterMeta setActiveMenu(String activeMenuKey) {
@@ -229,7 +231,7 @@ public class RouterMeta extends LinkedHashMap<String, Object> implements Seriali
 
     @Schema(description = "当前激活的菜单。用于配置详情页时左侧激活的菜单路径 By Soybean")
     public String getActivePath() {
-        return (String) this.get(routerMetaConfig.getActivePathKey());
+        return Convert.toStr(this.get(routerMetaConfig.getActivePathKey()));
     }
 
     public RouterMeta setActivePath(String activePath) {
@@ -238,73 +240,79 @@ public class RouterMeta extends LinkedHashMap<String, Object> implements Seriali
     }
 
 
-
     @Schema(description = "菜单标题 i18n key By Soybean")
     public String getI18nKey() {
-        return (String) this.get(routerMetaConfig.getI18nKeyKey());
+        return Convert.toStr(this.get(routerMetaConfig.getI18nKeyKey()));
     }
 
     public RouterMeta setI18nKey(String val) {
         this.put(routerMetaConfig.getI18nKeyKey(), val);
         return this;
     }
+
     @Schema(description = "是否缓存路由 By Soybean")
     public String getKeepAlive() {
-        return (String) this.get(routerMetaConfig.getKeepAliveKey());
+        return Convert.toStr(this.get(routerMetaConfig.getKeepAliveKey()));
     }
 
     public RouterMeta setKeepAlive(String val) {
         this.put(routerMetaConfig.getKeepAliveKey(), val);
         return this;
     }
+
     @Schema(description = "是否缓存路由 By Soybean")
     public Boolean getConstant() {
-        return (Boolean) this.get(routerMetaConfig.getConstantKey());
+        return Convert.toBool(this.get(routerMetaConfig.getConstantKey()));
     }
 
     public RouterMeta setConstant(Boolean val) {
         this.put(routerMetaConfig.getConstantKey(), val);
         return this;
     }
+
     @Schema(description = "在 src/assets/svg-icon, ，如果设置了该图标，则icon将被忽略 By Soybean")
     public String getLocalIcon() {
-        return (String) this.get(routerMetaConfig.getLocalIconKey());
+        return Convert.toStr(this.get(routerMetaConfig.getLocalIconKey()));
     }
 
     public RouterMeta setLocalIcon(String val) {
         this.put(routerMetaConfig.getLocalIconKey(), val);
         return this;
     }
+
     @Schema(description = "排序 By Soybean")
     public Integer getOrder() {
-        return (Integer) this.get(routerMetaConfig.getOrderKey());
+        return Convert.toInt(this.get(routerMetaConfig.getOrderKey()));
     }
 
     public RouterMeta setOrder(Integer val) {
         this.put(routerMetaConfig.getOrderKey(), val);
         return this;
     }
+
     @Schema(description = "外部链接 By Soybean")
     public String getHref() {
-        return (String) this.get(routerMetaConfig.getHrefKey());
+        return Convert.toStr(this.get(routerMetaConfig.getHrefKey()));
     }
 
     public RouterMeta setHref(String val) {
         this.put(routerMetaConfig.getHrefKey(), val);
         return this;
     }
+
     @Schema(description = "默认情况下，同一路由路径将使用一个选项卡，如果设置为true，则将使用多个选项卡 By Soybean")
     public String getMultiTab() {
-        return (String) this.get(routerMetaConfig.getMultiTabKey());
+        return Convert.toStr(this.get(routerMetaConfig.getMultiTabKey()));
     }
 
     public RouterMeta setMultiTab(String val) {
         this.put(routerMetaConfig.getMultiTabKey(), val);
         return this;
     }
+
     @Schema(description = "如果设置，则路由将固定在选项卡中，并且该值是固定选项卡的顺序 By Soybean")
     public String getFixedIndexInTab() {
-        return (String) this.get(routerMetaConfig.getFixedIndexInTabKey());
+        return Convert.toStr(this.get(routerMetaConfig.getFixedIndexInTabKey()));
     }
 
     public RouterMeta setFixedIndexInTab(String val) {
@@ -314,7 +322,7 @@ public class RouterMeta extends LinkedHashMap<String, Object> implements Seriali
 
     @Schema(description = "组件")
     public String getComponent() {
-        return (String) this.get(routerMetaConfig.getComponentKey());
+        return Convert.toStr(this.get(routerMetaConfig.getComponentKey()));
     }
 
     public RouterMeta setComponent(String val) {
