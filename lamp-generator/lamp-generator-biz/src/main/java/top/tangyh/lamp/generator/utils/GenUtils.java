@@ -250,10 +250,10 @@ public class GenUtils {
         Map<String, FieldFill> fillColumnName = entityConfig.getFillColumnName();
         Map<String, FieldFill> fillPropertyName = entityConfig.getFillPropertyName();
         if (CollUtil.isNotEmpty(fillPropertyName) && fillPropertyName.containsKey(tableColumn.getJavaField())) {
-            tableColumn.setFill(fillPropertyName.get(tableColumn.getJavaField()));
+            tableColumn.setFill(fillPropertyName.get(tableColumn.getJavaField()).name());
         }
         if (CollUtil.isNotEmpty(fillColumnName) && fillColumnName.containsKey(tableColumn.getName())) {
-            tableColumn.setFill(fillColumnName.get(tableColumn.getName()));
+            tableColumn.setFill(fillColumnName.get(tableColumn.getName()).name());
         }
 
         // 编辑字段

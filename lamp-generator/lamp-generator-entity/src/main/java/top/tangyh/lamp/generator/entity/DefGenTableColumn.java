@@ -115,7 +115,7 @@ public class DefGenTableColumn extends Entity<Long> {
      * 填充类型
      */
     @TableField(value = "fill", condition = LIKE)
-    private FieldFill fill;
+    private String fill;
     /**
      * 是否编辑字段
      */
