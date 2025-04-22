@@ -2,6 +2,7 @@ package top.tangyh.lamp.system.vo.result.system;
 
 import cn.dev33.satoken.session.SaSession;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 import java.time.LocalDateTime;
 
@@ -11,6 +12,7 @@ import java.time.LocalDateTime;
  * @since 2024/8/1 15:40
  */
 @Data
+@EqualsAndHashCode(callSuper=false)
 public class OnlineUsersResultVO extends SaSession {
 
     /**
