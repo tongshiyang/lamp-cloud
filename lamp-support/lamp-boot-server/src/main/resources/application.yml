@@ -254,9 +254,6 @@ lamp:
       TenantConnectTypeEnum: top.tangyh.lamp.model.enumeration.system.TenantConnectTypeEnum
 
 spring:
-  application:
-    # lamp自定义配置，用于lamp-scan-starter扫描接口时，拼接uri前缀。 需要和网关配置的前缀一致
-    path: '/base'
   config:
     # 配置优先级： ./application-${spring.profiles.active}.yml >= ./application.yml >= /config/${spring.profiles.active}/*.yml  >= bootstrap-${spring.profiles.active}.yml >= bootstrap.yml
     # import的文件顺序越靠后，优先级越大

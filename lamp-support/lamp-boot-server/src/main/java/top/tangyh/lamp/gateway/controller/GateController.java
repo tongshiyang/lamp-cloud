@@ -40,12 +40,11 @@ public class GateController {
     @Operation(summary = "查询在线服务")
     @GetMapping("/gateway/findOnlineService")
     public R<List<Option>> findOnlineService() {
-        List<Option> list = new ArrayList();
-
-        list.add(Option.builder()
-                .value("base").text(application).label(application)
-                .build());
-
+        // 自行新增服务后，需要在这里手动新增一条数据
+        List<Option> list = new ArrayList<>();
+        list.add(Option.builder().value("base").text(application).label("lamp-base").build());
+        list.add(Option.builder().value("system").text(application).label("lamp-system").build());
+        list.add(Option.builder().value("generator").text(application).label("lamp-generator").build());
         return R.success(list);
     }
 }
