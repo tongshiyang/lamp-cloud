@@ -39,17 +39,15 @@ import java.util.function.Predicate;
 @RequiredArgsConstructor
 @Slf4j
 public class DictServiceImpl implements DictService {
-    private final DefDictManager defDictManager;
-    private final EchoProperties echoProperties;
-    private final SystemProperties systemProperties;
-
-
     private static final Map<String, Map<String, String>> ENUM_MAP = new HashMap<>();
     private static final Map<String, List<Option>> ENUM_LIST_MAP = new HashMap<>();
     /**
      * 过滤那些枚举
      */
     private static final Predicate<Class<?>> CLASS_FILTER = item -> item != null && item.isEnum() && item.isEnum() && MybatisEnumTypeHandler.isMpEnums(item);
+    private final DefDictManager defDictManager;
+    private final EchoProperties echoProperties;
+    private final SystemProperties systemProperties;
 
     @PostConstruct
     public void init() {

@@ -29,7 +29,7 @@ public class TraceFilter implements WebFilter, Ordered {
                     .headers(h -> h.add(ContextConstants.TRACE_ID_HEADER, traceId))
                     .build();
             return chain.filter(exchange.mutate().request(serverHttpRequest).build());
-        }finally {
+        } finally {
             MDC.remove(ContextConstants.TRACE_ID_HEADER);
         }
     }

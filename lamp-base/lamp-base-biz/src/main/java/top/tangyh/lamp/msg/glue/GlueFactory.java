@@ -56,7 +56,7 @@ public class GlueFactory {
                     return inst;
                 } else {
                     throw new IllegalArgumentException("glue 加载失败，"
-                            + "无法将实例转换 [" + instance.getClass() + "] 为 MsgStrategy");
+                                                       + "无法将实例转换 [" + instance.getClass() + "] 为 MsgStrategy");
                 }
             }
         }

@@ -5,7 +5,6 @@ import cn.hutool.core.convert.Convert;
 import cn.hutool.core.util.ObjectUtil;
 import cn.hutool.core.util.RandomUtil;
 import cn.hutool.core.util.StrUtil;
-
 import com.google.common.collect.Multimap;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -70,7 +69,7 @@ public class DefApplicationServiceImpl extends SuperCacheServiceImpl<DefApplicat
 
     @Override
     public List<DefApplicationResultVO> findMyApplication(String name) {
-        List<DefApplicationResultVO> list = superManager.findMyApplication( name);
+        List<DefApplicationResultVO> list = superManager.findMyApplication(name);
         list.forEach(item -> {
             //0-过期 1-有效
             String state = item.getExpirationTime() == null || item.getExpirationTime().isAfter(LocalDateTime.now()) ? "1" : "0";

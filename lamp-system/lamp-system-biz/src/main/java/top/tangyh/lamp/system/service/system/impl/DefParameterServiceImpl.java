@@ -8,7 +8,6 @@ import org.springframework.transaction.annotation.Transactional;
 import top.tangyh.basic.base.service.impl.SuperCacheServiceImpl;
 import top.tangyh.basic.database.mybatis.conditions.Wraps;
 import top.tangyh.basic.utils.ArgumentAssert;
-
 import top.tangyh.lamp.model.enumeration.system.DataTypeEnum;
 import top.tangyh.lamp.system.entity.system.DefParameter;
 import top.tangyh.lamp.system.manager.system.DefParameterManager;

@@ -36,7 +36,7 @@ lamp:
       epochStr: '2020-09-15'
       boost-power: 3
       padding-factor: 50
-  echo:  #详情看: EchoProperties
+  echo: #详情看: EchoProperties
     # 是否启用 远程数据 手动注入
     enabled: true
     # 是否启用 远程数据 注解AOP注入
@@ -174,14 +174,14 @@ spring:
       # 从这里结束(druid)，中间的这段配置用于 lamp.database.multiTenantType != DATASOURCE 时
 
       # 以下的2段配置，同时适用于所有模式
-      web-stat-filter:  # WebStatFilter配置，说明请参考Druid Wiki，配置_配置WebStatFilter
+      web-stat-filter: # WebStatFilter配置，说明请参考Druid Wiki，配置_配置WebStatFilter
         enabled: true
         url-pattern: /*
         exclusions: "*.js , *.gif ,*.jpg ,*.png ,*.css ,*.ico , /druid/*"
         session-stat-max-count: 1000
         profile-enable: true
         session-stat-enable: false
-      stat-view-servlet:  #展示Druid的统计信息,StatViewServlet的用途包括：1.提供监控信息展示的html页面2.提供监控信息的JSON API
+      stat-view-servlet: #展示Druid的统计信息,StatViewServlet的用途包括：1.提供监控信息展示的html页面2.提供监控信息的JSON API
         enabled: true
         url-pattern: /druid/*   #根据配置中的url-pattern来访问内置监控页面，如果是上面的配置，内置监控页面的首页是/druid/index.html例如：http://127.0.0.1:9000/druid/index.html
         reset-enable: true    #允许清空统计数据

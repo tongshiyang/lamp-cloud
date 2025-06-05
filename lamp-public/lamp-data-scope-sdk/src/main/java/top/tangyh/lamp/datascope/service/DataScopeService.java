@@ -1,13 +1,11 @@
 package top.tangyh.lamp.datascope.service;
 
 import cn.hutool.core.collection.CollUtil;
-
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
-
 import top.tangyh.lamp.datascope.entity.DefResourceDataScope;
 import top.tangyh.lamp.datascope.mapper.DataScopeMapper;
 
@@ -37,7 +35,7 @@ public class DataScopeService {
      * @date 2022/10/20 10:26 AM
      * @create [2022/10/20 10:26 AM ] [tangyh] [初始创建]
      */
-    
+
     @Transactional(propagation = Propagation.REQUIRES_NEW, readOnly = true)
     public DefResourceDataScope getDataScopeByPath(Long applicationId, String path, List<Long> dataScopeIdList) {
         List<DefResourceDataScope> dataScopeByPaths = null;
@@ -62,7 +60,7 @@ public class DataScopeService {
      * @date 2022/10/20 10:32 AM
      * @create [2022/10/20 10:32 AM ] [tangyh] [初始创建]
      */
-    
+
     @Transactional(propagation = Propagation.REQUIRES_NEW, readOnly = true)
     public List<Long> selectDataScopeIdByEmployeeId(Long employeeId, String category) {
         List<Long> list = new ArrayList<>();

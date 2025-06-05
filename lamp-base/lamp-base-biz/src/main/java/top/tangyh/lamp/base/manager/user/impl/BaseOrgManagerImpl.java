@@ -44,7 +44,7 @@ public class BaseOrgManagerImpl extends SuperCacheManagerImpl<BaseOrgMapper, Bas
 
     @Override
     @Transactional(readOnly = true)
-    
+
     public Map<Serializable, Object> findByIds(Set<Serializable> params) {
         if (CollUtil.isEmpty(params)) {
             return Collections.emptyMap();

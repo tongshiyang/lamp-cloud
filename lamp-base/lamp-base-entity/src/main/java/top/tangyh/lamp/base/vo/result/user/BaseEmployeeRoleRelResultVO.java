@@ -46,12 +46,12 @@ public class BaseEmployeeRoleRelResultVO extends Entity<Long> implements Seriali
      * 角色;#base_role
      */
     @Schema(description = "角色")
-    
+
     private Long roleId;
     /**
      * 员工;#base_employee
      */
     @Schema(description = "员工")
-    
+
     private Long employeeId;
 }

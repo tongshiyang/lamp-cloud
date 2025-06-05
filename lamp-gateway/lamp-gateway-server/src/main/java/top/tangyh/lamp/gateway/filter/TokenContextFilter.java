@@ -55,10 +55,8 @@ import static top.tangyh.basic.context.ContextConstants.USER_ID_HEADER;
 @Slf4j
 @RequiredArgsConstructor
 public class TokenContextFilter implements WebFilter, Ordered {
-    private final IgnoreProperties ignoreProperties;
     protected final SaTokenConfig saTokenConfig;
-
-
+    private final IgnoreProperties ignoreProperties;
     @Value("${spring.profiles.active:dev}")
     protected String profiles;
 

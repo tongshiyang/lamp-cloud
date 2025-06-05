@@ -10,7 +10,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import top.tangyh.basic.base.service.impl.SuperCacheServiceImpl;
-import top.tangyh.basic.context.ContextUtil;
 import top.tangyh.basic.database.mybatis.conditions.Wraps;
 import top.tangyh.basic.database.mybatis.conditions.query.LbQueryWrap;
 import top.tangyh.basic.exception.BizException;
@@ -37,7 +36,6 @@ import top.tangyh.lamp.model.enumeration.system.DataTypeEnum;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
@@ -72,7 +70,7 @@ public class BaseRoleServiceImpl extends SuperCacheServiceImpl<BaseRoleManager, 
     protected <SaveVO> BaseRole saveBefore(SaveVO saveVO) {
         BaseRoleSaveVO data = (BaseRoleSaveVO) saveVO;
         ArgumentAssert.isFalse(StrUtil.isNotBlank(data.getCode()) &&
-                check(data.getCode(), null), "角色编码{}已存在", data.getCode());
+                               check(data.getCode(), null), "角色编码{}已存在", data.getCode());
         BaseRole baseRole = super.saveBefore(data);
         baseRole.setCode(StrHelper.getOrDef(data.getCode(), RandomUtil.randomString(8)));
         baseRole.setType(DataTypeEnum.BUSINESS.getCode());
@@ -84,7 +82,7 @@ public class BaseRoleServiceImpl extends SuperCacheServiceImpl<BaseRoleManager, 
     protected <UpdateVO> BaseRole updateBefore(UpdateVO updateVO) {
         BaseRoleUpdateVO data = (BaseRoleUpdateVO) updateVO;
         ArgumentAssert.isFalse(StrUtil.isNotBlank(data.getCode()) &&
-                check(data.getCode(), data.getId()), "角色编码{}已存在", data.getCode());
+                               check(data.getCode(), data.getId()), "角色编码{}已存在", data.getCode());
         BaseRole baseRole = super.updateBefore(data);
         baseRole.setCode(StrHelper.getOrDef(data.getCode(), RandomUtil.randomString(8)));
         baseRole.setReadonly(false);

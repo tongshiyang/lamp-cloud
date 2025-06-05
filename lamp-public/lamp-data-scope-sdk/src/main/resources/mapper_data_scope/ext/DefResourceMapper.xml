@@ -73,7 +73,7 @@
         <include refid="DataScope_R_Column_List"/>
         FROM def_resource r
         LEFT JOIN def_resource menu on menu.id = r.parent_id
-        WHERE  r.resource_type = 60 and menu.application_id = #{applicationId}
+        WHERE r.resource_type = 60 and menu.application_id = #{applicationId}
         and menu.path = #{path}
         and menu.state = 1
         ORDER BY r.is_def desc, r.sort_value ASC

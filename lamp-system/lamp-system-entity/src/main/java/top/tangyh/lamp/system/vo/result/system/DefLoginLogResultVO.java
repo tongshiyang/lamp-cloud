@@ -50,73 +50,73 @@ public class DefLoginLogResultVO extends Entity<Long> implements Serializable, E
      * 登录员工
      */
     @Schema(description = "登录员工")
-    
+
     private Long employeeId;
     /**
      * 登录用户
      */
     @Schema(description = "登录用户")
-    
+
     private Long userId;
     /**
      * 登录IP
      */
     @Schema(description = "登录IP")
-    
+
     private String requestIp;
     /**
      * 登录人姓名
      */
     @Schema(description = "登录人姓名")
-    
+
     private String nickName;
     /**
      * 登录人账号
      */
     @Schema(description = "登录人账号")
-    
+
     private String username;
     /**
      * 登录描述
      */
     @Schema(description = "登录描述")
-    
+
     private String description;
     /**
      * 登录时间
      */
     @Schema(description = "登录时间")
-    
+
     private String loginDate;
     /**
      * 浏览器请求头
      */
     @Schema(description = "浏览器请求头")
-    
+
     private String ua;
     /**
      * 浏览器名称
      */
     @Schema(description = "浏览器名称")
-    
+
     private String browser;
     /**
      * 浏览器版本
      */
     @Schema(description = "浏览器版本")
-    
+
     private String browserVersion;
     /**
      * 操作系统
      */
     @Schema(description = "操作系统")
-    
+
     private String operatingSystem;
     /**
      * 登录地点
      */
     @Schema(description = "登录地点")
-    
+
     private String location;
 
     /**

@@ -10,7 +10,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import top.tangyh.basic.base.entity.SuperEntity;
 import top.tangyh.basic.base.manager.impl.SuperManagerImpl;
-import top.tangyh.basic.context.ContextUtil;
 import top.tangyh.basic.database.mybatis.conditions.Wraps;
 import top.tangyh.basic.database.mybatis.conditions.query.LbQueryWrap;
 import top.tangyh.basic.interfaces.echo.EchoVO;

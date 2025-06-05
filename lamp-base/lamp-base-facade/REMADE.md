@@ -19,5 +19,4 @@
 - lamp-xxx-cloud-impl
   微服务版本的具体实现
 
-
 lamp-xxx-api 暴露xxx服务的接口，提供给其他服务调用 

@@ -39,7 +39,7 @@ public class BasePositionManagerImpl extends SuperCacheManagerImpl<BasePositionM
 
     @Transactional(readOnly = true)
     @Override
-    
+
     public Map<Serializable, Object> findByIds(Set<Serializable> ids) {
         List<BasePosition> list = findByIds(ids, null).stream().filter(Objects::nonNull).toList();
         return CollHelper.uniqueIndex(list, BasePosition::getId, BasePosition::getName);

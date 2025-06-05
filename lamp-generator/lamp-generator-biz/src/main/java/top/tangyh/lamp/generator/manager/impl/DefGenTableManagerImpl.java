@@ -36,10 +36,10 @@ import java.util.Map;
 public class DefGenTableManagerImpl extends SuperManagerImpl<DefGenTableMapper, DefGenTable> implements DefGenTableManager {
 
     private final GenDefDatasourceConfigMapper defDatasourceConfigManager;
-    @Value("${spring.datasource.druid.validation-query}")
-    private String validationQuery;
     private final DataSource dataSource;
     private final Map<String, DataSource> dsMap = new HashMap<>();
+    @Value("${spring.datasource.druid.validation-query}")
+    private String validationQuery;
 
     @Override
     public DbType getDbType() {

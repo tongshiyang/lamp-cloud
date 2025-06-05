@@ -2,7 +2,6 @@ package top.tangyh.lamp.oauth.facde.impl;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import top.tangyh.basic.base.R;
 import top.tangyh.basic.model.log.OptLogDTO;
 import top.tangyh.basic.utils.BeanPlusUtil;
 import top.tangyh.lamp.base.service.system.BaseOperationLogService;

@@ -37,7 +37,7 @@ import static top.tangyh.lamp.model.constant.Condition.LIKE;
 @AllArgsConstructor
 @Accessors(chain = true)
 @ToString(callSuper = true)
-@EqualsAndHashCode(callSuper=false)
+@EqualsAndHashCode(callSuper = false)
 @Schema(description = "角色")
 @TableName("base_role")
 @Builder

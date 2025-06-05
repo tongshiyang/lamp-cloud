@@ -37,7 +37,7 @@ import static top.tangyh.lamp.model.constant.Condition.LIKE;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@EqualsAndHashCode(callSuper=false)
+@EqualsAndHashCode(callSuper = false)
 @Accessors(chain = true)
 @ToString(callSuper = true)
 @Builder

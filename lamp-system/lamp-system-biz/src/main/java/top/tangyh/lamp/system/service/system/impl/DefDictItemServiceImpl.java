@@ -1,7 +1,6 @@
 package top.tangyh.lamp.system.service.system.impl;
 
 import cn.hutool.core.bean.BeanUtil;
-
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -12,7 +11,6 @@ import top.tangyh.basic.database.mybatis.conditions.Wraps;
 import top.tangyh.basic.model.cache.CacheHashKey;
 import top.tangyh.basic.utils.ArgumentAssert;
 import top.tangyh.lamp.common.cache.tenant.base.DictCacheKeyBuilder;
-
 import top.tangyh.lamp.model.enumeration.system.DictClassifyEnum;
 import top.tangyh.lamp.system.entity.system.DefDict;
 import top.tangyh.lamp.system.manager.system.DefDictManager;

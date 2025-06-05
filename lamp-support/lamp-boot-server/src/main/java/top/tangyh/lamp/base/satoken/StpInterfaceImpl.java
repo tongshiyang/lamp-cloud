@@ -13,7 +13,6 @@ import top.tangyh.lamp.common.constant.RoleConstant;
 import top.tangyh.lamp.system.entity.application.DefResource;
 import top.tangyh.lamp.system.service.application.DefResourceService;
 
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 

@@ -3,7 +3,6 @@ package top.tangyh.lamp.datascope.service;
 import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.convert.Convert;
 import cn.hutool.core.util.StrUtil;
-
 import com.google.common.collect.ImmutableMap;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -12,7 +11,6 @@ import org.springframework.transaction.annotation.Transactional;
 import top.tangyh.basic.database.mybatis.conditions.Wraps;
 import top.tangyh.basic.utils.CollHelper;
 import top.tangyh.lamp.common.constant.DefValConstants;
-
 import top.tangyh.lamp.datascope.entity.BaseOrgBO;
 import top.tangyh.lamp.datascope.mapper.DataScopeMapper;
 import top.tangyh.lamp.model.enumeration.base.OrgTypeEnum;
@@ -54,7 +52,7 @@ public class OrgHelperService {
      * @date 2022/4/12 12:33 PM
      * @create [2022/4/12 12:33 PM ] [tangyh] [初始创建]
      */
-    
+
     public Long getMainDeptIdByEmployeeId(Long employeeId) {
         BaseOrgBO baseOrg = dataScopeMapper.getMainDeptIdByEmployeeId(employeeId);
         return baseOrg != null ? baseOrg.getId() : null;
@@ -71,7 +69,7 @@ public class OrgHelperService {
      * @date 2022/4/12 12:34 PM
      * @create [2022/4/12 12:34 PM ] [tangyh] [初始创建]
      */
-    
+
     public List<Long> findDeptAndChildrenIdByEmployeeId(Long employeeId) {
         BaseOrgBO baseOrg = dataScopeMapper.getMainDeptIdByEmployeeId(employeeId);
         if (baseOrg == null) {
@@ -92,7 +90,7 @@ public class OrgHelperService {
      * @date 2022/4/12 12:34 PM
      * @create [2022/4/12 12:34 PM ] [tangyh] [初始创建]
      */
-    
+
     public Long getMainCompanyIdByEmployeeId(Long employeeId) {
         BaseOrgBO mainCompany = getMainCompanyByEmployeeId(employeeId);
         return mainCompany != null ? mainCompany.getId() : null;
@@ -107,7 +105,7 @@ public class OrgHelperService {
      * @date 2022/4/12 12:53 PM
      * @create [2022/4/12 12:53 PM ] [tangyh] [初始创建]
      */
-    
+
     public List<Long> findCompanyAndChildrenIdByEmployeeId(Long employeeId) {
         BaseOrgBO mainCompany = getMainCompanyByEmployeeId(employeeId);
         if (mainCompany == null) {

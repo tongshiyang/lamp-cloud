@@ -3,6 +3,7 @@ package top.tangyh.lamp.areatest;
 import cn.hutool.core.date.DateUtil;
 import cn.hutool.core.date.TimeInterval;
 import cn.hutool.log.StaticLog;
+import jakarta.annotation.Resource;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -10,7 +11,6 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import top.tangyh.lamp.system.entity.system.DefArea;
 
-import jakarta.annotation.Resource;
 import java.util.List;
 
 @SpringBootTest

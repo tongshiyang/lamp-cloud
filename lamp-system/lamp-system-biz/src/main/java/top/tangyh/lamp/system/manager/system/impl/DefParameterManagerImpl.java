@@ -2,7 +2,6 @@ package top.tangyh.lamp.system.manager.system.impl;
 
 import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.convert.Convert;
-
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -12,7 +11,6 @@ import top.tangyh.basic.database.mybatis.conditions.query.LbQueryWrap;
 import top.tangyh.basic.model.cache.CacheKeyBuilder;
 import top.tangyh.basic.utils.CollHelper;
 import top.tangyh.lamp.common.cache.tenant.base.DictParameterKeyBuilder;
-
 import top.tangyh.lamp.system.entity.system.DefParameter;
 import top.tangyh.lamp.system.manager.system.DefParameterManager;
 import top.tangyh.lamp.system.mapper.system.DefParameterMapper;
@@ -44,7 +42,7 @@ public class DefParameterManagerImpl extends SuperCacheManagerImpl<DefParameterM
     }
 
     @Override
-    
+
     public Map<Serializable, Object> findByIds(Set<Serializable> ids) {
         if (CollUtil.isEmpty(ids)) {
             return Collections.emptyMap();
@@ -58,7 +56,7 @@ public class DefParameterManagerImpl extends SuperCacheManagerImpl<DefParameterM
     }
 
     @Override
-    
+
     public Map<String, String> findParamMapByKey(List<String> paramsKeys) {
         if (CollUtil.isEmpty(paramsKeys)) {
             return Collections.emptyMap();

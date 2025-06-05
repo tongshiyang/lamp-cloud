@@ -4,7 +4,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import top.tangyh.lamp.base.service.user.BaseOrgService;
 import top.tangyh.lamp.model.constant.EchoApi;
-import top.tangyh.lamp.oauth.facade.DictFacade;
 import top.tangyh.lamp.oauth.facade.OrgFacade;
 
 import java.io.Serializable;

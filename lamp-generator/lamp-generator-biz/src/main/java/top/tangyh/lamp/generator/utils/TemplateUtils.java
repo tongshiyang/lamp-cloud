@@ -104,8 +104,7 @@ public class TemplateUtils {
                 templates.add(GenCodeConstant.TEMPLATE_WEB_SOYBEAN_SIMPLE_INDEX);
                 templates.add(GenCodeConstant.TEMPLATE_WEB_SOYBEAN_SIMPLE_CRUD);
             }
-        }
-        else if (TemplateEnum.WEB_VBEN5.eq(template)) {
+        } else if (TemplateEnum.WEB_VBEN5.eq(template)) {
             templates.add(GenCodeConstant.TEMPLATE_WEB_VBEN5_SIMPLE_API);
             templates.add(GenCodeConstant.TEMPLATE_WEB_VBEN5_SIMPLE_MODEL);
             templates.add(GenCodeConstant.TEMPLATE_WEB_VBEN5_SIMPLE_LANG_EN);

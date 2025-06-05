@@ -13,7 +13,7 @@ import top.tangyh.lamp.msg.strategy.domain.BaseProperty;
  * @date 2022/7/10 0010 18:56
  */
 @Data
-@EqualsAndHashCode(callSuper=false)
+@EqualsAndHashCode(callSuper = false)
 public class AliSmsProperty extends BaseProperty {
     /**
      * 更多服务接入点请参考： https://help.aliyun.com/document_detail/419270.html

@@ -1,7 +1,6 @@
 package top.tangyh.lamp.msg.service.impl;
 
 import cn.hutool.core.util.StrUtil;
-
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -12,7 +11,6 @@ import top.tangyh.basic.jackson.JsonUtil;
 import top.tangyh.basic.model.Kv;
 import top.tangyh.basic.utils.ArgumentAssert;
 import top.tangyh.basic.utils.StrPool;
-
 import top.tangyh.lamp.msg.entity.DefMsgTemplate;
 import top.tangyh.lamp.msg.manager.DefMsgTemplateManager;
 import top.tangyh.lamp.msg.service.DefMsgTemplateService;
@@ -40,18 +38,6 @@ import java.util.regex.Pattern;
 @Service
 @Transactional(readOnly = true)
 public class DefMsgTemplateServiceImpl extends SuperServiceImpl<DefMsgTemplateManager, Long, DefMsgTemplate> implements DefMsgTemplateService {
-    @Override
-    public DefMsgTemplate getByCode(String code) {
-        return superManager.getByCode(code);
-    }
-
-    @Override
-    public Boolean check(String code, Long id) {
-        ArgumentAssert.notEmpty(code, "请填写模板标识");
-        return superManager.count(Wraps.<DefMsgTemplate>lbQ().eq(DefMsgTemplate::getCode, code)
-                .ne(DefMsgTemplate::getId, id)) > 0;
-    }
-
     /**
      * 解析占位符 ${xxx}
      */
@@ -86,10 +72,22 @@ public class DefMsgTemplateServiceImpl extends SuperServiceImpl<DefMsgTemplateMa
     }
 
     @Override
+    public DefMsgTemplate getByCode(String code) {
+        return superManager.getByCode(code);
+    }
+
+    @Override
+    public Boolean check(String code, Long id) {
+        ArgumentAssert.notEmpty(code, "请填写模板标识");
+        return superManager.count(Wraps.<DefMsgTemplate>lbQ().eq(DefMsgTemplate::getCode, code)
+                .ne(DefMsgTemplate::getId, id)) > 0;
+    }
+
+    @Override
     protected <SaveVO> DefMsgTemplate saveBefore(SaveVO saveVO) {
         DefMsgTemplateSaveVO extendMsgTemplateSaveVO = (DefMsgTemplateSaveVO) saveVO;
         ArgumentAssert.isFalse(StrUtil.isNotBlank(extendMsgTemplateSaveVO.getCode()) &&
-                check(extendMsgTemplateSaveVO.getCode(), null), "模板标识{}已存在", extendMsgTemplateSaveVO.getCode());
+                               check(extendMsgTemplateSaveVO.getCode(), null), "模板标识{}已存在", extendMsgTemplateSaveVO.getCode());
         extendMsgTemplateSaveVO.setParam(getParamByContent(extendMsgTemplateSaveVO.getTitle(), extendMsgTemplateSaveVO.getContent()));
         return super.saveBefore(extendMsgTemplateSaveVO);
     }
@@ -98,7 +96,7 @@ public class DefMsgTemplateServiceImpl extends SuperServiceImpl<DefMsgTemplateMa
     protected <UpdateVO> DefMsgTemplate updateBefore(UpdateVO updateVO) {
         DefMsgTemplateUpdateVO extendMsgTemplateUpdateVO = (DefMsgTemplateUpdateVO) updateVO;
         ArgumentAssert.isFalse(StrUtil.isNotBlank(extendMsgTemplateUpdateVO.getCode()) &&
-                        check(extendMsgTemplateUpdateVO.getCode(), extendMsgTemplateUpdateVO.getId()),
+                               check(extendMsgTemplateUpdateVO.getCode(), extendMsgTemplateUpdateVO.getId()),
                 "模板标识{}已存在", extendMsgTemplateUpdateVO.getCode());
         extendMsgTemplateUpdateVO.setParam(getParamByContent(extendMsgTemplateUpdateVO.getTitle(), extendMsgTemplateUpdateVO.getContent()));
         return super.updateBefore(extendMsgTemplateUpdateVO);

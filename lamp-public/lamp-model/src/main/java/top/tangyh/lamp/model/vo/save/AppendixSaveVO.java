@@ -43,6 +43,52 @@ public class AppendixSaveVO implements Serializable {
     @Schema(description = "类型和附件id")
     private List<TypeFile> typeFiles;
 
+    public static AppendixSaveVO buildDelete(Long bizId) {
+        ArgumentAssert.notNull(bizId, "请填写业务id");
+        return new AppendixSaveVO().setBizId(bizId);
+    }
+
+    public static AppendixSaveVO build(Long bizId, String bizType, Long fileId) {
+        ArgumentAssert.notNull(bizId, "请填写业务id");
+        ArgumentAssert.notEmpty(bizType, "请填写业务类型");
+        return new AppendixSaveVO().setBizId(bizId).setTypeFiles(TypeFile.build(bizType, fileId));
+    }
+
+    public static AppendixSaveVO build(Long bizId, String bizType, List<Long> fileIds) {
+        ArgumentAssert.notNull(bizId, "请填写业务id");
+        ArgumentAssert.notEmpty(bizType, "请填写业务类型");
+        return new AppendixSaveVO().setBizId(bizId).setTypeFiles(TypeFile.build(bizType, fileIds));
+    }
+
+    public static AppendixSaveVO build(Long bizId, TypeFile... typeFiles) {
+        ArgumentAssert.notNull(bizId, "请填写业务id");
+        return new AppendixSaveVO().setBizId(bizId).setTypeFiles(typeFiles);
+    }
+
+    public static AppendixSaveVO build(Long bizId, List<TypeFile> typeFiles) {
+        ArgumentAssert.notNull(bizId, "请填写业务id");
+        return new AppendixSaveVO().setBizId(bizId).setTypeFiles(typeFiles);
+    }
+
+    public AppendixSaveVO setTypeFiles(List<TypeFile> typeFiles) {
+        this.typeFiles = typeFiles == null ? Collections.emptyList() : typeFiles;
+        return this;
+    }
+
+    public AppendixSaveVO setTypeFiles(TypeFile typeFile) {
+        if (typeFile != null) {
+            this.setTypeFiles(Collections.singletonList(typeFile));
+        }
+        return this;
+    }
+
+    public AppendixSaveVO setTypeFiles(TypeFile... typeFiles) {
+        if (typeFiles.length > 0) {
+            this.setTypeFiles(Arrays.stream(typeFiles).toList());
+        }
+        return this;
+    }
+
     @Getter
     @Setter
     @ToString
@@ -66,53 +112,6 @@ public class AppendixSaveVO implements Serializable {
             return new TypeFile().setBizType(bizType).setFileIdList(fileIds);
         }
 
-    }
-
-
-    public static AppendixSaveVO buildDelete(Long bizId) {
-        ArgumentAssert.notNull(bizId, "请填写业务id");
-        return new AppendixSaveVO().setBizId(bizId);
-    }
-
-    public AppendixSaveVO setTypeFiles(List<TypeFile> typeFiles) {
-        this.typeFiles = typeFiles == null ? Collections.emptyList() : typeFiles;
-        return this;
-    }
-
-    public AppendixSaveVO setTypeFiles(TypeFile typeFile) {
-        if (typeFile != null) {
-            this.setTypeFiles(Collections.singletonList(typeFile));
-        }
-        return this;
-    }
-
-    public AppendixSaveVO setTypeFiles(TypeFile... typeFiles) {
-        if (typeFiles.length > 0) {
-            this.setTypeFiles(Arrays.stream(typeFiles).toList());
-        }
-        return this;
-    }
-
-    public static AppendixSaveVO build(Long bizId, String bizType, Long fileId) {
-        ArgumentAssert.notNull(bizId, "请填写业务id");
-        ArgumentAssert.notEmpty(bizType, "请填写业务类型");
-        return new AppendixSaveVO().setBizId(bizId).setTypeFiles(TypeFile.build(bizType, fileId));
-    }
-
-    public static AppendixSaveVO build(Long bizId, String bizType, List<Long> fileIds) {
-        ArgumentAssert.notNull(bizId, "请填写业务id");
-        ArgumentAssert.notEmpty(bizType, "请填写业务类型");
-        return new AppendixSaveVO().setBizId(bizId).setTypeFiles(TypeFile.build(bizType, fileIds));
-    }
-
-    public static AppendixSaveVO build(Long bizId, TypeFile... typeFiles) {
-        ArgumentAssert.notNull(bizId, "请填写业务id");
-        return new AppendixSaveVO().setBizId(bizId).setTypeFiles(typeFiles);
-    }
-
-    public static AppendixSaveVO build(Long bizId, List<TypeFile> typeFiles) {
-        ArgumentAssert.notNull(bizId, "请填写业务id");
-        return new AppendixSaveVO().setBizId(bizId).setTypeFiles(typeFiles);
     }
 
 }

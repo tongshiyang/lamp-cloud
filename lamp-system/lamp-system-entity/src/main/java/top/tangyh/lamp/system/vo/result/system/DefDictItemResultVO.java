@@ -46,66 +46,66 @@ public class DefDictItemResultVO extends Entity<Long> implements Serializable, E
      * 字典ID
      */
     @Schema(description = "字典ID")
-    
+
     private Long parentId;
     /**
      * 父字典标识
      */
     @Schema(description = "父字典标识")
-    
+
     private String parentKey;
     /**
      * 分类;[10-系统字典 20-业务字典]@Echo(api = EchoApi.DICTIONARY_ITEM_FEIGN_CLASS, dictType = EchoDictType.System.DICT_CLASSIFY)
      */
     @Schema(description = "分类")
-    
+
     private String classify;
     /**
      * 标识
      */
     @Schema(description = "标识")
-    
+
     private String key;
     /**
      * 名称
      */
     @Schema(description = "名称")
-    
+
     private String name;
     /**
      * 状态
      */
     @Schema(description = "状态")
-    
+
     private Boolean state;
     /**
      * 备注
      */
     @Schema(description = "备注")
-    
+
     private String remark;
     /**
      * 排序
      */
     @Schema(description = "排序")
-    
+
     private Integer sortValue;
     /**
      * 图标
      */
     @Schema(description = "图标")
-    
+
     private String icon;
     /**
      * css样式
      */
     @Schema(description = "css样式")
-    
+
     private String cssStyle;
     /**
      * css类元素
      */
     @Schema(description = "css类元素")
-    
+
     private String cssClass;
 }

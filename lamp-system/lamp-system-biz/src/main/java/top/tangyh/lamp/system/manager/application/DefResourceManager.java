@@ -60,6 +60,7 @@ public interface DefResourceManager extends SuperCacheManager<DefResource> {
      * @return
      */
     List<DefResource> findAllChildrenByParentId(Long parentId);
+
     /**
      * 删除 角色-资源关系表
      *
@@ -70,6 +71,7 @@ public interface DefResourceManager extends SuperCacheManager<DefResource> {
      * @create [2021/9/17 10:51 下午 ] [tangyh] [初始创建]
      */
     int deleteRoleResourceRelByResourceId(List<Long> resourceIds);
+
     /**
      * 根据应用id查询应用下的资源
      *

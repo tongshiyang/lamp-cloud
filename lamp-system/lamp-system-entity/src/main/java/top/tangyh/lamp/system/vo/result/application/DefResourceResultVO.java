@@ -40,27 +40,27 @@ import java.util.Map;
 public class DefResourceResultVO extends TreeEntity<DefResourceResultVO, Long> implements Serializable, EchoVO {
 
     private static final long serialVersionUID = 1L;
-    @Builder.Default
-    private Map<String, Object> echoMap = new HashMap<>();
     @Schema(description = "名称")
     protected String name;
     @Schema(description = "父ID")
     protected Long parentId;
     @Schema(description = "排序号")
     protected Integer sortValue;
+    @Builder.Default
+    private Map<String, Object> echoMap = new HashMap<>();
     @Schema(description = "主键")
     private Long id;
     /**
      * 应用ID;#def_application
      */
     @Schema(description = "应用ID")
-    
+
     private Long applicationId;
     /**
      * 编码;唯一编码，用于区分资源
      */
     @Schema(description = "编码")
-    
+
     private String code;
     /**
      * 类型;[20-菜单 30-视图 40-按钮 50-字段 06-数据]@Echo(api = EchoApi.DICTIONARY_ITEM_FEIGN_CLASS, dictType = EchoDictType.System.RESOURCE_TYPE)
@@ -68,7 +68,7 @@ public class DefResourceResultVO extends TreeEntity<DefResourceResultVO, Long> i
      */
     @Schema(description = "类型")
     @Echo(api = EchoApi.DICTIONARY_ITEM_FEIGN_CLASS, dictType = EchoDictType.System.RESOURCE_TYPE)
-    
+
     private String resourceType;
     /**
      * 打开方式 [01-组件 02-内链 03-外链]
@@ -80,38 +80,38 @@ public class DefResourceResultVO extends TreeEntity<DefResourceResultVO, Long> i
      * 描述;resource_type=接口时表示接口说明
      */
     @Schema(description = "描述")
-    
+
     private String describe;
     /**
      * 地址栏路径;用于resource_type=菜单和视图和接口.resource_type=菜单和视图，表示地址栏地址, http开头表示外链, is_frame_src 为true表示在框架类打开.resource_type=接口，表示后端接口请求地址.
      */
     @Schema(description = "地址栏路径")
-    
+
     private String path;
     /**
      * 页面路径;用于resource_type=菜单和视图.
      * 前端页面在src/views目录下的相对地址.
      */
     @Schema(description = "页面路径")
-    
+
     private String component;
     /**
      * 重定向;用于resource_type=菜单和视图
      */
     @Schema(description = "重定向")
-    
+
     private String redirect;
     /**
      * 图标
      */
     @Schema(description = "图标")
-    
+
     private String icon;
     /**
      * 是否公共资源;1-无需分配所有人就可以访问的
      */
     @Schema(description = "是否公共资源")
-    
+
     private Boolean isGeneral;
     /**
      * 是否隐藏菜单;
@@ -123,25 +123,25 @@ public class DefResourceResultVO extends TreeEntity<DefResourceResultVO, Long> i
      * 状态;[0-禁用 1-启用]
      */
     @Schema(description = "状态")
-    
+
     private Boolean state;
     /**
      * 分组
      */
     @Schema(description = "分组")
-    
+
     private String subGroup;
     /**
      * 是否脱敏;显示时是否需要脱敏实现 (用于resource_type=字段)
      */
     @Schema(description = "是否脱敏")
-    
+
     private Boolean fieldIsSecret;
     /**
      * 是否可以编辑;是否可以编辑(用于resource_type=字段)
      */
     @Schema(description = "是否可以编辑")
-    
+
     private Boolean fieldIsEdit;
     /**
      * 数据范围;[01-全部 02-本单位及子级 03-本单位 04-本部门 05-本部门及子级 06-个人 07-自定义]
@@ -163,7 +163,7 @@ public class DefResourceResultVO extends TreeEntity<DefResourceResultVO, Long> i
      * 元数据;菜单视图的元数据
      */
     @Schema(description = "元数据")
-    
+
     private String metaJson;
     /**
      * 树层级

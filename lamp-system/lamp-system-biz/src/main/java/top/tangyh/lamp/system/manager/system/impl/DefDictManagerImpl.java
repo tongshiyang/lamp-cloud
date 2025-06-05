@@ -5,7 +5,6 @@ import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.map.MapBuilder;
 import cn.hutool.core.map.MapUtil;
 import cn.hutool.core.util.StrUtil;
-
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import top.tangyh.basic.base.manager.impl.SuperManagerImpl;
@@ -18,7 +17,6 @@ import top.tangyh.basic.model.cache.CacheHashKey;
 import top.tangyh.basic.utils.CollHelper;
 import top.tangyh.lamp.common.cache.tenant.base.DictCacheKeyBuilder;
 import top.tangyh.lamp.common.constant.DefValConstants;
-
 import top.tangyh.lamp.system.entity.system.DefDict;
 import top.tangyh.lamp.system.manager.system.DefDictManager;
 import top.tangyh.lamp.system.mapper.system.DefDictMapper;
@@ -49,7 +47,7 @@ public class DefDictManagerImpl extends SuperManagerImpl<DefDictMapper, DefDict>
     private final EchoProperties ips;
 
     @Override
-    
+
     public Map<Serializable, Object> findByIds(Set<Serializable> dictKeys) {
         if (dictKeys.isEmpty()) {
             return Collections.emptyMap();
@@ -79,7 +77,7 @@ public class DefDictManagerImpl extends SuperManagerImpl<DefDictMapper, DefDict>
 
 
     @Override
-    
+
     public Map<String, List<DefDictItemResultVO>> findDictMapItemListByKey(List<String> dictKeys) {
         if (CollUtil.isEmpty(dictKeys)) {
             return Collections.emptyMap();

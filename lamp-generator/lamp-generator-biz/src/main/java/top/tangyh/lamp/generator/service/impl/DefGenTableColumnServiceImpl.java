@@ -4,7 +4,6 @@ import cn.hutool.core.bean.BeanUtil;
 import cn.hutool.db.meta.Column;
 import cn.hutool.db.meta.MetaUtil;
 import cn.hutool.db.meta.Table;
-
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -15,7 +14,6 @@ import top.tangyh.basic.base.service.impl.SuperServiceImpl;
 import top.tangyh.basic.database.mybatis.conditions.Wraps;
 import top.tangyh.basic.utils.ArgumentAssert;
 import top.tangyh.basic.utils.BeanPlusUtil;
-
 import top.tangyh.lamp.generator.config.GeneratorConfig;
 import top.tangyh.lamp.generator.entity.DefGenTable;
 import top.tangyh.lamp.generator.entity.DefGenTableColumn;

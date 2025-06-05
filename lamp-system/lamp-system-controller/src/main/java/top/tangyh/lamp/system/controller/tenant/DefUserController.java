@@ -65,6 +65,39 @@ public class DefUserController extends SuperExcelController<DefUserService, Long
 
     private final EchoService echoService;
 
+    public static <T> IPage<T> buildPager(long pageSize, long pageIndex, List<T> list) {
+        //使用list 中的sublist方法分页
+        List<T> dataList = new ArrayList<>();
+        IPage<T> pageInfoVo = new Page<>(pageIndex, pageSize);
+        //当前第几页数据
+        long currentPage;
+        // 一共多少条记录
+        long totalRecord = list.size();
+        // 一共多少页
+        long totalPage = totalRecord % pageSize;
+        if (totalPage > 0) {
+            totalPage = totalRecord / pageSize + 1;
+        } else {
+            totalPage = totalRecord / pageSize;
+        }
+        pageInfoVo.setTotal(totalRecord);
+        // 当前第几页数据
+        currentPage = Math.min(totalPage, pageIndex);
+        // 起始索引
+        int fromIndex = (int) (pageSize * (currentPage - 1));
+        // 结束索引
+        int toIndex = (int) (Math.min(pageSize * currentPage, totalRecord));
+        try {
+            if (!list.isEmpty()) {
+                dataList = list.subList(fromIndex, toIndex);
+            }
+        } catch (IndexOutOfBoundsException e) {
+            log.error("e", e);
+        }
+        pageInfoVo.setRecords(dataList);
+        return pageInfoVo;
+    }
+
     @Override
     public Class<?> getExcelClass() {
         return DefUserExcelVO.class;
@@ -74,7 +107,6 @@ public class DefUserController extends SuperExcelController<DefUserService, Long
     public EchoService getEchoService() {
         return echoService;
     }
-
 
     @Operation(summary = "检测用户名是否存在")
     @GetMapping("/checkUsername")
@@ -156,7 +188,6 @@ public class DefUserController extends SuperExcelController<DefUserService, Long
         return R.success(superService.queryUser(params));
     }
 
-
     @PostMapping("/onlineUsers/logout")
     @Operation(summary = "强制注销")
     @WebLog("强制注销")
@@ -169,7 +200,6 @@ public class DefUserController extends SuperExcelController<DefUserService, Long
         }
         return R.success(true);
     }
-
 
     @PostMapping("/onlineUsers/kickout")
     @Operation(summary = "踢人下线")
@@ -257,38 +287,5 @@ public class DefUserController extends SuperExcelController<DefUserService, Long
         IPage<OnlineTokenResultVO> page = new Page<>(params.getCurrent(), params.getSize(), loginUserList.size());
         page.setRecords(loginUserList);
         return R.success(page);
-    }
-
-    public static <T> IPage<T> buildPager(long pageSize, long pageIndex, List<T> list) {
-        //使用list 中的sublist方法分页
-        List<T> dataList = new ArrayList<>();
-        IPage<T> pageInfoVo = new Page<>(pageIndex, pageSize);
-        //当前第几页数据
-        long currentPage;
-        // 一共多少条记录
-        long totalRecord = list.size();
-        // 一共多少页
-        long totalPage = totalRecord % pageSize;
-        if (totalPage > 0) {
-            totalPage = totalRecord / pageSize + 1;
-        } else {
-            totalPage = totalRecord / pageSize;
-        }
-        pageInfoVo.setTotal(totalRecord);
-        // 当前第几页数据
-        currentPage = Math.min(totalPage, pageIndex);
-        // 起始索引
-        int fromIndex = (int) (pageSize * (currentPage - 1));
-        // 结束索引
-        int toIndex = (int) (Math.min(pageSize * currentPage, totalRecord));
-        try {
-            if (!list.isEmpty()) {
-                dataList = list.subList(fromIndex, toIndex);
-            }
-        } catch (IndexOutOfBoundsException e) {
-            log.error("e", e);
-        }
-        pageInfoVo.setRecords(dataList);
-        return pageInfoVo;
     }
 }

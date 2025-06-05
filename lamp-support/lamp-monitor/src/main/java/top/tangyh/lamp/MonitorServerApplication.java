@@ -24,7 +24,7 @@ public class MonitorServerApplication {
         ConfigurableApplicationContext application = SpringApplication.run(MonitorServerApplication.class, args);
         Environment env = application.getEnvironment();
         String msg = """
-                                                                                 
+                
                 ----------------------------------------------------------
                 应用 '{}' 启动成功!
                 监控地址: http://{}:{}{}

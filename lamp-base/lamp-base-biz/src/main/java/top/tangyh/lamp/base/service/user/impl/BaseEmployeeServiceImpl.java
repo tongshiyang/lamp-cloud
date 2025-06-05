@@ -3,7 +3,6 @@ package top.tangyh.lamp.base.service.user.impl;
 import cn.hutool.core.bean.BeanUtil;
 import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.convert.Convert;
-import cn.hutool.core.util.StrUtil;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import lombok.RequiredArgsConstructor;
@@ -30,8 +29,6 @@ import top.tangyh.lamp.base.vo.save.user.BaseEmployeeSaveVO;
 import top.tangyh.lamp.base.vo.update.user.BaseEmployeeUpdateVO;
 import top.tangyh.lamp.common.cache.base.user.EmployeeOrgCacheKeyBuilder;
 import top.tangyh.lamp.common.cache.base.user.EmployeeRoleCacheKeyBuilder;
-import top.tangyh.lamp.common.constant.BizConstant;
-
 import top.tangyh.lamp.common.constant.RoleConstant;
 
 import java.util.Collection;
@@ -54,12 +51,14 @@ import java.util.List;
 public class BaseEmployeeServiceImpl extends SuperCacheServiceImpl<BaseEmployeeManager, Long, BaseEmployee> implements BaseEmployeeService {
     private final BaseEmployeeRoleRelManager baseEmployeeRoleRelManager;
     private final BaseEmployeeOrgRelManager baseEmployeeOrgRelManager;
+
     @Override
     @Transactional(rollbackFor = Exception.class)
     public void updateOrgInfo(Long id, Long lastCompanyId, Long lastDeptId) {
         superManager.update(Wrappers.<BaseEmployee>lambdaUpdate().set(BaseEmployee::getLastCompanyId, lastCompanyId)
                 .set(BaseEmployee::getLastDeptId, lastDeptId).eq(BaseEmployee::getId, id));
     }
+
     @Override
     @Transactional(rollbackFor = Exception.class)
     public boolean saveBatch(Collection<BaseEmployee> entityList) {

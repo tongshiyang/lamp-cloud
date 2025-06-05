@@ -8,6 +8,7 @@
 [![Star](https://gitee.com/dromara/lamp-cloud/badge/star.svg?theme=gray)](https://gitee.com/dromara/lamp-cloud/stargazers)
 [![Fork](https://gitee.com/dromara/lamp-cloud/badge/fork.svg?theme=gray)](https://gitee.com/dromara/lamp-cloud/members)
 ![star](https://gitcode.com/dromara/lamp-cloud/star/badge.svg)
+
 # 官网
 
 [https://tangyh.top](https://tangyh.top)
@@ -16,14 +17,14 @@
 
 新用户请直接学习和使用 java17/5.x 分支，其他分支已不在维护
 
-| 分支        | java8/3.x     | java17/3.x    | java17/4.x      | java17/5.x  |
-|-----------|---------------|---------------|-------------|-------------|
-| 源码版本      | 3.x           | 3.x           | 4.x     | 5.x         |
-| JDK版本     | jdk8          | jdk17         | jdk17、jdk21 | jdk17、jdk21 |
-| 是否继续升级新功能 | 不开发新功能,仅修复bug | 不开发新功能,仅修复bug | 不开发新功能,仅修复bug| 持续开发新功能和bug修复                                                              |
-| 是否支持数据源模式 | 是(赞助版支持)      | 是(赞助版支持)      | 否([赞助版](https://tangyh.top/vip/%E5%A6%82%E4%BD%95%E8%B5%9E%E5%8A%A9.html)支持)| 否([赞助版](https://tangyh.top/vip/%E5%A6%82%E4%BD%95%E8%B5%9E%E5%8A%A9.html)支持) |
-| 是否支持字段模式  | 是(开源版赞助版均支持)  | 是(开源版赞助版均支持)  | 否([赞助版](https://tangyh.top/vip/%E5%A6%82%E4%BD%95%E8%B5%9E%E5%8A%A9.html)支持)| 否([赞助版](https://tangyh.top/vip/%E5%A6%82%E4%BD%95%E8%B5%9E%E5%8A%A9.html)支持) |
-| 是否支持非租户模式 | 是(开源版赞助版均支持)  | 是(开源版赞助版均支持)  | 是(开源版支持)    | 是(开源版支持)                                                              |
+| 分支        | java8/3.x     | java17/3.x    | java17/4.x                                                                   | java17/5.x                                                                   |
+|-----------|---------------|---------------|------------------------------------------------------------------------------|------------------------------------------------------------------------------|
+| 源码版本      | 3.x           | 3.x           | 4.x                                                                          | 5.x                                                                          |
+| JDK版本     | jdk8          | jdk17         | jdk17、jdk21                                                                  | jdk17、jdk21                                                                  |
+| 是否继续升级新功能 | 不开发新功能,仅修复bug | 不开发新功能,仅修复bug | 不开发新功能,仅修复bug                                                                | 持续开发新功能和bug修复                                                                |
+| 是否支持数据源模式 | 是(赞助版支持)      | 是(赞助版支持)      | 否([赞助版](https://tangyh.top/vip/%E5%A6%82%E4%BD%95%E8%B5%9E%E5%8A%A9.html)支持) | 否([赞助版](https://tangyh.top/vip/%E5%A6%82%E4%BD%95%E8%B5%9E%E5%8A%A9.html)支持) |
+| 是否支持字段模式  | 是(开源版赞助版均支持)  | 是(开源版赞助版均支持)  | 否([赞助版](https://tangyh.top/vip/%E5%A6%82%E4%BD%95%E8%B5%9E%E5%8A%A9.html)支持) | 否([赞助版](https://tangyh.top/vip/%E5%A6%82%E4%BD%95%E8%B5%9E%E5%8A%A9.html)支持) |
+| 是否支持非租户模式 | 是(开源版赞助版均支持)  | 是(开源版赞助版均支持)  | 是(开源版支持)                                                                     | 是(开源版支持)                                                                     |
 
 # lamp 项目名字由来
 
@@ -38,22 +39,22 @@
 
 ## 工具集
 
-| 项目             | gitee                                                        | github                     | gitcode                                | 备注       |
-|----------------|--------------------------------------------------------------|------------------------------------------------------------|------------------------------------------------------------|----------|
-| lamp-util      | [lamp-util](https://gitee.com/zuihou111/lamp-util)           | [lamp-util](https://github.com/zuihou/lamp-util)   | [lamp-util](https://gitcode.com/zuihou/lamp-util)           | 核心工具集    |
-| lamp-job       | [lamp-job](https://gitee.com/zuihou111/lamp-job)             | [lamp-job](https://github.com/zuihou/lamp-job)    | [lamp-job](https://gitcode.com/zuihou/lamp-job)             | 分布式定时调度器 |
+| 项目        | gitee                                              | github                                           | gitcode                                           | 备注       |
+|-----------|----------------------------------------------------|--------------------------------------------------|---------------------------------------------------|----------|
+| lamp-util | [lamp-util](https://gitee.com/zuihou111/lamp-util) | [lamp-util](https://github.com/zuihou/lamp-util) | [lamp-util](https://gitcode.com/zuihou/lamp-util) | 核心工具集    |
+| lamp-job  | [lamp-job](https://gitee.com/zuihou111/lamp-job)   | [lamp-job](https://github.com/zuihou/lamp-job)   | [lamp-job](https://gitcode.com/zuihou/lamp-job)   | 分布式定时调度器 |
 
 ## 后端
 
-| 项目         | gitee                                                  | github           | gitcode                                             | 备注          |
-|------------|--------------------------------------------------------|--------------------------------------------------------|-----------------------------------------------------|-------------|
-| lamp-cloud | [lamp-cloud](https://gitee.com/dromara/lamp-cloud)     | [lamp-cloud](https://github.com/dromara/lamp-cloud)  | [lamp-cloud](https://gitcode.com/zuihou/lamp-cloud) | 微服务和单体模式融合版 |
+| 项目         | gitee                                              | github                                              | gitcode                                             | 备注          |
+|------------|----------------------------------------------------|-----------------------------------------------------|-----------------------------------------------------|-------------|
+| lamp-cloud | [lamp-cloud](https://gitee.com/dromara/lamp-cloud) | [lamp-cloud](https://github.com/dromara/lamp-cloud) | [lamp-cloud](https://gitcode.com/zuihou/lamp-cloud) | 微服务和单体模式融合版 |
 
 ## 前端
 
-| 项目                         | gitee                                                      | github                                                 | gitcode                                                   | 备注            | 演示地址                     |
-|----------------------------|------------------------------------------------------------|----------------------------------------------------------|----------------------------------------------------------|---------------|--------------------------|
-| lamp-web                   | [lamp-web](https://gitee.com/zuihou111/lamp-web)           | [lamp-web](https://github.com/zuihou/lamp-web)    | [lamp-web](https://gitcode.com/zuihou/lamp-web)           | 基于 vben-admin | https://none.tangyh.top  |
+| 项目       | gitee                                            | github                                         | gitcode                                         | 备注            | 演示地址                    |
+|----------|--------------------------------------------------|------------------------------------------------|-------------------------------------------------|---------------|-------------------------|
+| lamp-web | [lamp-web](https://gitee.com/zuihou111/lamp-web) | [lamp-web](https://github.com/zuihou/lamp-web) | [lamp-web](https://gitcode.com/zuihou/lamp-web) | 基于 vben-admin | https://none.tangyh.top |
 
 ## 注意：
 
@@ -65,7 +66,8 @@
 # lamp-cloud 简介
 
 `lamp-cloud`是基于`java`+ `SpringCloudAlibaba` +`SpringCloud`+`SpringBoot`
-开发的微服务中后台快速开发平台，专注于多租户 (SaaS架构) 解决方案，亦可作为普通项目（非SaaS架构）的基础开发框架使用，目前已实现 **大租户嵌套小租户隔离**、**数据库隔离**、**字段隔离**、 **无租户隔离** 等几种模式。
+开发的微服务中后台快速开发平台，专注于多租户 (SaaS架构) 解决方案，亦可作为普通项目（非SaaS架构）的基础开发框架使用，目前已实现
+**大租户嵌套小租户隔离**、**数据库隔离**、**字段隔离**、 **无租户隔离** 等几种模式。
 
 她拥有自研RBAC（基于租户应用的角色权限控制体系）、网关统一鉴权、数据权限、优雅缓存解决方案、防缓存击穿、前后端统一表单校验、字典数据自动回显、可视化前后端代码生成器、支持多种文件存储、支持多种短信邮件发送接口、灰度发布、防XSS攻击、防SQL注入、分布式事务、分布式定时任务等功能；
 支持多业务系统并行开发， 支持多服务并行开发，是中后台系统开发脚手架的最佳选择。
@@ -79,7 +81,7 @@ Alibaba、SpringBoot、Mybatis、Seata、Sentinel、RabbitMQ、FastDFS/MinIO、S
 
 - 官网
     - [https://tangyh.top](https://tangyh.top)
-- 4.0版本演示地址 （账号密码都是   lamp）
+- 4.0版本演示地址 （账号密码都是 lamp）
     - 数据源模式（vben5版）：演示地址：   [https://max-datasource.tangyh.top](https://max-datasource.tangyh.top)
     - 数据源模式（vben2版）：演示地址：   [https://datasource.tangyh.top](https://datasource.tangyh.top)
     - 数据源模式（soybean版）：演示地址：   [https://soy-datasource.tangyh.top](https://soy-datasource.tangyh.top)
@@ -99,22 +101,23 @@ Alibaba、SpringBoot、Mybatis、Seata、Sentinel、RabbitMQ、FastDFS/MinIO、S
 
 # 项目截图：
 
-| 预览                                             | 预览                                      |
-|------------------------------------------------|-----------------------------------------|
+| 预览                                                   | 预览                                            |
+|------------------------------------------------------|-----------------------------------------------|
 | ![预览.png](A极其重要/01-docs/image/架构图/lamp-cloud架构图.png) | ![预览.png](A极其重要/01-docs/image/业务/swagger.png) |
 | ![预览.png](A极其重要/01-docs/image/业务/nacos.jpg)          | ![预览.png](A极其重要/01-docs/image/业务/工作流.png)     |
-| ![预览.png](A极其重要/01-docs/image/业务/基础平台.png)          | ![预览.png](A极其重要/01-docs/image/业务/开发运营系统.png)   |
+| ![预览.png](A极其重要/01-docs/image/业务/基础平台.png)           | ![预览.png](A极其重要/01-docs/image/业务/开发运营系统.png)  |
 | ![预览.png](A极其重要/01-docs/image/监控/sw拓扑图.png)          | ![预览.png](A极其重要/01-docs/image/监控/sw追踪列表.png)  |
-| ![预览.png](A极其重要/01-docs/image/1000star.png)          | ![预览.png](A极其重要/01-docs/image/灯灯软著证书.png)   |
+| ![预览.png](A极其重要/01-docs/image/1000star.png)          | ![预览.png](A极其重要/01-docs/image/灯灯软著证书.png)     |
 
 # 推广
 
 - 【阿里云】超品周津贴: [点我进入](https://www.aliyun.com/minisite/goods?taskPkg=1212cpz&pkgSid=183200&userCode=uk5ga6sq)
 - 【阿里云】服务器折扣场：[点我进入](https://www.aliyun.com/minisite/goods?userCode=uk5ga6sq)
 - 【阿里云】服务器优惠券：[点我领取](https://www.aliyun.com/daily-act/ecs/activity_selection?userCode=uk5ga6sq)
--【腾讯云】境外1核2G服务器低至2折，半价续费券限量免费领取！：[点我进入](https://cloud.tencent.com/act/cps/redirect?redirect=1068&cps_key=970c3dc91a95510c5a474f54eac73ac7&from=console)
--【腾讯云】DNSPod解析套餐全面升配降价，更高的套餐配置规格，更优的价格方案，全面提升可用性及响应率，专业版限时99元/年！[点我进入](https://cloud.tencent.com/act/cps/redirect?redirect=1542&cps_key=970c3dc91a95510c5a474f54eac73ac7&from=console)
-- 通过以上链接任意购买金额大于等于50元的商品，联系作者可赠送 [看云文档](https://www.kancloud.cn/zuihou/zuihou-admin-cloud)
+  -【腾讯云】境外1核2G服务器低至2折，半价续费券限量免费领取！：[点我进入](https://cloud.tencent.com/act/cps/redirect?redirect=1068&cps_key=970c3dc91a95510c5a474f54eac73ac7&from=console)
+  -【腾讯云】DNSPod解析套餐全面升配降价，更高的套餐配置规格，更优的价格方案，全面提升可用性及响应率，专业版限时99元/年！[点我进入](https://cloud.tencent.com/act/cps/redirect?redirect=1542&cps_key=970c3dc91a95510c5a474f54eac73ac7&from=console)
+-
+通过以上链接任意购买金额大于等于50元的商品，联系作者可赠送 [看云文档](https://www.kancloud.cn/zuihou/zuihou-admin-cloud)
 一份。
 
 # Dromara 成员项目
@@ -221,4 +224,5 @@ Apache Licence 2.0 Licence是著名的非盈利开源组织Apache采用的协议
 - 在延伸的代码中（修改和有源代码衍生的代码中）需要带有原来代码中的协议，商标，专利声明和其他原来作者规定需要包含的说明。
 - 如果再发布的产品中包含一个Notice文件，则在Notice文件中需要带有Apache Licence。你可以在Notice中增加自己的许可，但不可以表现为对Apache
   Licence构成更改。 Apache Licence也是对商业应用友好的许可。使用者也可以在需要的时候修改代码来满足需要并作为开源或商业产品发布/销售。
-- 若你借鉴或学习了本项目的源码，请你在你的项目源码和说明文档中显著的表明引用于本项目，并附上本项目的github访问地址。（https://github.com/dromara/lamp-cloud）
+-
+若你借鉴或学习了本项目的源码，请你在你的项目源码和说明文档中显著的表明引用于本项目，并附上本项目的github访问地址。（https://github.com/dromara/lamp-cloud）

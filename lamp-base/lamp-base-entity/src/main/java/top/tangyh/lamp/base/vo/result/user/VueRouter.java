@@ -23,7 +23,7 @@ import java.util.Map;
  * @date 2019-10-20 15:17
  */
 @Data
-@EqualsAndHashCode(callSuper=false)
+@EqualsAndHashCode(callSuper = false)
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonIgnoreProperties({TreeEntity.LABEL, TreeEntity.SORT_VALUE,
         TreeEntity.PARENT_ID, Entity.UPDATED_BY, Entity.UPDATED_TIME, Entity.CREATED_TIME, Entity.CREATED_BY

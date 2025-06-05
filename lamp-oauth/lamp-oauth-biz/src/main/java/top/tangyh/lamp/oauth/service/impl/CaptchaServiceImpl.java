@@ -22,6 +22,7 @@ import top.tangyh.basic.model.cache.CacheKey;
 import top.tangyh.basic.utils.ArgumentAssert;
 import top.tangyh.lamp.common.cache.common.CaptchaCacheKeyBuilder;
 import top.tangyh.lamp.model.enumeration.base.MsgTemplateCodeEnum;
+import top.tangyh.lamp.msg.facade.MsgFacade;
 import top.tangyh.lamp.msg.vo.update.ExtendMsgSendVO;
 import top.tangyh.lamp.oauth.granter.CaptchaTokenGranter;
 import top.tangyh.lamp.oauth.properties.CaptchaProperties;
@@ -32,7 +33,6 @@ import java.io.IOException;
 
 import static top.tangyh.basic.exception.code.ExceptionCode.CAPTCHA_ERROR;
 
-import top.tangyh.lamp.msg.facade.MsgFacade;
 /**
  * 验证码服务
  *

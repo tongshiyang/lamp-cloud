@@ -1,7 +1,6 @@
 package top.tangyh.lamp.msg.service.impl;
 
 import cn.hutool.core.util.StrUtil;
-
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -9,7 +8,6 @@ import org.springframework.transaction.annotation.Transactional;
 import top.tangyh.basic.base.service.impl.SuperServiceImpl;
 import top.tangyh.basic.database.mybatis.conditions.Wraps;
 import top.tangyh.basic.utils.ArgumentAssert;
-
 import top.tangyh.lamp.msg.entity.DefInterface;
 import top.tangyh.lamp.msg.entity.DefInterfaceProperty;
 import top.tangyh.lamp.msg.enumeration.InterfaceExecModeEnum;
@@ -50,7 +48,7 @@ public class DefInterfaceServiceImpl extends SuperServiceImpl<DefInterfaceManage
     protected <SaveVO> DefInterface saveBefore(SaveVO saveVO) {
         DefInterfaceSaveVO interfaceSaveVO = (DefInterfaceSaveVO) saveVO;
         ArgumentAssert.isFalse(StrUtil.isNotBlank(interfaceSaveVO.getCode()) &&
-                check(interfaceSaveVO.getCode(), null), "接口编码{}已存在", interfaceSaveVO.getCode());
+                               check(interfaceSaveVO.getCode(), null), "接口编码{}已存在", interfaceSaveVO.getCode());
         if (InterfaceExecModeEnum.IMPL_CLASS.eq(interfaceSaveVO.getExecMode())) {
             ArgumentAssert.notEmpty(interfaceSaveVO.getImplClass(), "请填写实现类");
         } else {
@@ -63,7 +61,7 @@ public class DefInterfaceServiceImpl extends SuperServiceImpl<DefInterfaceManage
     protected <UpdateVO> DefInterface updateBefore(UpdateVO updateVO) {
         DefInterfaceUpdateVO interfaceUpdateVO = (DefInterfaceUpdateVO) updateVO;
         ArgumentAssert.isFalse(StrUtil.isNotBlank(interfaceUpdateVO.getCode()) &&
-                        check(interfaceUpdateVO.getCode(), interfaceUpdateVO.getId()),
+                               check(interfaceUpdateVO.getCode(), interfaceUpdateVO.getId()),
                 "接口编码{}已存在", interfaceUpdateVO.getCode());
         if (InterfaceExecModeEnum.IMPL_CLASS.eq(interfaceUpdateVO.getExecMode())) {
             ArgumentAssert.notEmpty(interfaceUpdateVO.getImplClass(), "请填写实现类");

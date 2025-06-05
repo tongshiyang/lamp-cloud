@@ -7,15 +7,15 @@ lamp:
     author: zuihou
     # 默认项目
     projectType: CLOUD
-  #  # 去除表前缀
-  #  tablePrefix:
-  #    - xxx_
-  #  # 去除字段前缀
-  #  fieldPrefix:
-  #    - xxx_
-  #  # 去除字段后缀
-  #  fieldSuffix:
-  #    - xxx_
+    #  # 去除表前缀
+    #  tablePrefix:
+    #    - xxx_
+    #  # 去除字段前缀
+    #  fieldPrefix:
+    #    - xxx_
+    #  # 去除字段后缀
+    #  fieldSuffix:
+    #    - xxx_
     # 项目前缀
     projectPrefix: 'lamp'
     superClass: SUPER_CLASS
@@ -65,16 +65,16 @@ lamp:
       formatMapperFileName: ''
       formatXmlFileName: ''
       mapperAnnotation: false
-  #    columnAnnotationTablePrefix:
-  #      - xxx
+      #    columnAnnotationTablePrefix:
+      #      - xxx
       baseResultMap: true
       cache: false
       baseColumnList: true
       cacheClass: org.apache.ibatis.cache.decorators.LoggingCache
-  #  serviceConfig:
-  #  managerConfig:
-  #  controllerConfig:
-  #  webProConfig:
+    #  serviceConfig:
+    #  managerConfig:
+    #  controllerConfig:
+    #  webProConfig:
     fileOverrideStrategy:
       entityFileOverride: OVERRIDE
       sqlFileOverride: OVERRIDE

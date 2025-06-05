@@ -51,26 +51,26 @@ public class BaseEmployeeResultVO extends Entity<Long> implements Serializable, 
      * 是否默认员工;[0-否 1-是]
      */
     @Schema(description = "是否默认员工")
-    
+
     private Boolean isDefault;
     /**
      * 用户id
      */
     @Schema(description = "用户id")
-    
+
     private Long userId;
     /**
      * 岗位Id
      */
     @Schema(description = "岗位Id")
-    
+
     @Echo(api = EchoApi.POSITION_ID_CLASS)
     private Long positionId;
     /**
      * 组织Id
      */
     @Schema(description = "组织Id")
-    
+
     @Echo(api = EchoApi.ORG_ID_CLASS)
     private List<Long> orgIdList;
 
@@ -85,7 +85,7 @@ public class BaseEmployeeResultVO extends Entity<Long> implements Serializable, 
      * 真实姓名
      */
     @Schema(description = "真实姓名")
-    
+
     private String realName;
 
     /**
@@ -93,13 +93,13 @@ public class BaseEmployeeResultVO extends Entity<Long> implements Serializable, 
      */
     @Schema(description = "职位状态")
     @Echo(api = EchoApi.DICTIONARY_ITEM_FEIGN_CLASS, dictType = EchoDictType.Base.POSITION_STATUS)
-    
+
     private String positionStatus;
     /**
      * 状态;[0-禁用 1-启用]
      */
     @Schema(description = "状态")
-    
+
     private Boolean state;
 
     /**

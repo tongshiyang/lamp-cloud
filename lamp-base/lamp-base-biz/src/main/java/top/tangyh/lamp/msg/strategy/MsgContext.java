@@ -2,21 +2,18 @@ package top.tangyh.lamp.msg.strategy;
 
 import cn.hutool.core.exceptions.ExceptionUtil;
 import cn.hutool.json.JSONUtil;
-
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 import top.tangyh.basic.utils.ArgumentAssert;
 import top.tangyh.basic.utils.SpringUtils;
-
 import top.tangyh.lamp.msg.entity.DefInterface;
 import top.tangyh.lamp.msg.entity.DefMsgTemplate;
 import top.tangyh.lamp.msg.entity.ExtendInterfaceLog;
 import top.tangyh.lamp.msg.entity.ExtendInterfaceLogging;
 import top.tangyh.lamp.msg.entity.ExtendMsg;
 import top.tangyh.lamp.msg.entity.ExtendMsgRecipient;
-import top.tangyh.lamp.msg.entity.DefMsgTemplate;
 import top.tangyh.lamp.msg.enumeration.InterfaceExecModeEnum;
 import top.tangyh.lamp.msg.enumeration.MsgInterfaceLoggingStatusEnum;
 import top.tangyh.lamp.msg.enumeration.TaskStatus;
@@ -45,7 +42,7 @@ public class MsgContext {
     private final ExtendInterfaceLoggingManager extendInterfaceLoggingManager;
 
     @Transactional(rollbackFor = Exception.class)
-    
+
     public boolean execSend(ExtendMsg extendMsg,
                             DefMsgTemplate extendMsgTemplate,
                             List<ExtendMsgRecipient> recipientList,

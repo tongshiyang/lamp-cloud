@@ -11,7 +11,7 @@ import top.tangyh.lamp.msg.strategy.domain.BaseProperty;
  * @date 2022/7/10 0010 18:56
  */
 @Data
-@EqualsAndHashCode(callSuper=false)
+@EqualsAndHashCode(callSuper = false)
 public class BaiduSmsProperty extends BaseProperty {
     private final static String DEF_END_POINT = "http://smsv3.bj.baidubce.com";
     /**

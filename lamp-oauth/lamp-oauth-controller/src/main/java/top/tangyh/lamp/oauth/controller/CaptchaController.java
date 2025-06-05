@@ -77,6 +77,7 @@ public class CaptchaController {
                                   @RequestParam(value = "templateCode") String templateCode) {
         return captchaService.sendSmsCode(mobile, templateCode);
     }
+
     @Parameters({
             @Parameter(name = "email", description = "邮箱", schema = @Schema(type = DATA_TYPE_STRING), in = ParameterIn.QUERY),
             @Parameter(name = "templateCode", description = "模板编码: 在「运营平台」-「消息模板」-「模板标识」配置一个邮件模板", schema = @Schema(type = DATA_TYPE_STRING), in = ParameterIn.QUERY),

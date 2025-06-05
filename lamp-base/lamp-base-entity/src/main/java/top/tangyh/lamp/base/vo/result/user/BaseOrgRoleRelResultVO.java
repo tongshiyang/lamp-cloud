@@ -46,12 +46,12 @@ public class BaseOrgRoleRelResultVO extends Entity<Long> implements Serializable
      * 部门;#base_org
      */
     @Schema(description = "部门")
-    
+
     private Long orgId;
     /**
      * 角色;#base_role
      */
     @Schema(description = "角色")
-    
+
     private Long roleId;
 }

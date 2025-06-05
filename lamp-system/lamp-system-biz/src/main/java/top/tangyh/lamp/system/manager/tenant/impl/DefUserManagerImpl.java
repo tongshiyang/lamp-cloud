@@ -2,7 +2,6 @@ package top.tangyh.lamp.system.manager.tenant.impl;
 
 import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.convert.Convert;
-
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.core.toolkit.support.SFunction;
@@ -21,7 +20,6 @@ import top.tangyh.lamp.common.cache.tenant.base.DefUserEmailCacheKeyBuilder;
 import top.tangyh.lamp.common.cache.tenant.base.DefUserIdCardCacheKeyBuilder;
 import top.tangyh.lamp.common.cache.tenant.base.DefUserMobileCacheKeyBuilder;
 import top.tangyh.lamp.common.cache.tenant.base.DefUserUserNameCacheKeyBuilder;
-
 import top.tangyh.lamp.system.entity.tenant.DefUser;
 import top.tangyh.lamp.system.manager.tenant.DefUserManager;
 import top.tangyh.lamp.system.mapper.tenant.DefUserMapper;
@@ -56,7 +54,7 @@ public class DefUserManagerImpl extends SuperCacheManagerImpl<DefUserMapper, Def
 
     @Transactional(readOnly = true)
     @Override
-    
+
     public Map<Serializable, Object> findByIds(Set<Serializable> ids) {
         List<DefUser> list = findByIds(ids, null).stream().filter(Objects::nonNull).toList();
         return CollHelper.uniqueIndex(list, DefUser::getId, DefUser::getNickName);

@@ -49,7 +49,7 @@ public class BaseRoleResultVO extends Entity<Long> implements Serializable, Echo
      * 角色类型;10-系统角色 20-自定义角色
      */
     @Schema(description = "角色类型")
-    
+
     private String type;
     /**
      * 角色类别;[10-功能角色 20-桌面角色 30-数据角色]
@@ -61,31 +61,31 @@ public class BaseRoleResultVO extends Entity<Long> implements Serializable, Echo
      * 名称
      */
     @Schema(description = "名称")
-    
+
     private String name;
     /**
      * 编码
      */
     @Schema(description = "编码")
-    
+
     private String code;
     /**
      * 备注
      */
     @Schema(description = "备注")
-    
+
     private String remarks;
     /**
      * 状态
      */
     @Schema(description = "状态")
-    
+
     private Boolean state;
     /**
      * 内置角色
      */
     @Schema(description = "内置角色")
-    
+
     private Boolean readonly;
 
     /**

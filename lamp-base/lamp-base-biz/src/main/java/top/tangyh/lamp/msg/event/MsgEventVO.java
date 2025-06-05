@@ -12,7 +12,7 @@ import top.tangyh.lamp.model.vo.BaseEventVO;
  * @create [2022/7/29 10:08 PM ] [tangyh] [初始创建]
  */
 @Data
-@EqualsAndHashCode(callSuper=false)
+@EqualsAndHashCode(callSuper = false)
 @Accessors(chain = true)
 public class MsgEventVO extends BaseEventVO {
     Long msgId;

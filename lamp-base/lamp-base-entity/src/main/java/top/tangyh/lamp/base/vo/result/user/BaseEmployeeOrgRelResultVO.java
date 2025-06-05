@@ -46,12 +46,12 @@ public class BaseEmployeeOrgRelResultVO extends Entity<Long> implements Serializ
      * 机构ID
      */
     @Schema(description = "机构ID")
-    
+
     private Long orgId;
     /**
      * 员工ID
      */
     @Schema(description = "员工ID")
-    
+
     private Long employeeId;
 }

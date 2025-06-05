@@ -60,7 +60,7 @@ public class MySwaggerXForwardedHeadersFilter implements HttpHeadersFilter, Orde
                     if (requestUriPath != null && (originalUriPath.endsWith(requestUriPath))) {
                         prefix = originalUriPath.replace(requestUriPath, "");
                         if (prefix != null && prefix.length() > 0 &&
-                                prefix.length() <= originalUri.getPath().length()) {
+                            prefix.length() <= originalUri.getPath().length()) {
                             // 就是这里跟官方的XForwardedHeadersFilter 不同，多了：contextPath
                             updated.set(X_FORWARDED_PREFIX_HEADER, contextPath + prefix);
                         }

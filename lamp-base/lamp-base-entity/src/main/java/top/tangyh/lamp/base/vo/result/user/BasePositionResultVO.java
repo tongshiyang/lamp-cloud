@@ -48,25 +48,25 @@ public class BasePositionResultVO extends Entity<Long> implements Serializable, 
      * 名称
      */
     @Schema(description = "名称")
-    
+
     private String name;
     /**
      * 组织;#base_org@Echo(api = EchoApi.ORG_ID_CLASS)
      */
     @Schema(description = "组织")
     @Echo(api = EchoApi.ORG_ID_CLASS)
-    
+
     private Long orgId;
     /**
      * 状态;0-禁用 1-启用
      */
     @Schema(description = "状态")
-    
+
     private Boolean state;
     /**
      * 备注
      */
     @Schema(description = "备注")
-    
+
     private String remarks;
 }

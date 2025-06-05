@@ -6,7 +6,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import top.tangyh.basic.base.service.impl.SuperServiceImpl;
-
 import top.tangyh.lamp.test.entity.DefGenTestSimple;
 import top.tangyh.lamp.test.manager.DefGenTestSimpleManager;
 import top.tangyh.lamp.test.service.DefGenTestSimpleService;

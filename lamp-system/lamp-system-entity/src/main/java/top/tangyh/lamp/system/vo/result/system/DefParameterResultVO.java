@@ -46,36 +46,36 @@ public class DefParameterResultVO extends Entity<Long> implements Serializable, 
      * 参数键
      */
     @Schema(description = "参数键")
-    
+
     private String key;
     /**
      * 参数值
      */
     @Schema(description = "参数值")
-    
+
     private String value;
     /**
      * 参数名称
      */
     @Schema(description = "参数名称")
-    
+
     private String name;
     /**
      * 备注
      */
     @Schema(description = "备注")
-    
+
     private String remarks;
     /**
      * 状态
      */
     @Schema(description = "状态")
-    
+
     private Boolean state;
     /**
      * 类型;[10-系统参数 20-业务参数]@Echo(api = EchoApi.DICTIONARY_ITEM_FEIGN_CLASS, dictType = EchoDictType.System.PARAMETER_TYPE)
      */
     @Schema(description = "类型")
-    
+
     private String paramType;
 }

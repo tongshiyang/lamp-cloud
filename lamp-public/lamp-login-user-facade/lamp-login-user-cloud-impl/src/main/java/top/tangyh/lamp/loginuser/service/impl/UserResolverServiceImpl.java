@@ -3,14 +3,14 @@ package top.tangyh.lamp.loginuser.service.impl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 import top.tangyh.basic.base.R;
+import top.tangyh.lamp.loginuser.api.BaseApi;
+import top.tangyh.lamp.loginuser.api.OauthApi;
+import top.tangyh.lamp.loginuser.api.SystemApi;
 import top.tangyh.lamp.model.entity.base.SysEmployee;
 import top.tangyh.lamp.model.entity.base.SysOrg;
 import top.tangyh.lamp.model.entity.base.SysPosition;
 import top.tangyh.lamp.model.entity.system.SysUser;
 import top.tangyh.lamp.model.vo.result.UserQuery;
-import top.tangyh.lamp.loginuser.api.BaseApi;
-import top.tangyh.lamp.loginuser.api.OauthApi;
-import top.tangyh.lamp.loginuser.api.SystemApi;
 import top.tangyh.lamp.userinfo.service.UserResolverService;
 
 import java.util.List;

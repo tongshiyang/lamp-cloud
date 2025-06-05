@@ -46,12 +46,12 @@ public class DefUserApplicationResultVO extends Entity<Long> implements Serializ
      * 所属用户ID
      */
     @Schema(description = "所属用户ID")
-    
+
     private Long userId;
     /**
      * 所属应用ID
      */
     @Schema(description = "所属应用ID")
-    
+
     private Long applicationId;
 }

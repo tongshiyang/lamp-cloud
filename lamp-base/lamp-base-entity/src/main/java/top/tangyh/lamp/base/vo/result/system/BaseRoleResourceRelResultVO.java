@@ -46,18 +46,18 @@ public class BaseRoleResourceRelResultVO extends Entity<Long> implements Seriali
      * 资源id;#def_resource
      */
     @Schema(description = "资源id")
-    
+
     private Long resourceId;
     /**
      * 角色id;#base_role
      */
     @Schema(description = "角色id")
-    
+
     private Long roleId;
     /**
      * 组织ID
      */
     @Schema(description = "组织ID")
-    
+
     private Long orgId;
 }

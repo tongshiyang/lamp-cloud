@@ -51,13 +51,13 @@ public class DefUserTenantRelResultVO extends Entity<Long> implements Serializab
      * 用户
      */
     @Schema(description = "用户")
-    
+
     private Long userId;
     /**
      * 状态;[0-禁用 1-启用]
      */
     @Schema(description = "状态")
-    
+
     private Boolean state;
 
     @Schema(description = "企业状态")

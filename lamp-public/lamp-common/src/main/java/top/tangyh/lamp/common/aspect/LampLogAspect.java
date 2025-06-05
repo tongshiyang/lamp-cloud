@@ -35,7 +35,7 @@ public class LampLogAspect extends BaseLogAspect {
      *
      */
     @Pointcut("execution(* top.tangyh.lamp.controller..*.*(..))) || execution(* top.tangyh.lamp.service..*.*(..))) " +
-            "|| execution(* top.tangyh.lamp.biz..*.*(..)))")
+              "|| execution(* top.tangyh.lamp.biz..*.*(..)))")
     public void lampLogAspect() {
 
     }

@@ -46,30 +46,30 @@ public class DefDictResultVO extends Entity<Long> implements Serializable, EchoV
      * 分类;[10-系统字典 20-业务字典]@Echo(api = EchoApi.DICTIONARY_ITEM_FEIGN_CLASS, dictType = EchoDictType.System.DICT_CLASSIFY)
      */
     @Schema(description = "分类")
-    
+
     private String classify;
     /**
      * 标识
      */
     @Schema(description = "标识")
-    
+
     private String key;
     /**
      * 名称
      */
     @Schema(description = "名称")
-    
+
     private String name;
     /**
      * 状态
      */
     @Schema(description = "状态")
-    
+
     private Boolean state;
     /**
      * 备注
      */
     @Schema(description = "备注")
-    
+
     private String remark;
 }

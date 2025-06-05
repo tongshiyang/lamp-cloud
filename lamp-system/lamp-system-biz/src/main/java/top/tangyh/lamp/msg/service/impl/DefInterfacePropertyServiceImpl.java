@@ -1,14 +1,12 @@
 package top.tangyh.lamp.msg.service.impl;
 
 import cn.hutool.core.bean.BeanUtil;
-
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import top.tangyh.basic.base.service.impl.SuperServiceImpl;
 import top.tangyh.basic.exception.BizException;
-
 import top.tangyh.lamp.msg.entity.DefInterfaceProperty;
 import top.tangyh.lamp.msg.manager.DefInterfacePropertyManager;
 import top.tangyh.lamp.msg.service.DefInterfacePropertyService;

@@ -12,7 +12,7 @@ import java.time.LocalDateTime;
  * @since 2024/8/1 15:40
  */
 @Data
-@EqualsAndHashCode(callSuper=false)
+@EqualsAndHashCode(callSuper = false)
 public class OnlineUsersResultVO extends SaSession {
 
     /**

@@ -4,7 +4,6 @@ import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.map.MapUtil;
 import cn.hutool.core.util.ReflectUtil;
 import cn.hutool.core.util.StrUtil;
-
 import com.baomidou.mybatisplus.annotation.DbType;
 import com.baomidou.mybatisplus.annotation.FieldFill;
 import com.baomidou.mybatisplus.annotation.IdType;
@@ -55,7 +54,6 @@ import top.tangyh.basic.utils.ArgumentAssert;
 import top.tangyh.basic.utils.BeanPlusUtil;
 import top.tangyh.basic.utils.StrPool;
 import top.tangyh.basic.utils.TreeUtil;
-
 import top.tangyh.lamp.generator.config.ControllerConfig;
 import top.tangyh.lamp.generator.config.EntityConfig;
 import top.tangyh.lamp.generator.config.GeneratorConfig;

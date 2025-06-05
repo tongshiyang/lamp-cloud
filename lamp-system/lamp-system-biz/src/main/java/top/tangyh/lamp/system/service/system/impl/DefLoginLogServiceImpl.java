@@ -5,14 +5,12 @@ import cn.hutool.http.useragent.Browser;
 import cn.hutool.http.useragent.OS;
 import cn.hutool.http.useragent.UserAgent;
 import cn.hutool.http.useragent.UserAgentUtil;
-
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import top.tangyh.basic.base.service.impl.SuperServiceImpl;
 import top.tangyh.basic.utils.DateUtils;
-
 import top.tangyh.lamp.system.entity.system.DefLoginLog;
 import top.tangyh.lamp.system.entity.tenant.DefUser;
 import top.tangyh.lamp.system.manager.system.DefLoginLogManager;

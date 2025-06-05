@@ -7,7 +7,6 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
 import top.tangyh.basic.utils.CollHelper;
 import top.tangyh.basic.utils.StrPool;
-
 import top.tangyh.lamp.file.domain.FileDeleteBO;
 import top.tangyh.lamp.file.domain.FileGetUrlBO;
 import top.tangyh.lamp.file.entity.File;
@@ -64,9 +63,9 @@ public class FastDfsFileStrategyImpl extends AbstractFileStrategy {
         FileServerProperties.FastDfs fastDfs = fileProperties.getFastDfs();
         fileGets.forEach(item -> {
             String url = fastDfs.getUrlPrefix() +
-                    item.getBucket() +
-                    StrPool.SLASH +
-                    item.getPath();
+                         item.getBucket() +
+                         StrPool.SLASH +
+                         item.getPath();
             map.put(item.getPath(), url);
         });
         return map;

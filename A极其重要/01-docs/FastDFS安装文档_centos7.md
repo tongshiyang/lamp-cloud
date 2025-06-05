@@ -131,9 +131,10 @@ http.tracker_server_port=6080 # tracker 服务器的 http 端口号，必须和t
 一切成功的话，会返回一个url，但你访问：
 http://123.249.76.119:6080/group1/M00/00/00/e_lMd1kgST-AQAodAAATIDVcVxc531.jpg
 却无法访问，因为FastDFS目前已不支持http协议，我们在FastDFS 5.1.0的版本更新日志中可以看到这样一条信息：
-​    
+​
+
 * remove embed HTTP support
-所以余大提供了nginx上使用FastDFS的模块fastdfs-nginx-module
+  所以余大提供了nginx上使用FastDFS的模块fastdfs-nginx-module
 
 #8,安装nginx和fastdfs-nginx-module模块
 查看nginx安装了那些模块： nginx/sbin/nginx -V

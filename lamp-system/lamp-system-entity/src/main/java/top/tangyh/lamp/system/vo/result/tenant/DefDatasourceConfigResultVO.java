@@ -46,7 +46,7 @@ public class DefDatasourceConfigResultVO extends Entity<Long> implements Seriali
      * 名称
      */
     @Schema(description = "名称")
-    
+
     private String name;
     @Schema(description = "数据源前缀")
     private String dbPrefix;
@@ -54,19 +54,19 @@ public class DefDatasourceConfigResultVO extends Entity<Long> implements Seriali
      * 用户名
      */
     @Schema(description = "用户名")
-    
+
     private String username;
     /**
      * 链接
      */
     @Schema(description = "链接")
-    
+
     private String url;
     /**
      * 驱动
      */
     @Schema(description = "驱动")
-    
+
     private String driverClassName;
 
 }
