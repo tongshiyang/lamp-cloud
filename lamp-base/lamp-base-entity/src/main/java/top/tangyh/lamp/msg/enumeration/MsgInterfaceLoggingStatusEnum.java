@@ -28,8 +28,7 @@ public enum MsgInterfaceLoggingStatusEnum implements BaseEnum {
     /**
      * 失败
      */
-    FAIL("03", "失败"),
-    ;
+    FAIL("03", "失败");
     private String value;
     private String desc;
 

@@ -30,8 +30,7 @@ public enum LogType implements BaseEnum {
     /**
      * EX="异常类型"
      */
-    EX("异常"),
-    ;
+    EX("异常");
 
     @Schema(description = "描述")
     private String desc;

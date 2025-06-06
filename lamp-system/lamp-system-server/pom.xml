@@ -31,6 +31,10 @@
             <version>${lamp-project.version}</version>
         </dependency>
         <dependency>
+            <groupId>top.tangyh.basic</groupId>
+            <artifactId>lamp-all</artifactId>
+        </dependency>
+        <dependency>
             <groupId>top.tangyh.lamp</groupId>
             <artifactId>lamp-oauth-api</artifactId>
             <version>${lamp-project.version}</version>
@@ -46,10 +50,6 @@
             <version>${lamp-project.version}</version>
         </dependency>
 
-        <dependency>
-            <groupId>top.tangyh.basic</groupId>
-            <artifactId>lamp-all</artifactId>
-        </dependency>
         <dependency>
             <groupId>top.tangyh.lamp</groupId>
             <artifactId>lamp-sa-token-ext</artifactId>

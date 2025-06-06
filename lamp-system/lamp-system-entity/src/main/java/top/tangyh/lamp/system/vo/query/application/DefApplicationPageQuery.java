@@ -64,6 +64,8 @@ public class DefApplicationPageQuery implements Serializable {
      */
     @Schema(description = "简介")
     private String introduce;
+    @Schema(description = "重定向")
+    private String redirect;
     /**
      * 备注
      */

@@ -396,8 +396,7 @@ public class ResourceBiz {
                     first.setComponent(component);
                     RouterMeta firstMeta = BeanPlusUtil.toBean(item.getMeta(), RouterMeta.class);
                     firstMeta.setActiveMenu(item.getName())
-                            .setHideInMenu(true)
-                    ;
+                            .setHideInMenu(true);
                     first.setMeta(firstMeta);
 
                     first.setIsHidden(true);

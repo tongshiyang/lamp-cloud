@@ -13,8 +13,8 @@ import top.tangyh.lamp.msg.strategy.domain.BaseProperty;
 @Data
 @EqualsAndHashCode(callSuper = false)
 public class TencentSmsProperty extends BaseProperty {
-    private final static String DEF_REGION = "ap-beijing";
-    private final static String DEF_END_POINT = "sms.tencentcloudapi.com";
+    private static final String DEF_REGION = "ap-beijing";
+    private static final String DEF_END_POINT = "sms.tencentcloudapi.com";
     /** secretId */
     private String secretId;
     /** secretKey */

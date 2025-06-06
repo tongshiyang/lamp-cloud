@@ -21,7 +21,6 @@ public class TestMsgStrategyImpl implements MsgStrategy {
 
     @Override
     public MsgResult exec(MsgParam msgParam) {
-        System.out.println(" 请开始你的接口逻辑 ");
 
         ExtendMsg a = extendMsgService.getById(msgParam.getExtendMsg().getId());
         log.info("a {}", a);

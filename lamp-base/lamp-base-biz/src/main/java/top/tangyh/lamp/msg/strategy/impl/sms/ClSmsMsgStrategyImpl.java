@@ -38,8 +38,8 @@ import java.util.stream.Collectors;
 @Service("clSmsMsgStrategyImpl")
 public class ClSmsMsgStrategyImpl implements MsgStrategy {
 
-    private final static Pattern REG = Pattern.compile("[$][{][a-zA-Z\\d\\\\_$]+[}]");
-    private final static String VAR = "{$var}";
+    private static final Pattern REG = Pattern.compile("[$][{][a-zA-Z\\d\\\\_$]+[}]");
+    private static final String VAR = "{$var}";
 
     private static ClSendResult sendSmsByPost(String path, String postContent) throws IOException {
         ClSendResult clSendResult = new ClSendResult();

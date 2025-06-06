@@ -26,8 +26,7 @@ import java.util.Map;
 @EqualsAndHashCode(callSuper = false)
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonIgnoreProperties({TreeEntity.LABEL, TreeEntity.SORT_VALUE,
-        TreeEntity.PARENT_ID, Entity.UPDATED_BY, Entity.UPDATED_TIME, Entity.CREATED_TIME, Entity.CREATED_BY
-        , Entity.ID_FIELD})
+        TreeEntity.PARENT_ID, Entity.UPDATED_BY, Entity.UPDATED_TIME, Entity.CREATED_TIME, Entity.CREATED_BY, Entity.ID_FIELD})
 public class VueRouter extends TreeEntity<VueRouter, Long> implements EchoVO {
 
     private static final long serialVersionUID = -3327478146308500708L;

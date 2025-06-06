@@ -15,8 +15,7 @@ import ${pkg};
  * </p>
  *
  * @author ${author}
- * @date ${datetime}
- * @create [${datetime}] [${author}] [代码生成器生成]
+ * @since ${datetime}
  */
 <#if superManagerClass??>
 public interface ${managerName} extends ${superManagerClass}<${table.entityName}> {

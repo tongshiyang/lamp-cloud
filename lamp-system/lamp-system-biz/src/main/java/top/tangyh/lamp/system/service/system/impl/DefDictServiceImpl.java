@@ -1,5 +1,6 @@
 package top.tangyh.lamp.system.service.system.impl;
 
+import cn.hutool.core.bean.copier.CopyOptions;
 import cn.hutool.core.collection.CollUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -139,9 +140,9 @@ public class DefDictServiceImpl extends SuperServiceImpl<DefDictManager, Long, D
         dict.setClassify(DictClassifyEnum.SYSTEM.getCode());
         superManager.updateById(dict);
 
-        saveItem(dictUpdateVO.getInsertList(), dict);
-        updateItem(dictUpdateVO.getUpdateList(), dict, old);
         superManager.removeItemByIds(dictUpdateVO.getDeleteList());
+        updateItem(dictUpdateVO.getUpdateList(), dict, old);
+        saveItem(dictUpdateVO.getInsertList(), dict);
 
         return dict;
     }
@@ -153,7 +154,9 @@ public class DefDictServiceImpl extends SuperServiceImpl<DefDictManager, Long, D
         DefDict old = getById(id);
         ArgumentAssert.notNull(old, "字典不存在或已被删除，请刷新重试");
 
-        DefDict dict = BeanPlusUtil.toBean(old, DefDict.class);
+        CopyOptions copyOptions = CopyOptions.create()
+                .setIgnoreProperties(DefDict::getId, DefDict::getCreatedTime, DefDict::getCreatedBy, DefDict::getUpdatedTime, DefDict::getUpdatedBy);
+        DefDict dict = BeanPlusUtil.toBean(old, DefDict.class, copyOptions);
         dict.setId(null);
         dict.setKey(dict.getKey() + "_copy");
         dict.setParentId(DefValConstants.PARENT_ID);
@@ -166,6 +169,10 @@ public class DefDictServiceImpl extends SuperServiceImpl<DefDictManager, Long, D
             item.setId(null);
             item.setParentId(dict.getId());
             item.setParentKey(dict.getKey());
+            item.setCreatedTime(null);
+            item.setCreatedBy(null);
+            item.setUpdatedTime(null);
+            item.setUpdatedBy(null);
         });
         superManager.saveBatch(itemList);
         return dict;

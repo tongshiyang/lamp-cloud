@@ -187,9 +187,7 @@ public class ZipUtils {
 
                     .replaceAll("%7C", "\\|").replaceAll("%3A", "\\:")
                     .replaceAll("%22", "\\\"").replaceAll("%3C", "\\<")
-                    .replaceAll("%3E", "\\>").replaceAll("%3F", "\\?")
-
-            ;
+                    .replaceAll("%3E", "\\>").replaceAll("%3F", "\\?");
             log.info("downloadFileName={}", downloadFileName);
         }
         response.setHeader("Content-Disposition", "attachment;fileName=" + downloadFileName);

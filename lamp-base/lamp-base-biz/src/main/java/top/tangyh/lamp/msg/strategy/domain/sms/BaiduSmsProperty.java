@@ -13,7 +13,7 @@ import top.tangyh.lamp.msg.strategy.domain.BaseProperty;
 @Data
 @EqualsAndHashCode(callSuper = false)
 public class BaiduSmsProperty extends BaseProperty {
-    private final static String DEF_END_POINT = "http://smsv3.bj.baidubce.com";
+    private static final String DEF_END_POINT = "http://smsv3.bj.baidubce.com";
     /**
      * accessKeyId
      */

@@ -1,7 +1,7 @@
 package top.tangyh.lamp.satoken.config;
 
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -15,7 +15,14 @@ import top.tangyh.lamp.common.properties.SystemProperties;
  * @since 2024/9/18 14:38
  */
 @Slf4j
+@RequiredArgsConstructor
 public class MySaTokenContextRegister {
+
+    @Bean
+    public AlwaysConfigurer getAlwaysConfigurer(SystemProperties systemProperties) {
+        return new AlwaysConfigurer(systemProperties);
+    }
+
 
     @Configuration
     @ConditionalOnProperty(prefix = Constants.PROJECT_PREFIX + ".webmvc", name = "header", havingValue = "true", matchIfMissing = true)
@@ -25,9 +32,8 @@ public class MySaTokenContextRegister {
         }
 
         @Bean
-        @ConditionalOnClass
-        public GlobalMvcConfigurer getGlobalMvcConfigurer(SystemProperties systemProperties, IgnoreProperties ignoreProperties) {
-            return new GlobalMvcConfigurer(systemProperties);
+        public GlobalMvcConfigurer getGlobalMvcConfigurer(IgnoreProperties ignoreProperties) {
+            return new GlobalMvcConfigurer();
         }
 
     }

@@ -30,8 +30,7 @@ public enum PopupTypeEnum implements BaseEnum {
      * 树结构
      */
     DRAWER("02", "抽屉"),
-    JUMP("03", "跳转"),
-    ;
+    JUMP("03", "跳转");
 
     private String value;
     private String desc;

@@ -154,7 +154,15 @@ public interface GenCodeConstant {
     String TEMPLATE_WEB_VBEN5_TREE_EDIT = "/templates/web/vben5/tree/vue/edit.vue.ftl";
     String TEMPLATE_WEB_VBEN5_TREE_CRUD = "/templates/web/vben5/tree/typescript/crud.tsx.ftl";
 
+    /** 主从页面 列表页 */
     String TEMPLATE_WEB_VBEN5_MAIN_INDEX = "/templates/web/vben5/mainSub/vue/index.vue.ftl";
+    /** 主从页面 列表页tsx */
+    String TEMPLATE_WEB_VBEN5_MAIN_DATA = "/templates/web/vben5/mainSub/typescript/crud.tsx.ftl";
+
+    /** 主从页面 从表列表页 */
+    String TEMPLATE_WEB_VBEN5_MAIN_SUB_INDEX = "/templates/web/vben5/mainSub/vue/subIndex.vue.ftl";
+    /** 主从页面 从表列表页tsx */
+    String TEMPLATE_WEB_VBEN5_MAIN_SUB_DATA = "/templates/web/vben5/mainSub/typescript/subData.tsx.ftl";
 
 
     String POM_FORMAT = "/templates/project/xml/{}.pom.ftl";

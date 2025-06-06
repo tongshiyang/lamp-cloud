@@ -46,5 +46,4 @@ public interface BaseEmployeeManager extends SuperCacheManager<BaseEmployee> {
      */
     IPage<BaseEmployeeResultVO> selectPageResultVO(IPage<BaseEmployee> page, Wrapper<BaseEmployee> wrapper, BaseEmployeePageQuery model);
 
-
 }

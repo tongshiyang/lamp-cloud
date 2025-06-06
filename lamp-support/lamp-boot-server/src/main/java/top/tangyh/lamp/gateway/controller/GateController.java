@@ -18,7 +18,7 @@ import java.util.Map;
  * 常用Controller
  *
  * @author zuihou
- * @date 2019-06-21 18:22
+ * @since 2019-06-21 18:22
  */
 @Controller
 public class GateController {
@@ -40,7 +40,6 @@ public class GateController {
     @Operation(summary = "查询在线服务")
     @GetMapping("/gateway/findOnlineService")
     public R<List<Option>> findOnlineService() {
-        // 自行新增服务后，需要在这里手动新增一条数据
         List<Option> list = new ArrayList<>();
         list.add(Option.builder().value("base").text(application).label("lamp-base").build());
         list.add(Option.builder().value("system").text(application).label("lamp-system").build());

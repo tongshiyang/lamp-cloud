@@ -273,9 +273,11 @@ public class DefUserServiceImpl extends SuperCacheServiceImpl<DefUserManager, Lo
     public Boolean updateBaseInfo(DefUserBaseInfoUpdateVO data) {
         DefUser old = getById(data.getId());
         DefUser defUser = BeanUtil.toBean(data, DefUser.class);
+
         if (data.getLogo() != null) {
             appendixService.save(AppendixSaveVO.build(data.getId(), AppendixType.System.DEF__USER__AVATAR, data.getLogo()));
         }
+
         boolean flag = superManager.updateById(defUser);
         if (StrUtil.isAllNotEmpty(data.getIdCard(), old.getIdCard()) && !StrUtil.equals(old.getIdCard(), data.getIdCard())) {
             cacheOps.del(DefUserIdCardCacheKeyBuilder.builder(old.getIdCard()));
@@ -296,12 +298,11 @@ public class DefUserServiceImpl extends SuperCacheServiceImpl<DefUserManager, Lo
             return superManager.listObjs(Wraps.<DefUser>lbQ().select(DefUser::getId), Convert::toLong);
         }
         return superManager.listObjs(Wraps.<DefUser>lbQ().select(DefUser::getId)
-                        .like(DefUser::getMobile, pageQuery.getMobile())
-                        .like(DefUser::getUsername, pageQuery.getUsername())
-                        .like(DefUser::getIdCard, pageQuery.getIdCard())
-                        .like(DefUser::getEmail, pageQuery.getEmail())
-                        .eq(DefUser::getSex, pageQuery.getSex())
-                , Convert::toLong);
+                .like(DefUser::getMobile, pageQuery.getMobile())
+                .like(DefUser::getUsername, pageQuery.getUsername())
+                .like(DefUser::getIdCard, pageQuery.getIdCard())
+                .like(DefUser::getEmail, pageQuery.getEmail())
+                .eq(DefUser::getSex, pageQuery.getSex()), Convert::toLong);
     }
 
 

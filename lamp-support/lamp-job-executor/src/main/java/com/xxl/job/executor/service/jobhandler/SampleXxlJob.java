@@ -108,9 +108,7 @@ public class SampleXxlJob {
             }
         }
 
-        if (exitValue == 0) {
-            // default success
-        } else {
+        if (exitValue != 0) {
             XxlJobHelper.handleFail("command exit value(" + exitValue + ") is failed");
         }
 

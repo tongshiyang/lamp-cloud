@@ -62,9 +62,7 @@ public enum SoyComponentEnum implements BaseEnum {
 
     COPYABLE("copyable", "复制"),
 
-    TIME_HUMANIZE("time-humanize", "人性化时间格式"),
-
-    ;
+    TIME_HUMANIZE("time-humanize", "人性化时间格式");
 
     private String value;
     private String desc;

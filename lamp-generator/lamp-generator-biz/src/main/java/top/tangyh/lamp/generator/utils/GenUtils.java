@@ -59,7 +59,7 @@ public class GenUtils {
         genTable.setName(tableMeta.getTableName());
         genTable.setComment(tableMeta.getComment());
         genTable.setSwaggerComment(getSwaggerComment(tableMeta.getComment()));
-        genTable.setMenuName(getName(genTable.getSwaggerComment(), webProConfig.getFormatMenuName(), "维护"));
+        genTable.setMenuName(getName(genTable.getSwaggerComment(), webProConfig.getFormatMenuName(), "管理"));
         genTable.setAuthor(generatorConfig.getAuthor());
         genTable.setEntityName(convertClassName(generatorConfig, tableMeta.getTableName()));
         genTable.setTplType(webProConfig.getTpl());
@@ -151,10 +151,9 @@ public class GenUtils {
         if (swaggerComment.contains(StrPool.SEMICOLON)) {
             swaggerComment = StrUtil.subBefore(swaggerComment, StrPool.SEMICOLON, false);
         }
-        swaggerComment = StrUtil.replace(swaggerComment, "\n", " ");
+        swaggerComment = StrUtil.subBefore(swaggerComment, StrPool.NEWLINE, false);
         return swaggerComment;
     }
-
 
     /**
      * 初始化列属性字段

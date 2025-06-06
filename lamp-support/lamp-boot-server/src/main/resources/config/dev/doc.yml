@@ -15,7 +15,7 @@ lamp:
         parameterType: header
         required: true
         # 默认值只是方便本地开发时，少填参数，生产环境请禁用swagger或者禁用默认参数
-        defaultValue: "Bearer xxx"
+        defaultValue: "test"
       - name: Authorization
         description: 客户端信息
         modelRef: String
@@ -65,7 +65,7 @@ springdoc:
   group-configs:
     # @lamp.generator auto insert springdoc.groupconfigs
     - group: 'oauth_auth'
-      displayName: 'oauth'
+      displayName: '认证服务'
       paths-to-match: '/**'
       packages-to-scan: top.tangyh.lamp.oauth
     - group: 'base_base'
@@ -83,11 +83,11 @@ springdoc:
         - top.tangyh.lamp.msg
         - top.tangyh.lamp.sms
     - group: 'system'
-      displayName: 'system'
+      displayName: '系统管理'
       paths-to-match: '/**'
       packages-to-scan: top.tangyh.lamp.system.controller
     - group: 'generator'
-      displayName: 'generator'
+      displayName: '代码生成器'
       paths-to-match: '/**'
       packages-to-scan:
         - top.tangyh.lamp.generator

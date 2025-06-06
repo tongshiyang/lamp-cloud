@@ -13,8 +13,8 @@ import top.tangyh.lamp.msg.strategy.domain.BaseProperty;
 @Data
 @EqualsAndHashCode(callSuper = false)
 public class ClSmsProperty extends BaseProperty {
-    private final static String DEF_END_POINT = "http://smssh1.253.com/msg/v1/send/json";
-    private final static String DEF_VARIABLE_END_POINT = "http://smssh1.253.com/msg/variable/json";
+    private static final String DEF_END_POINT = "http://smssh1.253.com/msg/v1/send/json";
+    private static final String DEF_VARIABLE_END_POINT = "http://smssh1.253.com/msg/variable/json";
 
     /**
      * 账号

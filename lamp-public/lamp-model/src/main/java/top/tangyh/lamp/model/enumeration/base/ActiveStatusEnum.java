@@ -26,8 +26,7 @@ public enum ActiveStatusEnum implements BaseEnum {
     /**
      * 已激活
      */
-    ACTIVATED("20", "已激活"),
-    ;
+    ACTIVATED("20", "已激活");
 
     @Schema(description = "状态")
     private String code;

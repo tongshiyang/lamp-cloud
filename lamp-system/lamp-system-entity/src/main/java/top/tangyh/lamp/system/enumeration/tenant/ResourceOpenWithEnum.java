@@ -29,9 +29,7 @@ public enum ResourceOpenWithEnum implements BaseEnum {
     /**
      * 外链
      */
-    OUTER_CHAIN("03", "外链"),
-
-    ;
+    OUTER_CHAIN("03", "外链");
 
 
     /**

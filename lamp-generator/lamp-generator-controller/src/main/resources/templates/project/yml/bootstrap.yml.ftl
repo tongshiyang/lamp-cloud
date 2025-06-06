@@ -22,7 +22,7 @@ spring:
     # 此参数一定要和 lamp-gateway-server.yml 文件中配置的 路由前缀(predicates参数) 一致！ （可以参考 system或base 服务）
     path: /${serviceName}
   profiles:
-    active: @profile.active@
+    active: '@profile.active@'
   cloud:
     sentinel:
       enabled: true

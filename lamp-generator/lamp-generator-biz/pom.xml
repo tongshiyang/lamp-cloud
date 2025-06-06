@@ -22,16 +22,14 @@
         </dependency>
         <dependency>
             <groupId>top.tangyh.lamp</groupId>
-            <artifactId>lamp-oauth-api</artifactId>
-            <version>${lamp-project.version}</version>
-        </dependency>
-
-        <dependency>
-            <groupId>top.tangyh.lamp</groupId>
             <artifactId>lamp-file-sdk</artifactId>
             <version>${lamp-project.version}</version>
         </dependency>
-
+        <dependency>
+            <groupId>top.tangyh.lamp</groupId>
+            <artifactId>lamp-oauth-api</artifactId>
+            <version>${lamp-project.version}</version>
+        </dependency>
         <dependency>
             <groupId>top.tangyh.lamp</groupId>
             <artifactId>lamp-data-scope-sdk</artifactId>
@@ -49,6 +47,7 @@
             <groupId>top.tangyh.basic</groupId>
             <artifactId>lamp-log-starter</artifactId>
         </dependency>
+
         <dependency>
             <groupId>org.freemarker</groupId>
             <artifactId>freemarker</artifactId>

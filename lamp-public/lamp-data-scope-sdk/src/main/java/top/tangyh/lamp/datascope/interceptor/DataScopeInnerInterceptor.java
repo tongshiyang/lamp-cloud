@@ -9,7 +9,7 @@ import org.apache.ibatis.session.ResultHandler;
 import org.apache.ibatis.session.RowBounds;
 
 /**
- * 赞助版 拥有此插件的全部源码
+ * mybatis 数据权限拦截器
  * <p>
  *
  * @author zuihou

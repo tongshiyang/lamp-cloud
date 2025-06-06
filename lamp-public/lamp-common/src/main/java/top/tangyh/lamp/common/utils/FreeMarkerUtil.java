@@ -27,8 +27,8 @@ import java.util.Map;
  */
 @Slf4j
 public class FreeMarkerUtil {
-    private final static Configuration FREEMARKER_CFG;
-    private final static StringTemplateLoader SL;
+    private static final Configuration FREEMARKER_CFG;
+    private static final StringTemplateLoader SL;
 
     static {
         FREEMARKER_CFG = new Configuration(Configuration.DEFAULT_INCOMPATIBLE_IMPROVEMENTS);

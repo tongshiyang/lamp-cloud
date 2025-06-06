@@ -22,8 +22,8 @@ public class JobFacadeImpl implements JobFacade {
 
     @Override
     public R<String> addTimingTask(XxlJobInfoVO xxlJobInfo) {
-        String URL = "/xxl-job-admin/jobinfo/save";
-        String result = HttpRequest.post(jobServerUrl + URL)
+        String url = "/xxl-job-admin/jobinfo/save";
+        String result = HttpRequest.post(jobServerUrl + url)
                 .body(JSONUtil.toJsonStr(xxlJobInfo))
                 .timeout(20000)//超时，毫秒
                 .execute().body();

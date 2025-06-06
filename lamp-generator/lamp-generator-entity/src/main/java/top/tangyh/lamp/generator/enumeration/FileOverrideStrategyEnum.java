@@ -28,8 +28,7 @@ public enum FileOverrideStrategyEnum implements BaseEnum {
     /**
      * 存在时忽略生成，不存在则生成文件
      */
-    EXIST_IGNORE("4", "存在时忽略"),
-    ;
+    EXIST_IGNORE("4", "存在时忽略");
 
     final String code;
     final String desc;

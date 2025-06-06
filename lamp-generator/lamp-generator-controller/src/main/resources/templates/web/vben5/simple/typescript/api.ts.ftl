@@ -13,6 +13,7 @@ import type { PageParams, PageResult } from '#/api';
 
 import { requestClient } from '#/api/request';
 import { ServicePrefixEnum } from '#/enums/commonEnum';
+import { ContentTypeEnum } from '#/enums/httpEnum';
 
 const MODULAR = '${table.entityName?uncap_first}';
 
@@ -71,6 +72,21 @@ export namespace ${table.entityName}Api {
     return requestClient.post<${table.entityName}Model.${resultVoName}>(
       ${table.entityName}Config.Save.url as string,
       params,
+    );
+  }
+
+  /**
+   * 复制
+   */
+  export async function copy(id?: string) {
+    return requestClient.post<${table.entityName}Model.${resultVoName}>(
+      `${r"${ServicePrefix}"}/${r"${MODULAR}"}/copy`,
+      { id },
+      {
+        headers: {
+          'Content-Type': ContentTypeEnum.FORM_URLENCODED,
+        },
+      },
     );
   }
 

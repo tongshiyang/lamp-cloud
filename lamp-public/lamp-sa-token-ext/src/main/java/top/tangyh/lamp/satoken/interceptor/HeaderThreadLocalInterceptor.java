@@ -36,15 +36,11 @@ public class HeaderThreadLocalInterceptor implements AsyncHandlerInterceptor {
         if (!(handler instanceof HandlerMethod)) {
             return true;
         }
-        log.info("HeaderThreadLocalInterceptor url={}, method={}", request.getRequestURI(), request.getMethod());
         ContextUtil.setPath(WebUtils.getHeader(request, ContextConstants.PATH_HEADER));
 
         ContextUtil.setApplicationId(WebUtils.getHeader(request, ContextConstants.APPLICATION_ID_HEADER));
         ContextUtil.setClientId(WebUtils.getHeader(request, ContextConstants.CLIENT_ID_HEADER));
         ContextUtil.setLogTraceId(WebUtils.getHeader(request, ContextConstants.TRACE_ID_HEADER));
-        Map<String, String> localMap = ContextUtil.getLocalMap();
-        localMap.forEach(MDC::put);
-
         ContextUtil.setGrayVersion(WebUtils.getHeader(request, ContextConstants.GRAY_VERSION));
 
         String userId = WebUtils.getHeader(request, ContextConstants.JWT_KEY_USER_ID);
@@ -56,6 +52,10 @@ public class HeaderThreadLocalInterceptor implements AsyncHandlerInterceptor {
         ContextUtil.setCurrentTopCompanyId(WebUtils.getHeader(request, ContextConstants.CURRENT_TOP_COMPANY_ID_HEADER));
         ContextUtil.setCurrentCompanyId(WebUtils.getHeader(request, ContextConstants.CURRENT_COMPANY_ID_HEADER));
         ContextUtil.setCurrentDeptId(WebUtils.getHeader(request, ContextConstants.CURRENT_DEPT_ID_HEADER));
+
+        Map<String, String> localMap = ContextUtil.getLocalMap();
+        localMap.forEach(MDC::put);
+        log.info("HeaderThreadLocalInterceptor url={}, method={}", request.getRequestURI(), request.getMethod());
         return true;
     }
 
@@ -63,5 +63,6 @@ public class HeaderThreadLocalInterceptor implements AsyncHandlerInterceptor {
     @Override
     public void afterCompletion(HttpServletRequest request, HttpServletResponse response, Object handler, Exception ex) {
         ContextUtil.remove();
+        MDC.clear();
     }
 }

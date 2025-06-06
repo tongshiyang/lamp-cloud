@@ -87,6 +87,7 @@ public class BaseRoleManagerImpl extends SuperCacheManagerImpl<BaseRoleMapper, B
         Function<Long, List<Long>> loader = roleId -> baseRoleResourceRelMapper.selectResourceIdByRoleId(applicationId, roleId);
         Set<Long> resourceIdSet = findCollectByIds(roleIdList, cacheBuilder, loader);
         // 新方法 end
+
         log.debug("resourceIdSet={}", resourceIdSet.size());
 
         return new ArrayList<>(resourceIdSet);
@@ -97,6 +98,7 @@ public class BaseRoleManagerImpl extends SuperCacheManagerImpl<BaseRoleMapper, B
         List<Long> roleIdList = findRoleIdByEmployeeId(employeeId);
         return findByIds(roleIdList, null).stream().filter(item -> item != null && item.getState()).toList();
     }
+
 
     /**
      * 查询员工拥有的角色

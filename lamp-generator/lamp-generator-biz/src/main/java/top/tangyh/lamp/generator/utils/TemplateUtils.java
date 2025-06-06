@@ -96,7 +96,7 @@ public class TemplateUtils {
                 templates.add(GenCodeConstant.TEMPLATE_WEB_SOYBEAN_TREE_TREE);
                 templates.add(GenCodeConstant.TEMPLATE_WEB_SOYBEAN_TREE_CRUD);
             } else if (TplEnum.MAIN_SUB.eq(tplType)) {
-
+                templates.add(GenCodeConstant.TEMPLATE_WEB_SOYBEAN_MAIN_INDEX);
             } else {
                 if (PopupTypeEnum.JUMP.eq(popupType)) {
                     templates.add(GenCodeConstant.TEMPLATE_WEB_SOYBEAN_SIMPLE_JUMP_EDIT);
@@ -116,7 +116,11 @@ public class TemplateUtils {
                 templates.add(GenCodeConstant.TEMPLATE_WEB_VBEN5_TREE_TREE);
                 templates.add(GenCodeConstant.TEMPLATE_WEB_VBEN5_TREE_CRUD);
             } else if (TplEnum.MAIN_SUB.eq(tplType)) {
-
+                templates.add(GenCodeConstant.TEMPLATE_WEB_VBEN5_MAIN_INDEX);
+                templates.add(GenCodeConstant.TEMPLATE_WEB_VBEN5_MAIN_DATA);
+                // 从表
+                templates.add(GenCodeConstant.TEMPLATE_WEB_VBEN5_MAIN_SUB_INDEX);
+                templates.add(GenCodeConstant.TEMPLATE_WEB_VBEN5_MAIN_SUB_DATA);
             } else {
                 if (PopupTypeEnum.JUMP.eq(popupType)) {
                     templates.add(GenCodeConstant.TEMPLATE_WEB_VBEN5_SIMPLE_JUMP_EDIT);

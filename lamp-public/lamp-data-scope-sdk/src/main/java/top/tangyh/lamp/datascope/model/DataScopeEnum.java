@@ -41,8 +41,7 @@ public enum DataScopeEnum implements BaseEnum {
      * SELF=个人
      */
     SELF("06", "个人"),
-    CUSTOM("07", "自定义"),
-    ;
+    CUSTOM("07", "自定义");
 
     @Schema(description = "描述")
     private final String val;

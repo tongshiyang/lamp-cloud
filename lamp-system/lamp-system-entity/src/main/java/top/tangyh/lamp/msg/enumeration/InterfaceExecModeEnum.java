@@ -26,8 +26,7 @@ public enum InterfaceExecModeEnum implements BaseEnum {
     /**
      * 脚本
      */
-    SCRIPT("02", "脚本"),
-    ;
+    SCRIPT("02", "脚本");
     private String value;
     private String desc;
 

@@ -22,8 +22,7 @@ public enum ProjectTypeEnum implements BaseEnum {
     /**
      * 微服务版
      */
-    CLOUD("微服务版"),
-    ;
+    CLOUD("微服务版");
 
     private final String desc;
 

@@ -9,7 +9,6 @@
         <relativePath>../pom.xml</relativePath>
     </parent>
 
-
     <modelVersion>4.0.0</modelVersion>
     <artifactId>lamp-login-user-resolver</artifactId>
     <description>当前登录用户信息注入模块</description>

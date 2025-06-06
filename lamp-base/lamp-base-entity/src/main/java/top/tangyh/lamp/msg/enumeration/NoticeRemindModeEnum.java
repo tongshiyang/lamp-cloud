@@ -34,8 +34,7 @@ public enum NoticeRemindModeEnum implements BaseEnum {
     /**
      * NOTIFY="提醒"
      */
-    NOTICE("03", "提醒"),
-    ;
+    NOTICE("03", "提醒");
 
     private String value;
     @Schema(description = "描述")

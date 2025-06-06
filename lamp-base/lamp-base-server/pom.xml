@@ -22,12 +22,12 @@
         </dependency>
         <dependency>
             <groupId>top.tangyh.lamp</groupId>
-            <artifactId>lamp-login-user-cloud-impl</artifactId>
+            <artifactId>lamp-base-controller</artifactId>
             <version>${lamp-project.version}</version>
         </dependency>
         <dependency>
             <groupId>top.tangyh.lamp</groupId>
-            <artifactId>lamp-base-controller</artifactId>
+            <artifactId>lamp-login-user-cloud-impl</artifactId>
             <version>${lamp-project.version}</version>
         </dependency>
         <dependency>

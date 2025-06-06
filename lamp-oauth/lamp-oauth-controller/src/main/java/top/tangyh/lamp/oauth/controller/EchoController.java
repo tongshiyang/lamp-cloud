@@ -13,7 +13,6 @@ import top.tangyh.basic.annotation.response.IgnoreResponseBodyAdvice;
 import top.tangyh.lamp.base.service.user.BaseOrgService;
 import top.tangyh.lamp.base.service.user.BasePositionService;
 import top.tangyh.lamp.oauth.service.DictService;
-import top.tangyh.lamp.system.service.tenant.DefUserService;
 
 import java.io.Serializable;
 import java.util.Map;
@@ -35,14 +34,8 @@ import java.util.Set;
 public class EchoController {
     private final DictService dictService;
     private final BaseOrgService baseOrgService;
-    private final DefUserService defUserService;
     private final BasePositionService basePositionService;
 
-    @Operation(summary = "根据id查询用户", description = "根据id查询用户")
-    @PostMapping("/user/findByIds")
-    public Map<Serializable, Object> findUserByIds(@RequestParam(value = "ids") Set<Serializable> ids) {
-        return defUserService.findByIds(ids);
-    }
 
     @PostMapping("/position/findByIds")
     public Map<Serializable, Object> findStationByIds(@RequestParam("ids") Set<Serializable> ids) {

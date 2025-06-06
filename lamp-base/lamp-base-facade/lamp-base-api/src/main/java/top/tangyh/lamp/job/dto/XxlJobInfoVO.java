@@ -17,7 +17,7 @@ import java.util.Date;
 @ToString
 public class XxlJobInfoVO implements Serializable {
 
-    private final static DateTimeFormatter DTF = DateTimeFormatter.ofPattern(DateUtils.DEFAULT_DATE_TIME_FORMAT);
+    private static final DateTimeFormatter DTF = DateTimeFormatter.ofPattern(DateUtils.DEFAULT_DATE_TIME_FORMAT);
     /**
      * 执行器 名
      */

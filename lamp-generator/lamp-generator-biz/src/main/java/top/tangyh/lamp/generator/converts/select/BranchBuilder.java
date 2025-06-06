@@ -5,7 +5,8 @@ import java.util.function.Predicate;
 
 /**
  * 分支构建者
- *
+ * @param <P>    参数类型
+ * @param <T>    返回值类型
  * @author hanchunlin
  * @author zuihou
  * Created at 2020/6/11 17:22

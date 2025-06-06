@@ -19,8 +19,7 @@ import com.baomidou.mybatisplus.annotation.InterceptorIgnore;
  * </p>
  *
  * @author ${author}
- * @date ${datetime}
- * @create [${datetime}] [${author}] [代码生成器生成]
+ * @since ${datetime}
  */
 @Repository
 <#if table.isTenantLine>

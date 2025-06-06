@@ -3,6 +3,7 @@ package ${package.SaveVO};
 <#list saveVoImport as pkg>
 import ${pkg};
 </#list>
+import java.io.Serial;
 import java.io.Serializable;
 
 /**
@@ -12,7 +13,7 @@ import java.io.Serializable;
  * </p>
  *
  * @author ${author}
- * @date ${datetime}
+ * @since ${datetime}
  */
 <#if table.isLombok>
 @Data
@@ -27,7 +28,7 @@ import java.io.Serializable;
 </#if>
 @Schema(description = "${table.swaggerComment}")
 public class ${saveVoName} implements Serializable {
-
+    @Serial
     private static final long serialVersionUID = 1L;
 
 <#list fields as field>

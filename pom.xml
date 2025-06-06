@@ -21,11 +21,18 @@
         <!-- @lamp.generator auto insert root.pom.xml -->
         <module>lamp-dependencies-parent</module>
         <module>lamp-public</module>
-        <module>lamp-base</module>
+        <!-- 认证服务 -->
         <module>lamp-oauth</module>
+        <!-- 基础服务 -->
+        <module>lamp-base</module>
+        <!-- 系统服务 -->
         <module>lamp-system</module>
-        <module>lamp-gateway</module>
-        <module>lamp-support</module>
+        <!-- 代码生成 -->
         <module>lamp-generator</module>
+        <!-- 网关 -->
+        <module>lamp-gateway</module>
+        <!-- 支撑模块 -->
+        <module>lamp-support</module>
     </modules>
+
 </project>

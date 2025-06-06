@@ -30,7 +30,7 @@ import java.util.regex.Matcher;
 @Slf4j
 @AllArgsConstructor
 public class FileInsertUtil {
-    public final static String SLOT_PAT = "@lamp.generator auto insert ([a-zA-Z0-9._]+)( -->)?";
+    public static final String SLOT_PAT = "@lamp.generator auto insert ([a-zA-Z0-9._]+)( -->)?";
     private static final Set<String> ONE_TAB = CollUtil.newHashSet(EchoDictType.class.getSimpleName(), EchoRef.class.getSimpleName(), EchoApi.class.getSimpleName());
     /** 要操作的文件的路径 */
     private String filePath;

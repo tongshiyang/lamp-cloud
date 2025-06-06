@@ -42,8 +42,7 @@ public enum FileType implements BaseEnum {
     /**
      * OTHER="其他"
      */
-    OTHER("其他"),
-    ;
+    OTHER("其他");
 
     @Schema(description = "描述")
     private String desc;

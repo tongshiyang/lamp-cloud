@@ -47,7 +47,7 @@ public class SysUser extends Entity<Long> implements Serializable, EchoVO {
     private static final long serialVersionUID = 1L;
     @TableField(exist = false)
     @Builder.Default
-    private Map<String, Object> echoMap = MapUtil.newHashMap();
+    private final Map<String, Object> echoMap = MapUtil.newHashMap();
 
     /**
      * 用户名;大小写数字下划线

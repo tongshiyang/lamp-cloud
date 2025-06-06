@@ -130,8 +130,8 @@ public class DefGenTableController
     @Operation(summary = "获取字段模板映射", description = "获取字段模板映射")
     @GetMapping("/getFieldTemplate")
     @WebLog(value = "获取字段模板映射")
-    public R<Map<String, String>> getFieldTemplate() {
-        return R.success(superService.getFieldTemplate());
+    public R<Map<String, String>> getFieldTemplate(TemplateEnum template) {
+        return R.success(superService.getFieldTemplate(template));
     }
 
     @Operation(summary = "获取生成代码是否覆盖的默认配置", description = "获取生成代码是否覆盖的默认配置")

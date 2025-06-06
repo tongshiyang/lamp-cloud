@@ -41,8 +41,7 @@ public class MsgController {
     @Operation(summary = "根据模板发送消息", description = "根据模板发送消息")
     @PostMapping("/extendMsg/sendByTemplate")
     @WebLog("发送消息")
-    public R<Boolean> sendByTemplate(@RequestBody @Validated(SuperEntity.Update.class) ExtendMsgSendVO data
-            , @Parameter(hidden = true) @LoginUser(isEmployee = true) SysUser sysUser) {
+    public R<Boolean> sendByTemplate(@RequestBody @Validated(SuperEntity.Update.class) ExtendMsgSendVO data, @Parameter(hidden = true) @LoginUser(isEmployee = true) SysUser sysUser) {
         return R.success(msgBiz.sendByTemplate(data, sysUser));
     }
 

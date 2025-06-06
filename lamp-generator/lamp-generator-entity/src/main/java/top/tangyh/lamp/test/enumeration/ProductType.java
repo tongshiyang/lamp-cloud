@@ -30,8 +30,7 @@ public enum ProductType implements BaseEnum {
     /**
      * GIFT
      */
-    GIFT("赠品"),
-    ;
+    GIFT("赠品");
 
     @Schema(description = "描述")
     private String desc;

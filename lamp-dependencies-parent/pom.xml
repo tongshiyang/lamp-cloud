@@ -55,11 +55,6 @@
             </dependency>
             <dependency>
                 <groupId>top.tangyh.basic</groupId>
-                <artifactId>lamp-captcha-starter</artifactId>
-                <version>${lamp-util.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>top.tangyh.basic</groupId>
                 <artifactId>lamp-cloud-starter</artifactId>
                 <version>${lamp-util.version}</version>
             </dependency>
@@ -78,9 +73,15 @@
                 <artifactId>lamp-echo-starter</artifactId>
                 <version>${lamp-util.version}</version>
             </dependency>
+
             <dependency>
                 <groupId>top.tangyh.basic</groupId>
                 <artifactId>lamp-log-starter</artifactId>
+                <version>${lamp-util.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>top.tangyh.basic</groupId>
+                <artifactId>lamp-captcha-starter</artifactId>
                 <version>${lamp-util.version}</version>
             </dependency>
             <dependency>
@@ -138,10 +139,6 @@
             <artifactId>hutool-all</artifactId>
         </dependency>
         <dependency>
-            <groupId>com.alibaba</groupId>
-            <artifactId>fastjson</artifactId>
-        </dependency>
-        <dependency>
             <groupId>com.google.guava</groupId>
             <artifactId>guava</artifactId>
         </dependency>
@@ -193,6 +190,9 @@
                         <source>${maven.compiler.source}</source>
                         <target>${maven.compiler.target}</target>
                         <encoding>${project.build.sourceEncoding}</encoding>
+                        <compilerArgs>
+                            <arg>-parameters</arg>
+                        </compilerArgs>
                     </configuration>
                 </plugin>
                 <plugin>
@@ -237,7 +237,6 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-resources-plugin</artifactId>
-
             </plugin>
             <!--
             <plugin>
@@ -256,6 +255,12 @@
                 <configuration>
                     <generateBackupPoms>false</generateBackupPoms>
                 </configuration>
+            </plugin>
+
+            <!-- 代码规范检查 -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-checkstyle-plugin</artifactId>
             </plugin>
         </plugins>
     </build>

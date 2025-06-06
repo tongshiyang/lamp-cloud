@@ -36,7 +36,7 @@ public class ProjectGeneratorVO implements Serializable {
     private static final long serialVersionUID = 1L;
     /** 作者 */
     @NotEmpty(message = "请填写作者")
-    public String author;
+    private String author;
     /** cloud boot */
     @NotNull(message = "请填写类型")
     private ProjectTypeEnum type;

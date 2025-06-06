@@ -44,7 +44,7 @@ public class DefGenTestSimpleResultVO extends Entity<Long> implements Serializab
 
     private static final long serialVersionUID = 1L;
     @Builder.Default
-    private Map<String, Object> echoMap = MapUtil.newHashMap();
+    private final Map<String, Object> echoMap = MapUtil.newHashMap();
 
     @Schema(description = "ID")
     private Long id;

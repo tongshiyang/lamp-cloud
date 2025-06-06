@@ -3,6 +3,7 @@ package ${package.PageQuery};
 <#list pageQueryImport as pkg>
 import ${pkg};
 </#list>
+import java.io.Serial;
 import java.io.Serializable;
 
 
@@ -13,7 +14,7 @@ import java.io.Serializable;
  * </p>
  *
  * @author ${author}
- * @date ${datetime}
+ * @since ${datetime}
  */
 <#if table.isLombok>
 @Data
@@ -29,6 +30,7 @@ import java.io.Serializable;
 @Schema(description = "${table.swaggerComment}")
 public class ${pageQueryName} implements Serializable {
 
+    @Serial
     private static final long serialVersionUID = 1L;
 
     @Schema(description = "${pkField.swaggerComment!}")

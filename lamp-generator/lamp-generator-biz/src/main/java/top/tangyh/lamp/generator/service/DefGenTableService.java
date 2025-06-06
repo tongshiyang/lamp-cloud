@@ -128,7 +128,7 @@ public interface DefGenTableService extends SuperService<Long, DefGenTable> {
      * @return java.util.Map<java.lang.String, java.lang.String>
      * @create [2022/4/15 10:27 AM ] [tangyh] [初始创建]
      */
-    Map<String, String> getFieldTemplate();
+    Map<String, String> getFieldTemplate(TemplateEnum template);
 
     /**
      * 获取默认的文件覆盖策略

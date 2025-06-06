@@ -38,8 +38,7 @@ public enum TaskStatus implements BaseEnum {
     /**
      * FAIL
      */
-    FAIL("执行失败"),
-    ;
+    FAIL("执行失败");
 
     @Schema(description = "描述")
     private String desc;

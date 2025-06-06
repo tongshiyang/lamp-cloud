@@ -33,8 +33,7 @@ public enum FileStorageType implements BaseEnum {
     MIN_IO("MinIO"),
     ALI_OSS("阿里云OSS"),
     QINIU_OSS("七牛云OSS"),
-    HUAWEI_OSS("华为云OSS"),
-    ;
+    HUAWEI_OSS("华为云OSS");
 
     @Schema(description = "描述")
     private String desc;

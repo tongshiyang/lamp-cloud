@@ -41,4 +41,6 @@ public interface DefResourceApiManager extends SuperCacheManager<DefResourceApi>
      * @create [2021/9/20 6:49 下午 ] [tangyh] [初始创建]
      */
     List<DefResourceApi> findByResourceId(Long resourceId);
+
+
 }

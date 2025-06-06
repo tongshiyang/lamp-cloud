@@ -40,14 +40,14 @@ import java.util.Map;
 public class DefAreaResultVO extends TreeEntity<DefAreaResultVO, Long> implements Serializable, EchoVO {
 
     private static final long serialVersionUID = 1L;
+    @Builder.Default
+    private final Map<String, Object> echoMap = MapUtil.newHashMap();
     @Schema(description = "名称")
     protected String name;
     @Schema(description = "父ID")
     protected Long parentId;
     @Schema(description = "排序号")
     protected Integer sortValue;
-    @Builder.Default
-    private Map<String, Object> echoMap = MapUtil.newHashMap();
     @Schema(description = "主键")
     private Long id;
     /**

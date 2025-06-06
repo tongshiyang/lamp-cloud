@@ -7,6 +7,8 @@ import java.util.function.Predicate;
 /**
  * 分支提供者
  *
+ * @param <P>    参数类型
+ * @param <T>    返回值类型
  * @author hanchunlin
  * @author zuihou
  * Created at 2020/6/11 17:19
@@ -24,7 +26,7 @@ public interface Branch<P, T> {
      * @return 返回一个新的分支
      */
     static <P, T> Branch<P, T> of(Predicate<P> tester, Function<P, T> factory) {
-        return new Branch<P, T>() {
+        return new Branch<>() {
 
             @Override
             public Predicate<P> tester() {

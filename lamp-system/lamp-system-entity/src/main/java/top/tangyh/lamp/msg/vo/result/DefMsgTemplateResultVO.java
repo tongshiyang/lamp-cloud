@@ -40,7 +40,7 @@ public class DefMsgTemplateResultVO extends Entity<Long> implements Serializable
     private static final long serialVersionUID = 1L;
 
     @Builder.Default
-    private Map<String, Object> echoMap = MapUtil.newHashMap();
+    private final Map<String, Object> echoMap = MapUtil.newHashMap();
 
     @Schema(description = "模板ID")
     private Long id;

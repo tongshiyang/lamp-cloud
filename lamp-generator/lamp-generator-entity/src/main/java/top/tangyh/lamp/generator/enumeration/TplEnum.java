@@ -31,8 +31,7 @@ public enum TplEnum implements BaseEnum {
      * 树结构
      */
     TREE("02", "树结构"),
-    MAIN_SUB("03", "主从结构"),
-    ;
+    MAIN_SUB("03", "主从结构");
 
     private String value;
     private String desc;

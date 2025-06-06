@@ -38,5 +38,10 @@ export namespace ${table.entityName}Model {
   <#list fields as field>
     ${field.javaField}?: ${field.tsType}; // ${field.swaggerComment!}
   </#list>
+  <#if table.tplType == TPL_MAIN_SUB>
+    insertList?: ${resultVoName}[];
+    updateList?: ${resultVoName}[];
+    deleteList?: string[];
+  </#if>
   }
 }

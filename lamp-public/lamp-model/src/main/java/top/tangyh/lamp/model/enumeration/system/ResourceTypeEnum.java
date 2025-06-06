@@ -24,7 +24,6 @@ public enum ResourceTypeEnum implements BaseEnum {
     /**
      * 视图
      */
-//    @Deprecated
 //    VIEW("30", "视图"),
     /**
      * 按钮

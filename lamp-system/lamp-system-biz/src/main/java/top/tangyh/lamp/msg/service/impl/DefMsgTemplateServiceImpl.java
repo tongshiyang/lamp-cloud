@@ -41,7 +41,7 @@ public class DefMsgTemplateServiceImpl extends SuperServiceImpl<DefMsgTemplateMa
     /**
      * 解析占位符 ${xxx}
      */
-    private final static Pattern REG_EX = Pattern.compile("\\$\\{([^}]+)}");
+    private static final Pattern REG_EX = Pattern.compile("\\$\\{([^}]+)}");
 
     private static String getParamByContent(String title, String content) {
 

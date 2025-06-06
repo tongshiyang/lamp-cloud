@@ -30,8 +30,7 @@ public enum GenTypeEnum implements BaseEnum {
     /**
      * 打包下载
      */
-    ZIP("02", "打包下载"),
-    ;
+    ZIP("02", "打包下载");
 
     private String value;
     private String desc;

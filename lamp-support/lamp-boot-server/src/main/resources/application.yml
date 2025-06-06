@@ -32,17 +32,36 @@ lamp:
       POST:
         - /defResource
         - /defTenantApplicationRel/cancel
+        - /baseRole/roleEmployee
+        - /baseRole/roleResource
+        - /baseEmployee/employeeRole
+        - /sopPermGroupPermission/delete
       PUT:
         - /defResource
         - /defResource/moveResource
       DELETE:
+        - /defResource
         - /defResource*/**
+        - /defTenant
         - /defTenant*/**
+        - /defApplication
         - /defApplication*/**
+        - /defUser
         - /defUser*/**
+        - /baseEmployee
+        - /baseEmployee*/**
+        - /defParameter
         - /defParameter*/**
+        - /defDict
         - /defDict*/**
+        - /defClient
         - /defClient*/**
+        - /defMsgTemplate*/**
+        - /sopApiInfo*/**
+        - /sopSysConfig*/**
+        - /sopIsvInfo*/**
+        - /sopPermGroup*/**
+        - /sopSysConfig*/**
   ignore:
     # 是否启用网关的 uri权限鉴权 (设置为false，则后台不校验访问权限)
     authEnabled: true
@@ -327,6 +346,3 @@ feign:
       min-request-size: 2048
     response: # 响应压缩
       enabled: true
-
-
-

@@ -30,8 +30,7 @@ public enum SourceType implements BaseEnum {
     /**
      * SERVICE
      */
-    SERVICE("服务"),
-    ;
+    SERVICE("服务");
 
     @Schema(description = "描述")
     private String desc;

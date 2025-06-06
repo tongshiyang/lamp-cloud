@@ -19,8 +19,7 @@ public enum BooleanEnum {
     /**
      * false
      */
-    FALSE(false, 0, "0", "否"),
-    ;
+    FALSE(false, 0, "0", "否");
     private final Boolean bool;
     private final int integer;
     private final String str;

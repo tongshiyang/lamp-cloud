@@ -100,6 +100,7 @@ public class BaseRoleServiceImpl extends SuperCacheServiceImpl<BaseRoleManager, 
         if (count > 0) {
             throw new BizException("内置角色不允许删除");
         }
+
         // 员工的角色
         baseEmployeeRoleRelManager.deleteByRole(idList);
         // 组织的角色

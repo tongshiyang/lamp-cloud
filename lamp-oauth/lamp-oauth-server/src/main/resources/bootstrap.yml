@@ -13,6 +13,7 @@ lamp:
     namespace: ${SEATA_NAMESPACE:@seata.namespace@}
   sentinel:
     dashboard: ${SENTINEL_DASHBOARD:@sentinel.dashboard@}
+
 spring:
   main:
     allow-bean-definition-overriding: true

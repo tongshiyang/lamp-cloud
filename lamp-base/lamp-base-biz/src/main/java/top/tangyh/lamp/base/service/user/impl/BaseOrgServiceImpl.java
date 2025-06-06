@@ -128,7 +128,6 @@ public class BaseOrgServiceImpl extends SuperCacheServiceImpl<BaseOrgManager, Lo
         return BeanUtil.copyToList(list, BaseOrgResultVO.class);
     }
 
-
     @Override
     @Transactional(rollbackFor = Exception.class)
     public List<Long> saveOrgRole(BaseOrgRoleRelSaveVO saveVO) {
@@ -199,7 +198,6 @@ public class BaseOrgServiceImpl extends SuperCacheServiceImpl<BaseOrgManager, Lo
         return sysOrg;
     }
 
-
     @Override
     @Transactional(readOnly = true)
     public List<BaseOrg> findCompanyByEmployeeId(Long employeeId) {
@@ -241,6 +239,7 @@ public class BaseOrgServiceImpl extends SuperCacheServiceImpl<BaseOrgManager, Lo
         }
         return companyList;
     }
+
 
     @Override
     @Transactional(readOnly = true)

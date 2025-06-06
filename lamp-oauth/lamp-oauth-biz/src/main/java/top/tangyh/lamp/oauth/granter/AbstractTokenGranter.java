@@ -104,6 +104,7 @@ public abstract class AbstractTokenGranter implements TokenGranter {
             return result;
         }
 
+
         // 2. 查找用户
         DefUser defUser = getUser(loginParam);
 
@@ -195,6 +196,7 @@ public abstract class AbstractTokenGranter implements TokenGranter {
      *
      * @param loginParam loginParam
      * @param user       user
+     * @param tenantId       tenantId
      * @return top.tangyh.basic.base.R<top.tangyh.lamp.oauth.vo.result.LoginResultVO>
      * @author tangyh
      * @date 2022/10/5 12:38 PM

@@ -49,7 +49,6 @@ public class GatewayWebConfig {
         return new GarbageEchoServiceImpl();
     }
 
-
     /**
      * Spring 工具类
      *

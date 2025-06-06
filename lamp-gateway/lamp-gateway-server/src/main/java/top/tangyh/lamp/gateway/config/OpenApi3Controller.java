@@ -37,7 +37,7 @@ import java.util.concurrent.TimeUnit;
 @RestController
 @Slf4j
 public class OpenApi3Controller {
-    public final static String SWAGGER_RESOURCES_URI = "/v3/api-docs/swagger-config";
+    public static final String SWAGGER_RESOURCES_URI = "/v3/api-docs/swagger-config";
 
     @Autowired
     private GatewayProperties gatewayProperties;

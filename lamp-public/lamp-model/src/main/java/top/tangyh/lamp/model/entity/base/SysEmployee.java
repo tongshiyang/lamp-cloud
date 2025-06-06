@@ -46,7 +46,7 @@ public class SysEmployee extends Entity<Long> implements Serializable, EchoVO {
     private static final long serialVersionUID = 1L;
 
     @TableField(exist = false)
-    private Map<String, Object> echoMap = MapUtil.newHashMap();
+    private final Map<String, Object> echoMap = MapUtil.newHashMap();
 
     /**
      * 是否默认员工;[0-否 1-是]
@@ -114,5 +114,6 @@ public class SysEmployee extends Entity<Long> implements Serializable, EchoVO {
      */
     @TableField(value = "created_org_id")
     private Long createdOrgId;
+
 
 }

@@ -110,7 +110,7 @@ public class AuthenticationSaInterceptor implements WebFilter, Ordered {
 
             // 接口权限
             Map<String, Set<String>> anyone = ignoreProperties.buildAnyone();
-            Map<String, Set<String>> allApi = this.defResourceFacade.listAllApi();
+            Map<String, Set<String>> allApi = defResourceFacade.listAllApi();
 
             allApi.forEach((api, auth) -> {
                 List<String> list = StrUtil.split(api, "###");
@@ -170,11 +170,12 @@ public class AuthenticationSaInterceptor implements WebFilter, Ordered {
             }
 
         } catch (StopMatchException e) {
+            log.error(e.getMessage(), e);
             // StopMatchException 异常代表：停止匹配，进入Controller
 
         } catch (SaTokenException e) {
             String result = e.getMessage();
-
+            log.error(e.getMessage(), e);
             ServerHttpResponse response = exchange.getResponse();
             R tokenError = R.fail(e.getCode(), result);
             response.getHeaders().add(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE);
@@ -182,6 +183,7 @@ public class AuthenticationSaInterceptor implements WebFilter, Ordered {
             DataBuffer dataBuffer = response.bufferFactory().wrap(tokenError.toString().getBytes());
             return response.writeWith(Mono.just(dataBuffer));
         } catch (Throwable e) {
+            log.error(e.getMessage(), e);
             // 1. 获取异常处理策略结果
             String result = e.getMessage();
             ServerHttpResponse response = exchange.getResponse();

@@ -5,5 +5,10 @@
     <include resource="defaults-biz-dev.xml"/>
 
     <!-- 可以在这里自定义规则 -->
-
+    <logger name="top.tangyh.lamp.base.controller" additivity="true" level="${log.level.controller}">
+        <appender-ref ref="CONTROLLER_APPENDER"/>
+    </logger>
+    <logger name="top.tangyh.lamp.base.service" additivity="true" level="${log.level.service}">
+        <appender-ref ref="SERVICE_APPENDER"/>
+    </logger>
 </configuration>

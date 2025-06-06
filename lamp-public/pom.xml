@@ -9,7 +9,6 @@
         <relativePath>../lamp-dependencies-parent/pom.xml</relativePath>
     </parent>
 
-    <groupId>top.tangyh.lamp</groupId>
     <artifactId>lamp-public</artifactId>
 
     <modelVersion>4.0.0</modelVersion>
@@ -22,8 +21,8 @@
         <module>lamp-database-mode</module>
         <module>lamp-file-sdk</module>
         <module>lamp-data-scope-sdk</module>
-        <module>lamp-sa-token-ext</module>
         <module>lamp-login-user-facade</module>
+        <module>lamp-sa-token-ext</module>
     </modules>
 
 </project>

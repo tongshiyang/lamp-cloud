@@ -29,6 +29,7 @@
         <result column="query_type" property="queryType"/>
         <result column="component" property="component"/>
         <result column="vxe_component" property="vxeComponent"/>
+        <result column="soy_component" property="soyComponent"/>
         <result column="dict_type" property="dictType"/>
         <result column="echo_str" property="echoStr"/>
         <result column="enum_str" property="enumStr"/>
@@ -48,7 +49,7 @@
         , table_id, name, comment_, swagger_comment, type,
         java_type, java_field, ts_type, size_, digit, is_pk, is_increment,
         is_required, is_logic_delete_field, is_version_field, fill, is_edit, is_list,
-        is_query, width, query_type, component, vxe_component, dict_type,
+        is_query, width, query_type, component, vxe_component, soy_component, dict_type,
         echo_str, enum_str, sort_value, edit_def_value, edit_help_message, index_help_message,
         created_by, created_time, updated_by, updated_time
     </sql>

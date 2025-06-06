@@ -9,5 +9,4 @@
         ra.resource_id, ra.controller, ra.spring_application_name, ra.request_method, ra.name, ra.uri
     </sql>
 
-
 </mapper>

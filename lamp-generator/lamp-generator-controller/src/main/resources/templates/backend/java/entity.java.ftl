@@ -7,6 +7,7 @@ import ${pkg};
 <#else>
 import java.io.Serializable;
 </#if>
+import java.io.Serial;
 
 
 /**
@@ -16,7 +17,7 @@ import java.io.Serializable;
  * </p>
  *
  * @author ${author}
- * @date ${datetime}
+ * @since ${datetime}
  */
 <#if table.isLombok>
 @Data
@@ -35,6 +36,7 @@ public class ${table.entityName} extends ${superEntityClass}<<#if isTreeEntity>$
 <#else>
 public class ${table.entityName} implements Serializable {
 </#if>
+    @Serial
     private static final long serialVersionUID = 1L;
 
 <#list fields as field>

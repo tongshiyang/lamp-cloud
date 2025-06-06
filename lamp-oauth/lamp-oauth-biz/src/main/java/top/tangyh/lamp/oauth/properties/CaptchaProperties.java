@@ -66,8 +66,7 @@ public class CaptchaProperties {
         /**
          * 算数
          */
-        ARITHMETIC("image/png"),
-        ;
+        ARITHMETIC("image/png");
 
         final String contentType;
 

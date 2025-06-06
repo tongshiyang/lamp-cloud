@@ -119,18 +119,7 @@ public class OutputFileUtils {
             frontOutputFile = StrUtil.format("src/views/{}/{}/{}/modules/Tree.vue", plusApplicationName, plusModuleName, entityName);
         } else if (templatePath.equals(GenCodeConstant.TEMPLATE_WEB_SOYBEAN_SIMPLE_JUMP_EDIT)) {
             frontOutputFile = StrUtil.format("src/views/{}/{}/{}/modules/Edit.vue", plusApplicationName, plusModuleName, entityName);
-        }
-
-//        else if (templatePath.equals(GenCodeConstant.TEMPLATE_WEB_SOYBEAN_MAIN_EDIT) || templatePath.equals(GenCodeConstant.TEMPLATE_WEB_SOYBEAN_MAIN_JUMP_EDIT) || templatePath.equals(GenCodeConstant.TEMPLATE_WEB_SOYBEAN_SIMPLE_EDIT) || templatePath.equals(GenCodeConstant.TEMPLATE_WEB_SOYBEAN_SIMPLE_JUMP_EDIT) || templatePath.equals(GenCodeConstant.TEMPLATE_WEB_SOYBEAN_TREE_EDIT)) {
-//            frontOutputFile = StrUtil.format("src/views/{}/{}/{}/Edit.vue", plusApplicationName, plusModuleName, entityName);
-//        } else if (templatePath.equals(GenCodeConstant.TEMPLATE_WEB_SOYBEAN_MAIN_SUB_INDEX)) {
-//            String subEntityName = StrUtil.lowerFirst(subTable.getEntityName());
-//            frontOutputFile = StrUtil.format("src/views/{}/{}/{}/{}/index.vue", plusApplicationName, plusModuleName, entityName, subEntityName);
-//        } else if (templatePath.equals(GenCodeConstant.TEMPLATE_WEB_SOYBEAN_MAIN_SUB_DATA)) {
-//            String subEntityName = StrUtil.lowerFirst(subTable.getEntityName());
-//            frontOutputFile = StrUtil.format("src/views/{}/{}/{}/{}/{}.data.tsx", plusApplicationName, plusModuleName, entityName, subEntityName, subEntityName);
-//        }
-        else {
+        } else {
             return outputDir;
         }
         if (isAbsolute) {
@@ -163,7 +152,7 @@ public class OutputFileUtils {
             frontOutputFile = StrUtil.format("src/locales/langs/en-US/{}/{}/{}.json", plusApplicationName, plusModuleName, entityName);
         } else if (templatePath.equals(GenCodeConstant.TEMPLATE_WEB_VBEN5_SIMPLE_LANG_ZH)) {
             frontOutputFile = StrUtil.format("src/locales/langs/zh-CN/{}/{}/{}.json", plusApplicationName, plusModuleName, entityName);
-        } else if (StrUtil.equalsAny(templatePath, GenCodeConstant.TEMPLATE_WEB_VBEN5_SIMPLE_CRUD, GenCodeConstant.TEMPLATE_WEB_VBEN5_TREE_CRUD)) {
+        } else if (StrUtil.equalsAny(templatePath, GenCodeConstant.TEMPLATE_WEB_VBEN5_SIMPLE_CRUD, GenCodeConstant.TEMPLATE_WEB_VBEN5_MAIN_DATA, GenCodeConstant.TEMPLATE_WEB_VBEN5_TREE_CRUD)) {
             frontOutputFile = StrUtil.format("src/views/{}/{}/{}/data/crud.tsx", plusApplicationName, plusModuleName, entityName);
         } else if (
                 StrUtil.equalsAny(templatePath, GenCodeConstant.TEMPLATE_WEB_VBEN5_MAIN_INDEX, GenCodeConstant.TEMPLATE_WEB_VBEN5_SIMPLE_INDEX, GenCodeConstant.TEMPLATE_WEB_VBEN5_TREE_INDEX)
@@ -171,6 +160,14 @@ public class OutputFileUtils {
             frontOutputFile = StrUtil.format("src/views/{}/{}/{}/index.vue", plusApplicationName, plusModuleName, entityName);
         } else if (templatePath.equals(GenCodeConstant.TEMPLATE_WEB_VBEN5_TREE_EDIT)) {
             frontOutputFile = StrUtil.format("src/views/{}/{}/{}/modules/edit.vue", plusApplicationName, plusModuleName, entityName);
+        } else if (
+                StrUtil.equalsAny(templatePath, GenCodeConstant.TEMPLATE_WEB_VBEN5_MAIN_SUB_INDEX)
+        ) {
+            String subEntityName = StrUtil.lowerFirst(subTable.getEntityName());
+            frontOutputFile = StrUtil.format("src/views/{}/{}/{}/modules/index.vue", plusApplicationName, plusModuleName, entityName);
+        } else if (templatePath.equals(GenCodeConstant.TEMPLATE_WEB_VBEN5_MAIN_SUB_DATA)) {
+            String subEntityName = StrUtil.lowerFirst(subTable.getEntityName());
+            frontOutputFile = StrUtil.format("src/views/{}/{}/{}/data/slave.tsx", plusApplicationName, plusModuleName, entityName);
         } else if (templatePath.equals(GenCodeConstant.TEMPLATE_WEB_VBEN5_TREE_TREE)) {
             frontOutputFile = StrUtil.format("src/views/{}/{}/{}/modules/tree.vue", plusApplicationName, plusModuleName, entityName);
         } else if (templatePath.equals(GenCodeConstant.TEMPLATE_WEB_VBEN5_SIMPLE_JUMP_EDIT)) {
@@ -215,7 +212,9 @@ public class OutputFileUtils {
             frontOutputFile = StrUtil.format("src/views/{}/{}/{}/index.vue", plusApplicationName, plusModuleName, entityName);
         } else if (templatePath.equals(GenCodeConstant.TEMPLATE_WEB_PRO_MAIN_EDIT) || templatePath.equals(GenCodeConstant.TEMPLATE_WEB_PRO_MAIN_JUMP_EDIT) || templatePath.equals(GenCodeConstant.TEMPLATE_WEB_PRO_SIMPLE_EDIT) || templatePath.equals(GenCodeConstant.TEMPLATE_WEB_PRO_SIMPLE_JUMP_EDIT) || templatePath.equals(GenCodeConstant.TEMPLATE_WEB_PRO_TREE_EDIT)) {
             frontOutputFile = StrUtil.format("src/views/{}/{}/{}/Edit.vue", plusApplicationName, plusModuleName, entityName);
-        } else if (templatePath.equals(GenCodeConstant.TEMPLATE_WEB_PRO_MAIN_SUB_INDEX)) {
+        } else if (
+                StrUtil.equalsAny(templatePath, GenCodeConstant.TEMPLATE_WEB_PRO_MAIN_SUB_INDEX)
+        ) {
             String subEntityName = StrUtil.lowerFirst(subTable.getEntityName());
             frontOutputFile = StrUtil.format("src/views/{}/{}/{}/{}/index.vue", plusApplicationName, plusModuleName, entityName, subEntityName);
         } else if (templatePath.equals(GenCodeConstant.TEMPLATE_WEB_PRO_MAIN_SUB_DATA)) {
@@ -443,10 +442,15 @@ public class OutputFileUtils {
                 Map<String, Class<?>> constantsPackage = generatorConfig.getConstantsPackage();
                 yield constantsPackage.containsKey(enumName) ? FileOverrideStrategyEnum.IGNORE : defStrategy.getEntityFileOverride();
             }
-            case GenCodeConstant.TEMPLATE_WEB_PRO_SIMPLE_API, GenCodeConstant.TEMPLATE_WEB_PRO_SIMPLE_MODEL ->
+            case GenCodeConstant.TEMPLATE_WEB_PRO_SIMPLE_API, GenCodeConstant.TEMPLATE_WEB_PRO_SIMPLE_MODEL,
+                 GenCodeConstant.TEMPLATE_WEB_SOYBEAN_SIMPLE_API, GenCodeConstant.TEMPLATE_WEB_SOYBEAN_SIMPLE_MODEL,
+                 GenCodeConstant.TEMPLATE_WEB_VBEN5_SIMPLE_API, GenCodeConstant.TEMPLATE_WEB_VBEN5_SIMPLE_MODEL ->
                     defStrategy.getApiModelFileOverride();
-            case GenCodeConstant.TEMPLATE_WEB_PRO_SIMPLE_LANG_EN, GenCodeConstant.TEMPLATE_WEB_PRO_SIMPLE_LANG_ZH ->
-                    defStrategy.getLangFileOverride();
+            case GenCodeConstant.TEMPLATE_WEB_PRO_SIMPLE_LANG_EN, GenCodeConstant.TEMPLATE_WEB_PRO_SIMPLE_LANG_ZH,
+                 GenCodeConstant.TEMPLATE_WEB_SOYBEAN_SIMPLE_LANG_EN,
+                 GenCodeConstant.TEMPLATE_WEB_SOYBEAN_SIMPLE_LANG_ZH,
+                 GenCodeConstant.TEMPLATE_WEB_VBEN5_SIMPLE_LANG_EN,
+                 GenCodeConstant.TEMPLATE_WEB_VBEN5_SIMPLE_LANG_ZH -> defStrategy.getLangFileOverride();
             case GenCodeConstant.TEMPLATE_WEB_PRO_MAIN_EDIT, GenCodeConstant.TEMPLATE_WEB_PRO_MAIN_JUMP_EDIT,
                  GenCodeConstant.TEMPLATE_WEB_PRO_MAIN_SUB_INDEX, GenCodeConstant.TEMPLATE_WEB_PRO_MAIN_SUB_DATA,
                  GenCodeConstant.TEMPLATE_WEB_PRO_SIMPLE_EDIT, GenCodeConstant.TEMPLATE_WEB_PRO_SIMPLE_JUMP_EDIT,
@@ -455,11 +459,27 @@ public class OutputFileUtils {
                     CollUtil.isNotEmpty(fileOverrideConfig) && fileOverrideConfig.get(GenCodeConstant.TEMPLATE_WEB_PRO_SIMPLE_EDIT) != null ?
                             fileOverrideConfig.get(GenCodeConstant.TEMPLATE_WEB_PRO_SIMPLE_EDIT) :
                             defStrategy.getIndexEditTreeFileOverride();
+
             case GenCodeConstant.TEMPLATE_WEB_PRO_SIMPLE_INDEX, GenCodeConstant.TEMPLATE_WEB_PRO_MAIN_INDEX ->
                     CollUtil.isNotEmpty(fileOverrideConfig) && fileOverrideConfig.get(GenCodeConstant.TEMPLATE_WEB_PRO_SIMPLE_INDEX) != null ?
                             fileOverrideConfig.get(GenCodeConstant.TEMPLATE_WEB_PRO_SIMPLE_INDEX) :
                             defStrategy.getIndexEditTreeFileOverride();
-            case GenCodeConstant.TEMPLATE_WEB_PRO_SIMPLE_DATA -> defStrategy.getDataFileOverride();
+            case GenCodeConstant.TEMPLATE_WEB_SOYBEAN_SIMPLE_INDEX, GenCodeConstant.TEMPLATE_WEB_SOYBEAN_MAIN_INDEX ->
+                    CollUtil.isNotEmpty(fileOverrideConfig) && fileOverrideConfig.get(GenCodeConstant.TEMPLATE_WEB_SOYBEAN_SIMPLE_INDEX) != null ?
+                            fileOverrideConfig.get(GenCodeConstant.TEMPLATE_WEB_SOYBEAN_SIMPLE_INDEX) :
+                            defStrategy.getIndexEditTreeFileOverride();
+            case GenCodeConstant.TEMPLATE_WEB_VBEN5_SIMPLE_INDEX, GenCodeConstant.TEMPLATE_WEB_VBEN5_MAIN_INDEX ->
+                    CollUtil.isNotEmpty(fileOverrideConfig) && fileOverrideConfig.get(GenCodeConstant.TEMPLATE_WEB_VBEN5_SIMPLE_INDEX) != null ?
+                            fileOverrideConfig.get(GenCodeConstant.TEMPLATE_WEB_VBEN5_SIMPLE_INDEX) :
+                            defStrategy.getIndexEditTreeFileOverride();
+            case GenCodeConstant.TEMPLATE_WEB_PRO_SIMPLE_DATA, GenCodeConstant.TEMPLATE_WEB_SOYBEAN_SIMPLE_CRUD ->
+                    defStrategy.getDataFileOverride();
+
+            case GenCodeConstant.TEMPLATE_WEB_VBEN5_MAIN_SUB_DATA, GenCodeConstant.TEMPLATE_WEB_VBEN5_SIMPLE_CRUD,
+                 GenCodeConstant.TEMPLATE_WEB_VBEN5_MAIN_DATA ->
+                    CollUtil.isNotEmpty(fileOverrideConfig) && fileOverrideConfig.get(GenCodeConstant.TEMPLATE_WEB_VBEN5_SIMPLE_CRUD) != null ?
+                            fileOverrideConfig.get(GenCodeConstant.TEMPLATE_WEB_VBEN5_SIMPLE_CRUD) :
+                            defStrategy.getDataFileOverride();
             default -> FileOverrideStrategyEnum.OVERRIDE;
         };
     }

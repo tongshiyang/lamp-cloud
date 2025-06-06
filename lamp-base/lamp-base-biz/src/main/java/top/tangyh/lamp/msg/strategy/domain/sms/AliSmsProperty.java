@@ -18,8 +18,8 @@ public class AliSmsProperty extends BaseProperty {
     /**
      * 更多服务接入点请参考： https://help.aliyun.com/document_detail/419270.html
      */
-    private final static String DEF_END_POINT = "dysmsapi.aliyuncs.com";
-    private final static String DEF_REGION_ID = "cn-hangzhou";
+    private static final String DEF_END_POINT = "dysmsapi.aliyuncs.com";
+    private static final String DEF_REGION_ID = "cn-hangzhou";
 
     /**
      * 地域ID

@@ -26,42 +26,42 @@ import java.util.Map;
 public class GeneratorConfig {
     public static final String PREFIX = Constants.PROJECT_PREFIX + ".generator";
     /**
-     * 后端工程 lamp-datasource-max 代码生成跟路径
+     * 后端工程 lamp-cloud 代码生成跟路径
      */
-    public String outputDir;
+    private String outputDir;
     /**
      * 前端工程lamp-web-pro 跟路径
      */
-    public String frontOutputDir;
+    private String frontOutputDir;
     /**
      * 前端工程lamp-web-pro-soybean 跟路径
      */
-    public String frontSoyOutputDir;
+    private String frontSoyOutputDir;
     /**
      * 前端工程lamp-web-max-vben 跟路径
      */
-    public String frontVben5OutputDir;
+    private String frontVben5OutputDir;
 
 
     /** 默认项目 */
-    public ProjectTypeEnum projectType = ProjectTypeEnum.CLOUD;
+    private ProjectTypeEnum projectType = ProjectTypeEnum.CLOUD;
 
     /**
      * 作者
      */
-    public String author = "zuihou";
+    private String author = "zuihou";
     /**
      * 去除表前缀(类名不会包含表前缀)
      */
-    public List<String> tablePrefix = new ArrayList<>();
+    private List<String> tablePrefix = new ArrayList<>();
     /**
      * 去除字段前缀
      */
-    public List<String> fieldPrefix = new ArrayList<>();
+    private List<String> fieldPrefix = new ArrayList<>();
     /**
      * 去除字段后缀
      */
-    public List<String> fieldSuffix = new ArrayList<>();
+    private List<String> fieldSuffix = new ArrayList<>();
     /**
      * 后端项目前缀
      * 项目部分公共文件夹的名称

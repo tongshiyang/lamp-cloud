@@ -34,10 +34,7 @@ public enum RoleCategoryEnum implements BaseEnum {
     /**
      * 数据角色
      */
-    DATA_SCOPE("30", "数据角色"),
-
-
-    ;
+    DATA_SCOPE("30", "数据角色");
 
     @Schema(description = "描述")
     private String code;

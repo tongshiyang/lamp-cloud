@@ -57,6 +57,7 @@ public class BaseEmployeeServiceImpl extends SuperCacheServiceImpl<BaseEmployeeM
     public void updateOrgInfo(Long id, Long lastCompanyId, Long lastDeptId) {
         superManager.update(Wrappers.<BaseEmployee>lambdaUpdate().set(BaseEmployee::getLastCompanyId, lastCompanyId)
                 .set(BaseEmployee::getLastDeptId, lastDeptId).eq(BaseEmployee::getId, id));
+        superManager.delCache(id);
     }
 
     @Override
@@ -79,7 +80,6 @@ public class BaseEmployeeServiceImpl extends SuperCacheServiceImpl<BaseEmployeeM
 
         return superManager.selectPageResultVO(page, wrap, model);
     }
-
 
     @Override
     @Transactional(rollbackFor = Exception.class)

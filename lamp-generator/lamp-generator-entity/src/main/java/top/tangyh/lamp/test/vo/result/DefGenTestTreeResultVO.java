@@ -43,12 +43,13 @@ import java.util.Map;
 public class DefGenTestTreeResultVO extends TreeEntity<DefGenTestTreeResultVO, Long> implements Serializable, EchoVO {
 
     private static final long serialVersionUID = 1L;
+    @Builder.Default
+    private final Map<String, Object> echoMap = MapUtil.newHashMap();
+
     @Schema(description = "父节点")
     protected Long parentId;
     @Schema(description = "排序号")
     protected Integer sortValue;
-    @Builder.Default
-    private Map<String, Object> echoMap = MapUtil.newHashMap();
     @Schema(description = "ID")
     private Long id;
     /**

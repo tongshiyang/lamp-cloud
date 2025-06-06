@@ -60,4 +60,5 @@ public class DefResourceApiManagerImpl extends SuperCacheManagerImpl<DefResource
         return list(Wraps.<DefResourceApi>lbQ().eq(DefResourceApi::getResourceId, resourceId));
     }
 
+
 }

@@ -41,8 +41,7 @@ public enum EntitySuperClassEnum implements BaseEnum {
     /**
      * 不继承任何实体
      */
-    NONE("04", "", new String[]{""}),
-    ;
+    NONE("04", "", new String[]{""});
 
     private final String value;
     private final String clazzName;

@@ -20,7 +20,7 @@ import java.util.concurrent.ConcurrentMap;
 public class GlueFactory {
 
 
-    private final static ConcurrentMap<String, Class<?>> CLASS_CACHE = new ConcurrentHashMap<>();
+    private static final ConcurrentMap<String, Class<?>> CLASS_CACHE = new ConcurrentHashMap<>();
     private static GlueFactory glueFactory = new SpringGlueFactory();
     /**
      * groovy class loader

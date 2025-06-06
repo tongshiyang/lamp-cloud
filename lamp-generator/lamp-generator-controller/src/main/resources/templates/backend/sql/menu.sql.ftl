@@ -45,6 +45,30 @@ VALUES (${apiDeleteId}, ${buttonDeleteId}, '${controllerName}', '${projectPrefix
 INSERT INTO def_resource_api(id, resource_id, controller, spring_application_name, request_method, name, uri, is_input, created_by, created_time, updated_by, updated_time)
 VALUES (${apiCopyId}, ${buttonCopyId}, '${controllerName}', '${projectPrefix}-${table.serviceName}-server', 'POST', '${table.swaggerComment}-复制', '/${table.serviceName}/<#if controllerConfig.hyphenStyle>${mappingHyphen}<#else>${table.entityName?uncap_first}</#if>/copy', 0, ${createdBy}, <#if dbType == oracle>to_date('${datetime}', 'yyyy-MM-dd HH24:mi:ss')<#else>'${datetime}'</#if>, ${createdBy}, <#if dbType == oracle>to_date('${datetime}', 'yyyy-MM-dd HH24:mi:ss')<#else>'${datetime}'</#if>);
 
+-- 给内置的租户授权, 请注意：内置租户以外的租户，需要自行在【应用管理】-【应用资源授权】中给其他租户授权！
+INSERT INTO def_tenant_resource_rel(id, tenant_id, application_id, resource_id, created_by, created_time, updated_by, updated_time)
+VALUES (${trMenuId}, ${defTenantId}, ${table.menuApplicationId}, ${menuId}, ${createdBy}, <#if dbType == oracle>to_date('${datetime}', 'yyyy-MM-dd HH24:mi:ss')<#else>'${datetime}'</#if>, ${createdBy}, <#if dbType == oracle>to_date('${datetime}', 'yyyy-MM-dd HH24:mi:ss')<#else>'${datetime}'</#if>);
+<#if table.addShow>
+INSERT INTO def_tenant_resource_rel(id, tenant_id, application_id, resource_id, created_by, created_time, updated_by, updated_time)
+VALUES (${trButtonAddId}, ${defTenantId}, ${table.menuApplicationId}, ${buttonAddId}, ${createdBy}, <#if dbType == oracle>to_date('${datetime}', 'yyyy-MM-dd HH24:mi:ss')<#else>'${datetime}'</#if>, ${createdBy}, <#if dbType == oracle>to_date('${datetime}', 'yyyy-MM-dd HH24:mi:ss')<#else>'${datetime}'</#if>);
+</#if>
+<#if table.editShow>
+INSERT INTO def_tenant_resource_rel(id, tenant_id, application_id, resource_id, created_by, created_time, updated_by, updated_time)
+VALUES (${trButtonEditId}, ${defTenantId}, ${table.menuApplicationId}, ${buttonEditId}, ${createdBy}, <#if dbType == oracle>to_date('${datetime}', 'yyyy-MM-dd HH24:mi:ss')<#else>'${datetime}'</#if>, ${createdBy}, <#if dbType == oracle>to_date('${datetime}', 'yyyy-MM-dd HH24:mi:ss')<#else>'${datetime}'</#if>);
+</#if>
+<#if table.copyShow>
+INSERT INTO def_tenant_resource_rel(id, tenant_id, application_id, resource_id, created_by, created_time, updated_by, updated_time)
+VALUES (${trButtonCopyId}, ${defTenantId}, ${table.menuApplicationId}, ${buttonCopyId}, ${createdBy}, <#if dbType == oracle>to_date('${datetime}', 'yyyy-MM-dd HH24:mi:ss')<#else>'${datetime}'</#if>, ${createdBy}, <#if dbType == oracle>to_date('${datetime}', 'yyyy-MM-dd HH24:mi:ss')<#else>'${datetime}'</#if>);
+</#if>
+<#if table.deleteShow>
+INSERT INTO def_tenant_resource_rel(id, tenant_id, application_id, resource_id, created_by, created_time, updated_by, updated_time)
+VALUES (${trButtonDeleteId}, ${defTenantId}, ${table.menuApplicationId}, ${buttonDeleteId}, ${createdBy}, <#if dbType == oracle>to_date('${datetime}', 'yyyy-MM-dd HH24:mi:ss')<#else>'${datetime}'</#if>, ${createdBy}, <#if dbType == oracle>to_date('${datetime}', 'yyyy-MM-dd HH24:mi:ss')<#else>'${datetime}'</#if>);
+</#if>
+<#if table.viewShow>
+INSERT INTO def_tenant_resource_rel(id, tenant_id, application_id, resource_id, created_by, created_time, updated_by, updated_time)
+VALUES (${trButtonViewId}, ${defTenantId}, ${table.menuApplicationId}, ${buttonViewId}, ${createdBy}, <#if dbType == oracle>to_date('${datetime}', 'yyyy-MM-dd HH24:mi:ss')<#else>'${datetime}'</#if>, ${createdBy}, <#if dbType == oracle>to_date('${datetime}', 'yyyy-MM-dd HH24:mi:ss')<#else>'${datetime}'</#if>);
+</#if>
+
 -- 字典
 <#list dictList as dict>
 <#assign dictId=uidGenerator.getUid()/>
@@ -64,4 +88,5 @@ VALUES (${uidGenerator.getUid()}, ${dictId}, '${dict.key}', '20', '${item.key}',
 /*
 delete from def_resource where id in (${menuId}, ${buttonAddId}, ${buttonEditId}, ${buttonCopyId}, ${buttonDeleteId}, ${buttonViewId});
 delete from def_resource_api where id in (${apiPageId}, ${apiDetailId}, ${apiAddId}, ${apiEditId}, ${apiDeleteId}, ${apiCopyId});
+delete from def_tenant_resource_rel where id in (${trMenuId}, ${trButtonAddId}, ${trButtonEditId}, ${trButtonCopyId}, ${trButtonDeleteId}, ${trButtonViewId});
 */

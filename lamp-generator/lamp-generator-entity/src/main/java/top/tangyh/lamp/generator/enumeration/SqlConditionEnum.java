@@ -47,8 +47,7 @@ public enum SqlConditionEnum implements BaseEnum {
     /**
      * 右 %
      */
-    LIKE_RIGHT("06", "static " + SqlCondition.class.getCanonicalName() + "."),
-    ;
+    LIKE_RIGHT("06", "static " + SqlCondition.class.getCanonicalName() + ".");
 
     private String value;
     private String desc;

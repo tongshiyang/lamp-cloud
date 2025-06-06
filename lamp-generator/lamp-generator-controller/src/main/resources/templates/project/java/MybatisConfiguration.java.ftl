@@ -16,7 +16,7 @@ import java.util.List;
  * ${pg.description}
  *
  * @author ${pg.author}
- * @date ${datetime}
+ * @since ${datetime}
  */
 @Configuration
 @Slf4j

@@ -26,6 +26,7 @@
                 </exclusion>
             </exclusions>
         </dependency>
+
         <dependency>
             <groupId>top.tangyh.lamp</groupId>
             <artifactId>lamp-system-api</artifactId>
@@ -70,7 +71,6 @@
                     <artifactId>lamp-validator-starter</artifactId>
                     <groupId>top.tangyh.basic</groupId>
                 </exclusion>
-
             </exclusions>
         </dependency>
         <dependency>
@@ -89,8 +89,8 @@
             <artifactId>lamp-log-starter</artifactId>
             <exclusions>
                 <exclusion>
-                    <groupId>org.springframework</groupId>
                     <artifactId>spring-webmvc</artifactId>
+                    <groupId>org.springframework</groupId>
                 </exclusion>
             </exclusions>
         </dependency>

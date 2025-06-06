@@ -501,7 +501,6 @@ public class PackageUtils {
                 entityImportPackages.add(Accessors.class.getCanonicalName());
             }
         }
-
         // VO-实体 公共部分
         saveVoImportPackages.addAll(entityImportPackages);
 

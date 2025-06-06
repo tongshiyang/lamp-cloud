@@ -53,9 +53,7 @@ public enum HttpMethod implements BaseEnum {
     /**
      * OPTIONS:OPTIONS
      */
-    OPTIONS("OPTIONS", "default"),
-
-    ;
+    OPTIONS("OPTIONS", "default");
     @Schema(description = "描述")
     private String desc;
     private String extra;

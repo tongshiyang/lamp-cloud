@@ -43,7 +43,7 @@ public class DefGenTableResultVO extends Entity<Long> implements Serializable, E
     private static final long serialVersionUID = 1L;
 
     @Builder.Default
-    private Map<String, Object> echoMap = MapUtil.newHashMap();
+    private final Map<String, Object> echoMap = MapUtil.newHashMap();
 
     @Schema(description = "编号")
     private Long id;

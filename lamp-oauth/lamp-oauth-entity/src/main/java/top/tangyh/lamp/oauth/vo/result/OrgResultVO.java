@@ -41,7 +41,6 @@ public class OrgResultVO {
     @Schema(description = "当前部门ID")
     private Long currentDeptId;
 
-
     @Schema(description = "当前员工ID")
     private Long employeeId;
 

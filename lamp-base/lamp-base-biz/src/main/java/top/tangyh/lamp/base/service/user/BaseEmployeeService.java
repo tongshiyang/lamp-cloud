@@ -18,7 +18,7 @@ import java.util.List;
  * </p>
  *
  * @author zuihou
- * @date 2021-10-18
+ * @since 2021-10-18
  */
 public interface BaseEmployeeService extends SuperCacheService<Long, BaseEmployee> {
     /**
@@ -27,7 +27,7 @@ public interface BaseEmployeeService extends SuperCacheService<Long, BaseEmploye
      * @param entityList entityList
      * @return boolean
      * @author tangyh
-     * @date 2022/10/28 4:38 PM
+     * @since 2022/10/28 4:38 PM
      * @create [2022/10/28 4:38 PM ] [tangyh] [初始创建]
      */
     boolean saveBatch(Collection<BaseEmployee> entityList);
@@ -71,7 +71,7 @@ public interface BaseEmployeeService extends SuperCacheService<Long, BaseEmploye
      * @param baseEmployee baseEmployee
      * @return boolean
      * @author tangyh
-     * @date 2022/10/28 9:20 AM
+     * @since 2022/10/28 9:20 AM
      * @create [2022/10/28 9:20 AM ] [tangyh] [初始创建]
      */
     boolean updateById(BaseEmployee baseEmployee);
@@ -82,7 +82,7 @@ public interface BaseEmployeeService extends SuperCacheService<Long, BaseEmploye
      * @param baseEmployee baseEmployee
      * @return boolean
      * @author tangyh
-     * @date 2022/10/28 9:20 AM
+     * @since 2022/10/28 9:20 AM
      * @create [2022/10/28 9:20 AM ] [tangyh] [初始创建]
      */
     boolean updateAllById(BaseEmployee baseEmployee);

@@ -216,7 +216,6 @@ public class FileContext {
                     map.put(originalFileName, file.getUrl());
                 });
 
-
         ZipUtils.zipFilesByInputStream(map, fileSize, packageName, request, response);
     }
 

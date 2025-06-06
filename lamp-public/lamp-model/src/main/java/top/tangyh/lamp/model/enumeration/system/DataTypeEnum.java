@@ -25,8 +25,7 @@ public enum DataTypeEnum implements BaseEnum {
     /**
      * 应用续期
      */
-    BUSINESS("20", "业务值"),
-    ;
+    BUSINESS("20", "业务值");
 
     private final String code;
     private final String desc;

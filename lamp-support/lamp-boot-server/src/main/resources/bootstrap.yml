@@ -6,7 +6,7 @@ spring:
     # 单体版不需要配置这个配置
     path: ''
   profiles:
-    active: @profile.active@
+    active: '@profile.active@'
 
 logging:
   file:

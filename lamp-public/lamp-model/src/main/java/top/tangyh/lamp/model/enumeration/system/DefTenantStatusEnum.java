@@ -50,8 +50,7 @@ public enum DefTenantStatusEnum implements BaseEnum {
     /**
      * AGREED="已同意"
      */
-    AGREED("35", "已同意", "default"),
-    ;
+    AGREED("35", "已同意", "default");
 
     @Schema(description = "描述")
     private String code;

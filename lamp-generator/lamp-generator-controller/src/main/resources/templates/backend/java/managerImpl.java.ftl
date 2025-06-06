@@ -17,8 +17,7 @@ import ${mapperPackage};
  * </p>
  *
  * @author ${author}
- * @date ${datetime}
- * @create [${datetime}] [${author}] [代码生成器生成]
+ * @since ${datetime}
  */
 <#if table.isLombok>
 @Slf4j

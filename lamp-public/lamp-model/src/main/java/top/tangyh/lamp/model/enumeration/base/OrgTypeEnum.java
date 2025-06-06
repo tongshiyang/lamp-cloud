@@ -30,8 +30,7 @@ public enum OrgTypeEnum implements BaseEnum {
     /**
      * 部门
      */
-    DEPT("20", "部门"),
-    ;
+    DEPT("20", "部门");
 
     private String code;
     private String desc;

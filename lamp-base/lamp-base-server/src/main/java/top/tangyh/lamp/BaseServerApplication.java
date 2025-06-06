@@ -32,7 +32,6 @@ import static top.tangyh.lamp.common.constant.BizConstant.UTIL_PACKAGE;
 })
 @EnableAspectJAutoProxy(proxyTargetClass = true, exposeProxy = true)
 @Slf4j
-
 @EnableFormValidator
 public class BaseServerApplication extends ServerApplication {
     public static void main(String[] args) throws UnknownHostException {

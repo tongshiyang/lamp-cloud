@@ -22,7 +22,7 @@ spring:
     # 此参数一定要和 lamp-gateway-server.yml 文件中配置的 路由前缀(predicates参数) 一致！ （可以参考 system或base 服务）
     path: /generator
   profiles:
-    active: @profile.active@
+    active: '@profile.active@'
   cloud:
     sentinel:
       enabled: true
@@ -55,7 +55,7 @@ spring:
         namespace: ${lamp.nacos.namespace}
         metadata: # 元数据，用于权限服务实时获取各个服务的所有接口
           management.context-path: ${server.servlet.context-path:}${spring.mvc.servlet.path:}${management.endpoints.web.base-path:}
-          grayversion: zuihou
+          gray_version: zuihou
 
 logging:
   file:
@@ -64,6 +64,7 @@ logging:
   config: classpath:logback-spring.xml
   level:
     druid.sql.Statement: debug
+
 # 用于/actuator/info
 info:
   name: '@project.name@'

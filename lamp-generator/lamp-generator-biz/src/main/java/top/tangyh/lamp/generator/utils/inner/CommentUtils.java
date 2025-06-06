@@ -44,25 +44,25 @@ public class CommentUtils {
      * 匹配： @Echo(api="", ref="", beanClass=Xxx.class)
      * 匹配： @Echo(api="orgApi", ref="" beanClass=Org.class, dictType="")
      */
-    public final static Pattern ECHO_FIELD_PATTERN = Pattern.compile("(@Echo[(](api|feign)? *= *([a-zA-Z\\d\"._]+)(, *ref *= *([a-zA-Z\\d\"._]+))?(, *beanClass *= *([a-zA-Z\\d\"._]+))?(, *dictType *= *([a-zA-Z\\d\"._]+))?[)])");
+    public static final Pattern ECHO_FIELD_PATTERN = Pattern.compile("(@Echo[(](api|feign)? *= *([a-zA-Z\\d\"._]+)(, *ref *= *([a-zA-Z\\d\"._]+))?(, *beanClass *= *([a-zA-Z\\d\"._]+))?(, *dictType *= *([a-zA-Z\\d\"._]+))?[)])");
     /**
      * 字典列表解析
      * <p>
      * 注释模板1： 注释内容 [key-value ...]
      */
-    public final static Pattern ECHO_DICT_ITEM_PATTERN = Pattern.compile("\\[(.*?)?]");
+    public static final Pattern ECHO_DICT_ITEM_PATTERN = Pattern.compile("\\[(.*?)?]");
 
     /**
      * 字典列表解析 正则
      * 匹配 key-value 形式的注释
      */
-    public final static Pattern ECHO_DICT_ITEM_KEY_VALUE_PATTERN = Pattern.compile("(.*?)-(.*?)? ");
+    public static final Pattern ECHO_DICT_ITEM_KEY_VALUE_PATTERN = Pattern.compile("(.*?)-(.*?)? ");
 
     /**
      * 枚举类型 正则
      * 匹配 xx:xx; 形式的注释
      */
-    public final static Pattern ENUM_KEY_VALUE_PATTERN = Pattern.compile("([A-Za-z1-9_-]+):(.*?)?;");
+    public static final Pattern ENUM_KEY_VALUE_PATTERN = Pattern.compile("([A-Za-z1-9_-]+):(.*?)?;");
     /**
      * 枚举类型解析
      * <p>
@@ -71,7 +71,7 @@ public class CommentUtils {
      * 注释模板3： 注释内容 #枚举类名{枚举值英文名:val,"枚举值英文注释",val2;  ...}
      * 注释模板4： 注释内容 #{枚举值英文名:"枚举值英文注释";  ...}
      */
-    public final static Pattern ENUM_FIELD_PATTERN = Pattern.compile("(#([a-zA-Z\\d\"._]+)?[{](.*?)?[}])");
+    public static final Pattern ENUM_FIELD_PATTERN = Pattern.compile("(#([a-zA-Z\\d\"._]+)?[{](.*?)?[}])");
 
     public static EchoDict getEchoDict(String dictType, String fieldComment, String comment) {
         if (StrUtil.isEmpty(dictType)) {

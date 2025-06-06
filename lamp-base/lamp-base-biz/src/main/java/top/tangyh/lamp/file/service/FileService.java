@@ -78,5 +78,4 @@ public interface FileService extends SuperService<Long, File> {
      * @throws Exception
      */
     void download(HttpServletRequest request, HttpServletResponse response, Long id) throws Exception;
-
 }

@@ -102,6 +102,26 @@ import static top.tangyh.lamp.generator.utils.GenCodeConstant.TEMPLATE_WEB_PRO_S
 import static top.tangyh.lamp.generator.utils.GenCodeConstant.TEMPLATE_WEB_PRO_TREE_EDIT;
 import static top.tangyh.lamp.generator.utils.GenCodeConstant.TEMPLATE_WEB_PRO_TREE_INDEX;
 import static top.tangyh.lamp.generator.utils.GenCodeConstant.TEMPLATE_WEB_PRO_TREE_TREE;
+import static top.tangyh.lamp.generator.utils.GenCodeConstant.TEMPLATE_WEB_SOYBEAN_SIMPLE_API;
+import static top.tangyh.lamp.generator.utils.GenCodeConstant.TEMPLATE_WEB_SOYBEAN_SIMPLE_CRUD;
+import static top.tangyh.lamp.generator.utils.GenCodeConstant.TEMPLATE_WEB_SOYBEAN_SIMPLE_INDEX;
+import static top.tangyh.lamp.generator.utils.GenCodeConstant.TEMPLATE_WEB_SOYBEAN_SIMPLE_JUMP_EDIT;
+import static top.tangyh.lamp.generator.utils.GenCodeConstant.TEMPLATE_WEB_SOYBEAN_SIMPLE_LANG_EN;
+import static top.tangyh.lamp.generator.utils.GenCodeConstant.TEMPLATE_WEB_SOYBEAN_SIMPLE_LANG_ZH;
+import static top.tangyh.lamp.generator.utils.GenCodeConstant.TEMPLATE_WEB_SOYBEAN_SIMPLE_MODEL;
+import static top.tangyh.lamp.generator.utils.GenCodeConstant.TEMPLATE_WEB_SOYBEAN_TREE_EDIT;
+import static top.tangyh.lamp.generator.utils.GenCodeConstant.TEMPLATE_WEB_SOYBEAN_TREE_INDEX;
+import static top.tangyh.lamp.generator.utils.GenCodeConstant.TEMPLATE_WEB_SOYBEAN_TREE_TREE;
+import static top.tangyh.lamp.generator.utils.GenCodeConstant.TEMPLATE_WEB_VBEN5_SIMPLE_API;
+import static top.tangyh.lamp.generator.utils.GenCodeConstant.TEMPLATE_WEB_VBEN5_SIMPLE_CRUD;
+import static top.tangyh.lamp.generator.utils.GenCodeConstant.TEMPLATE_WEB_VBEN5_SIMPLE_INDEX;
+import static top.tangyh.lamp.generator.utils.GenCodeConstant.TEMPLATE_WEB_VBEN5_SIMPLE_JUMP_EDIT;
+import static top.tangyh.lamp.generator.utils.GenCodeConstant.TEMPLATE_WEB_VBEN5_SIMPLE_LANG_EN;
+import static top.tangyh.lamp.generator.utils.GenCodeConstant.TEMPLATE_WEB_VBEN5_SIMPLE_LANG_ZH;
+import static top.tangyh.lamp.generator.utils.GenCodeConstant.TEMPLATE_WEB_VBEN5_SIMPLE_MODEL;
+import static top.tangyh.lamp.generator.utils.GenCodeConstant.TEMPLATE_WEB_VBEN5_TREE_EDIT;
+import static top.tangyh.lamp.generator.utils.GenCodeConstant.TEMPLATE_WEB_VBEN5_TREE_INDEX;
+import static top.tangyh.lamp.generator.utils.GenCodeConstant.TEMPLATE_WEB_VBEN5_TREE_TREE;
 import static top.tangyh.lamp.generator.utils.GenCodeConstant.TEMPLATE_XML;
 
 /**
@@ -121,6 +141,9 @@ import static top.tangyh.lamp.generator.utils.GenCodeConstant.TEMPLATE_XML;
 @EnableConfigurationProperties(GeneratorConfig.class)
 public class DefGenTableServiceImpl extends SuperServiceImpl<DefGenTableManager, Long, DefGenTable> implements DefGenTableService {
     private static final Map<String, String> TEMPLATE_FIELD_MAP = MapUtil.newHashMap();
+    private static final Map<String, String> TEMPLATE_VBEN_MAP = MapUtil.newHashMap();
+    private static final Map<String, String> TEMPLATE_VBEN5_MAP = MapUtil.newHashMap();
+    private static final Map<String, String> TEMPLATE_SOYBEAN_MAP = MapUtil.newHashMap();
 
     static {
         TEMPLATE_FIELD_MAP.put("enum", TEMPLATE_ENUM);
@@ -138,17 +161,41 @@ public class DefGenTableServiceImpl extends SuperServiceImpl<DefGenTableManager,
         TEMPLATE_FIELD_MAP.put("serviceImpl", TEMPLATE_SERVICE_IMPL);
         TEMPLATE_FIELD_MAP.put("controller", TEMPLATE_CONTROLLER);
 
-        TEMPLATE_FIELD_MAP.put("api", TEMPLATE_WEB_PRO_SIMPLE_API);
-        TEMPLATE_FIELD_MAP.put("model", TEMPLATE_WEB_PRO_SIMPLE_MODEL);
-        TEMPLATE_FIELD_MAP.put("langEn", TEMPLATE_WEB_PRO_SIMPLE_LANG_EN);
-        TEMPLATE_FIELD_MAP.put("langZh", TEMPLATE_WEB_PRO_SIMPLE_LANG_ZH);
-        TEMPLATE_FIELD_MAP.put("data", TEMPLATE_WEB_PRO_SIMPLE_DATA);
-        TEMPLATE_FIELD_MAP.put("index", TEMPLATE_WEB_PRO_SIMPLE_INDEX);
-        TEMPLATE_FIELD_MAP.put("edit", TEMPLATE_WEB_PRO_SIMPLE_EDIT);
-        TEMPLATE_FIELD_MAP.put("jumpEdit", TEMPLATE_WEB_PRO_SIMPLE_JUMP_EDIT);
-        TEMPLATE_FIELD_MAP.put("treeIndex", TEMPLATE_WEB_PRO_TREE_INDEX);
-        TEMPLATE_FIELD_MAP.put("treeEdit", TEMPLATE_WEB_PRO_TREE_EDIT);
-        TEMPLATE_FIELD_MAP.put("treeTree", TEMPLATE_WEB_PRO_TREE_TREE);
+        TEMPLATE_VBEN_MAP.put("api", TEMPLATE_WEB_PRO_SIMPLE_API);
+        TEMPLATE_VBEN_MAP.put("model", TEMPLATE_WEB_PRO_SIMPLE_MODEL);
+        TEMPLATE_VBEN_MAP.put("langEn", TEMPLATE_WEB_PRO_SIMPLE_LANG_EN);
+        TEMPLATE_VBEN_MAP.put("langZh", TEMPLATE_WEB_PRO_SIMPLE_LANG_ZH);
+        TEMPLATE_VBEN_MAP.put("data", TEMPLATE_WEB_PRO_SIMPLE_DATA);
+        TEMPLATE_VBEN_MAP.put("index", TEMPLATE_WEB_PRO_SIMPLE_INDEX);
+        TEMPLATE_VBEN_MAP.put("edit", TEMPLATE_WEB_PRO_SIMPLE_EDIT);
+        TEMPLATE_VBEN_MAP.put("jumpEdit", TEMPLATE_WEB_PRO_SIMPLE_JUMP_EDIT);
+        TEMPLATE_VBEN_MAP.put("treeIndex", TEMPLATE_WEB_PRO_TREE_INDEX);
+        TEMPLATE_VBEN_MAP.put("treeEdit", TEMPLATE_WEB_PRO_TREE_EDIT);
+        TEMPLATE_VBEN_MAP.put("treeTree", TEMPLATE_WEB_PRO_TREE_TREE);
+
+        TEMPLATE_VBEN5_MAP.put("api", TEMPLATE_WEB_VBEN5_SIMPLE_API);
+        TEMPLATE_VBEN5_MAP.put("model", TEMPLATE_WEB_VBEN5_SIMPLE_MODEL);
+        TEMPLATE_VBEN5_MAP.put("langEn", TEMPLATE_WEB_VBEN5_SIMPLE_LANG_EN);
+        TEMPLATE_VBEN5_MAP.put("langZh", TEMPLATE_WEB_VBEN5_SIMPLE_LANG_ZH);
+        TEMPLATE_VBEN5_MAP.put("data", TEMPLATE_WEB_VBEN5_SIMPLE_CRUD);
+        TEMPLATE_VBEN5_MAP.put("index", TEMPLATE_WEB_VBEN5_SIMPLE_INDEX);
+        TEMPLATE_VBEN5_MAP.put("edit", TEMPLATE_WEB_VBEN5_SIMPLE_JUMP_EDIT);
+        TEMPLATE_VBEN5_MAP.put("jumpEdit", TEMPLATE_WEB_VBEN5_SIMPLE_JUMP_EDIT);
+        TEMPLATE_VBEN5_MAP.put("treeIndex", TEMPLATE_WEB_VBEN5_TREE_INDEX);
+        TEMPLATE_VBEN5_MAP.put("treeEdit", TEMPLATE_WEB_VBEN5_TREE_EDIT);
+        TEMPLATE_VBEN5_MAP.put("treeTree", TEMPLATE_WEB_VBEN5_TREE_TREE);
+
+        TEMPLATE_SOYBEAN_MAP.put("api", TEMPLATE_WEB_SOYBEAN_SIMPLE_API);
+        TEMPLATE_SOYBEAN_MAP.put("model", TEMPLATE_WEB_SOYBEAN_SIMPLE_MODEL);
+        TEMPLATE_SOYBEAN_MAP.put("langEn", TEMPLATE_WEB_SOYBEAN_SIMPLE_LANG_EN);
+        TEMPLATE_SOYBEAN_MAP.put("langZh", TEMPLATE_WEB_SOYBEAN_SIMPLE_LANG_ZH);
+        TEMPLATE_SOYBEAN_MAP.put("data", TEMPLATE_WEB_SOYBEAN_SIMPLE_CRUD);
+        TEMPLATE_SOYBEAN_MAP.put("index", TEMPLATE_WEB_SOYBEAN_SIMPLE_INDEX);
+        TEMPLATE_SOYBEAN_MAP.put("edit", TEMPLATE_WEB_SOYBEAN_SIMPLE_JUMP_EDIT);
+        TEMPLATE_SOYBEAN_MAP.put("jumpEdit", TEMPLATE_WEB_SOYBEAN_SIMPLE_JUMP_EDIT);
+        TEMPLATE_SOYBEAN_MAP.put("treeIndex", TEMPLATE_WEB_SOYBEAN_TREE_INDEX);
+        TEMPLATE_SOYBEAN_MAP.put("treeEdit", TEMPLATE_WEB_SOYBEAN_TREE_EDIT);
+        TEMPLATE_SOYBEAN_MAP.put("treeTree", TEMPLATE_WEB_SOYBEAN_TREE_TREE);
     }
 
     private final DefGenTableColumnManager defGenTableColumnManager;
@@ -186,7 +233,7 @@ public class DefGenTableServiceImpl extends SuperServiceImpl<DefGenTableManager,
             return true;
         }
         String tableName = list.stream().map(DefGenTable::getName).collect(Collectors.joining(StrPool.COMMA));
-        throw BizException.wrap("表：{} 已经存在，是否覆盖导入？", tableName);
+        throw BizException.wrap("表：{} 已经存在，是否继续导入？", tableName);
     }
 
     @Override
@@ -782,8 +829,22 @@ public class DefGenTableServiceImpl extends SuperServiceImpl<DefGenTableManager,
     }
 
     @Override
-    public Map<String, String> getFieldTemplate() {
-        return TEMPLATE_FIELD_MAP;
+    public Map<String, String> getFieldTemplate(TemplateEnum template) {
+        Map<String, String> map = new HashMap<>(TEMPLATE_FIELD_MAP);
+        return switch (template) {
+            case WEB_SOYBEAN -> {
+                map.putAll(TEMPLATE_SOYBEAN_MAP);
+                yield map;
+            }
+            case WEB_VBEN5 -> {
+                map.putAll(TEMPLATE_VBEN5_MAP);
+                yield map;
+            }
+            default -> {
+                map.putAll(TEMPLATE_VBEN_MAP);
+                yield map;
+            }
+        };
     }
 
     @Override

@@ -33,7 +33,7 @@ import java.util.stream.Collectors;
 @Slf4j
 @Service("aliSmsMsgStrategyImpl")
 public class AliSmsMsgStrategyImpl implements MsgStrategy {
-    private final static Map<String, com.aliyun.dysmsapi20170525.Client> CACHE = new HashMap<>();
+    private static final Map<String, com.aliyun.dysmsapi20170525.Client> CACHE = new HashMap<>();
 
     /**
      * 使用AK&SK初始化账号Client

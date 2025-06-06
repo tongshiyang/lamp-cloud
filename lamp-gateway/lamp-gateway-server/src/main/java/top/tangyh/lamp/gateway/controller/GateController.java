@@ -25,7 +25,7 @@ import java.util.Map;
  * 常用Controller
  *
  * @author zuihou
- * @date 2019-06-21 18:22
+ * @since 2019-06-21 18:22
  */
 @Controller
 public class GateController {
@@ -56,7 +56,6 @@ public class GateController {
         List<String> services = discoveryClient.getServices();
 
         Map<String, String> map = MapUtil.newHashMap();
-//        map.put(application, "gateway");
         services.forEach(service ->
                 gatewayProperties.getRoutes().forEach(route -> {
                     if (StrUtil.equalsIgnoreCase(service, route.getUri().getHost())) {
@@ -80,7 +79,7 @@ public class GateController {
     public R<List<Option>> findOnlineService() {
         List<String> services = discoveryClient.getServices();
 
-        List<Option> list = new ArrayList();
+        List<Option> list = new ArrayList<>();
         services.forEach(service ->
                 gatewayProperties.getRoutes().forEach(route -> {
                     if (StrUtil.equalsIgnoreCase(service, route.getUri().getHost())) {

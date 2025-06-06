@@ -33,6 +33,7 @@
             <artifactId>lamp-base-biz</artifactId>
             <version>${lamp-project.version}</version>
         </dependency>
+
         <!-- boot 版本使用此实现 -->
         <dependency>
             <groupId>top.tangyh.lamp</groupId>

@@ -3,6 +3,7 @@ package ${package.ResultVO};
 <#list resultVoImport as pkg>
 import ${pkg};
 </#list>
+import java.io.Serial;
 import java.io.Serializable;
 
 /**
@@ -12,7 +13,7 @@ import java.io.Serializable;
  * </p>
  *
  * @author ${author}
- * @date ${datetime}
+ * @since ${datetime}
  */
 <#if table.isLombok>
 @Data
@@ -31,10 +32,10 @@ public class ${resultVoName} extends ${superEntityClass}<<#if isTreeEntity>${res
 <#else>
 public class ${resultVoName} implements Serializable, EchoVO {
 </#if>
-
+    @Serial
     private static final long serialVersionUID = 1L;
-
-    private Map<String, Object> echoMap = MapUtil.newHashMap();
+    @Builder.Default
+    private final Map<String, Object> echoMap = MapUtil.newHashMap();
 
     @Schema(description = "${pkField.swaggerComment!''}")
     private ${pkField.javaType} ${pkField.javaField};

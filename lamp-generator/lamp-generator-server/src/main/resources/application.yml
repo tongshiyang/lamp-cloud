@@ -1,8 +1,8 @@
 # 代码生成
 lamp:
   generator:
-    outputDir: /Users/tangyh/gitlab/lamp-cloud-pro-none
-    frontOutputDir: /Users/tangyh/gitlab/lamp-web-pro
+    outputDir: /Users/tangyh/gitlab/lamp-cloud
+    frontOutputDir: /Users/tangyh/gitlab/lamp-web
     # 作者
     author: zuihou
     # 默认项目
@@ -107,10 +107,14 @@ lamp:
       DateType: top.tangyh.lamp.model.enumeration.base.DateType
       DictClassifyEnum: top.tangyh.lamp.model.enumeration.system.DictClassifyEnum
       DataTypeEnum: top.tangyh.lamp.model.enumeration.system.DataTypeEnum
-  swagger:
-    docket:
-      generator:
-        title: 在线代码生成器模块服务
-        base-package: top.tangyh.lamp.generator.controller
 server:
-  port: 18780
+  port: 18764
+
+springdoc:
+  group-configs:
+    - group: 'generator'
+      displayName: 'generator'
+      paths-to-match: '/**'
+      packages-to-scan:
+        - top.tangyh.lamp.generator
+        - top.tangyh.lamp.test.controller

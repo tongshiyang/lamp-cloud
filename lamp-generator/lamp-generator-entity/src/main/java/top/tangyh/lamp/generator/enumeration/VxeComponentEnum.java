@@ -34,9 +34,7 @@ public enum VxeComponentEnum implements BaseEnum {
     $BUTTONS("$buttons", "按钮组"),
     $RADIO("$radio", "单选"),
     $CHECKBOX("$checkbox", "多选"),
-    $SWITCH("$switch", "开关"),
-
-    ;
+    $SWITCH("$switch", "开关");
 
     private String value;
     private String desc;

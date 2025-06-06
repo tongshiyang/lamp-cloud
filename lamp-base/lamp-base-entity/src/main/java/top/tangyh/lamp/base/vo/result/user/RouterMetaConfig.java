@@ -22,7 +22,7 @@ public class RouterMetaConfig implements Serializable {
     /**
      * 默认属性配置对象
      */
-    public static RouterMetaConfig DEFAULT_CONFIG = new RouterMetaConfig();
+    public static final RouterMetaConfig DEFAULT_CONFIG = new RouterMetaConfig();
 
     /* 公共属性 start */
     private String titleKey = "title";

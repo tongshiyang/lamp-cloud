@@ -34,8 +34,7 @@ public enum MsgTemplateTypeEnum implements BaseEnum {
     /**
      * NOTIFY="站内信"
      */
-    NOTICE("03", "站内信"),
-    ;
+    NOTICE("03", "站内信");
 
     private String value;
     @Schema(description = "描述")

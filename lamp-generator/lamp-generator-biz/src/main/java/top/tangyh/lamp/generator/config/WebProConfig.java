@@ -16,7 +16,7 @@ public class WebProConfig {
     /**
      * 格式化菜单文件名称
      */
-    private String formatMenuName = "{}维护";
+    private String formatMenuName = "{}管理";
 
     /**
      * 前端生成页面样式模板

@@ -8,9 +8,9 @@
         <version>5.3.0</version>
         <relativePath>../lamp-dependencies-parent/pom.xml</relativePath>
     </parent>
-    <modelVersion>4.0.0</modelVersion>
-
     <artifactId>lamp-system</artifactId>
+
+    <modelVersion>4.0.0</modelVersion>
     <name>${project.artifactId}</name>
     <description>系统服务</description>
     <packaging>pom</packaging>

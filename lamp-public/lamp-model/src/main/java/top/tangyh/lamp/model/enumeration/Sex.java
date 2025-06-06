@@ -34,8 +34,7 @@ public enum Sex implements BaseEnum {
     /**
      * N="未知"
      */
-    N("未知"),
-    ;
+    N("未知");
 
     @Schema(description = "描述")
     private String desc;

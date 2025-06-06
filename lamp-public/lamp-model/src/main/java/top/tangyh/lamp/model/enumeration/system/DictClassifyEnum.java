@@ -25,8 +25,7 @@ public enum DictClassifyEnum implements BaseEnum {
     /**
      * 应用续期
      */
-    BUSINESS("20", "业务字典"),
-    ;
+    BUSINESS("20", "业务字典");
 
     private final String code;
     private final String desc;

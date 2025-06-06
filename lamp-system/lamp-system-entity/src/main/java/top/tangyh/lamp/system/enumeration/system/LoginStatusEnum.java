@@ -41,8 +41,7 @@ public enum LoginStatusEnum implements BaseEnum {
     /**
      * 短信验证码错误
      */
-    SMS_CODE_ERROR("06", "短信验证码错误", "error"),
-    ;
+    SMS_CODE_ERROR("06", "短信验证码错误", "error");
 
     @Schema(description = "code")
     private String code;

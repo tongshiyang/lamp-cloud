@@ -39,7 +39,6 @@ public interface BaseOrgService extends SuperCacheService<Long, BaseOrg> {
      */
     boolean check(String name, Long parentId, Long id);
 
-
     /**
      * 查询机构
      *
@@ -99,6 +98,7 @@ public interface BaseOrgService extends SuperCacheService<Long, BaseOrg> {
      * @create [2022/10/26 10:27 PM ] [tangyh] [初始创建]
      */
     BaseOrg getDefaultOrg(List<BaseOrg> orgList, Long lastOrgId);
+
 
     /**
      * 查询当前员工的所有部门或单位

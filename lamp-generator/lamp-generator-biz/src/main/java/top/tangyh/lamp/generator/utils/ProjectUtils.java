@@ -3,6 +3,7 @@ package top.tangyh.lamp.generator.utils;
 import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.io.IoUtil;
 import cn.hutool.core.map.MapUtil;
+import cn.hutool.core.text.NamingCase;
 import cn.hutool.core.util.StrUtil;
 import com.baomidou.mybatisplus.extension.plugins.inner.InnerInterceptor;
 import freemarker.template.Template;
@@ -85,21 +86,21 @@ import static top.tangyh.lamp.generator.utils.GenCodeConstant.WEB_CONFIGURATION_
 @Slf4j
 public class ProjectUtils {
 
-    private final static String[] MAVEN_PATH = new String[]{
+    private static final String[] MAVEN_PATH = new String[]{
             SRC_MAIN_JAVA, SRC_MAIN_RESOURCE, SRC_TEST_JAVA, SRC_TEST_RESOURCE
     };
 
-    private final static List<String> CLOUD_MODULE = CollUtil.newArrayList(
+    private static final List<String> CLOUD_MODULE = CollUtil.newArrayList(
             ENTITY_SERVICE_SUFFIX, BIZ_SERVICE_SUFFIX,
             CONTROLLER_SERVICE_SUFFIX, SERVER_SERVICE_SUFFIX
     );
-    private final static List<String> BOOT_MODULE = CollUtil.newArrayList(
+    private static final List<String> BOOT_MODULE = CollUtil.newArrayList(
             ENTITY_SERVICE_SUFFIX, BIZ_SERVICE_SUFFIX, CONTROLLER_SERVICE_SUFFIX
     );
-    private final static List<String> FACADE_MODULE = CollUtil.newArrayList(
+    private static final List<String> FACADE_MODULE = CollUtil.newArrayList(
             API_SERVICE_SUFFIX, BOOT_IMPL_SERVICE_SUFFIX, CLOUD_IMPL_SERVICE_SUFFIX
     );
-    private final static Map<ProjectTypeEnum, List<String>> TYPE_MODULE_MAP = new HashMap();
+    private static final Map<ProjectTypeEnum, List<String>> TYPE_MODULE_MAP = new HashMap();
 
     static {
         TYPE_MODULE_MAP.put(ProjectTypeEnum.CLOUD, CLOUD_MODULE);
@@ -167,7 +168,8 @@ public class ProjectUtils {
      */
     public static void generator(ProjectGeneratorVO vo, DatabaseProperties databaseProperties) {
         String serviceName = vo.getServiceName();
-        String serviceNameUpper = StrUtil.upperFirst(serviceName);
+        String serviceNameUpper = StrUtil.upperFirst(NamingCase.toCamelCase(serviceName, '-'));
+
         vo.setApplicationName(StrUtil.format("{}-{}-server", vo.getProjectPrefix(), serviceName));
         Map<String, Object> objectMap = buildObjectMap(vo, databaseProperties, serviceName, serviceNameUpper);
 
@@ -267,8 +269,7 @@ public class ProjectUtils {
                                   paths-to-match: '/**'
                                   packages-to-scan:
                                     - {}
-                            """
-                    , serviceName, vo.getDescription(), vo.getParent() + StrPool.DOT + vo.getModuleName());
+                            """, serviceName, vo.getDescription(), vo.getParent() + StrPool.DOT + vo.getModuleName());
             Map<String, String> applicationMap = MapUtil.newHashMap();
             applicationMap.put("springdoc.groupconfigs", swaggerStr);
 
@@ -360,7 +361,7 @@ public class ProjectUtils {
         ZipOutputStream zip = new ZipOutputStream(outputStream);
 
         String serviceName = vo.getServiceName();
-        String serviceNameUpper = StrUtil.upperFirst(serviceName);
+        String serviceNameUpper = StrUtil.upperFirst(NamingCase.toCamelCase(serviceName, '-'));
 
         vo.setApplicationName(StrUtil.format("{}-{}-server", vo.getProjectPrefix(), serviceName));
         Map<String, Object> objectMap = buildObjectMap(vo, databaseProperties, serviceName, serviceNameUpper);
@@ -458,8 +459,7 @@ public class ProjectUtils {
                                         <artifactId>{}-{}-controller</artifactId>
                                         <version>${{}-project.version}</version>
                                     </dependency>
-                            """
-                    , vo.getGroupId(), projectPrefix, vo.getServiceName(), projectPrefix);
+                            """, vo.getGroupId(), projectPrefix, vo.getServiceName(), projectPrefix);
 
             tips.append("1. 请在 lamp-boot-server/pom.xml 中加入以下代码：\n");
             tips.append(dependencyStr);
@@ -472,8 +472,7 @@ public class ProjectUtils {
                                   paths-to-match: '/**'
                                   packages-to-scan:
                                     - {}
-                            """
-                    , serviceName, vo.getDescription(), vo.getParent() + StrPool.DOT + vo.getModuleName());
+                            """, serviceName, vo.getDescription(), vo.getParent() + StrPool.DOT + vo.getModuleName());
             tips.append("\n 2. 请在 doc.yml 中加入以下代码：\n");
             tips.append(swaggerStr);
 

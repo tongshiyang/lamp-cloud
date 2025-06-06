@@ -38,8 +38,7 @@ public enum UserStatusEnum implements BaseEnum {
     /**
      * 您的账号被禁用
      */
-    USER_DISABLE("4", "您的账号被禁用"),
-    ;
+    USER_DISABLE("4", "您的账号被禁用");
 
     @Schema(description = "状态")
     private String code;

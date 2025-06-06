@@ -151,8 +151,7 @@ public enum ComponentEnum implements BaseEnum {
     /**
      * Divider
      */
-    PLUS_DIVIDER("Divider", "分隔线"),
-    ;
+    PLUS_DIVIDER("Divider", "分隔线");
 
     private String value;
     private String desc;

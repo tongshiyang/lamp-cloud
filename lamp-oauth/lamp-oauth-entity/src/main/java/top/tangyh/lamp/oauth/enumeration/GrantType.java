@@ -33,8 +33,7 @@ public enum GrantType implements BaseEnum {
     /**
      * 手机登录
      */
-    MOBILE,
-    ;
+    MOBILE;
 
     @Schema(description = "描述")
     private int val;

@@ -48,7 +48,7 @@ public class SourceCodeUtils {
      * @param genTable           表信息
      * @param allFieldList       所有字段
      * @param uidGenerator       uidGenerator
-     * @return java.util.Map<java.lang.String, java.lang.Object>
+     * @return 集合
      * @author tangyh
      * @date 2022/4/6 8:55 PM
      * @create [2022/4/6 8:55 PM ] [tangyh] [初始创建]

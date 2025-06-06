@@ -30,8 +30,7 @@ public enum DefGenTestSimpleType2Enum implements BaseEnum {
     /**
      * GIFT
      */
-    GIFT("02", "赠品"),
-    ;
+    GIFT("02", "赠品");
 
     @Schema(description = "数据库存储值")
     private String value;

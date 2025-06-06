@@ -19,8 +19,7 @@ public enum StateEnum {
     /**
      * 禁用
      */
-    DISABLE(false, 0, "0", "禁用"),
-    ;
+    DISABLE(false, 0, "0", "禁用");
     private final Boolean bool;
     private final int integer;
     private final String str;

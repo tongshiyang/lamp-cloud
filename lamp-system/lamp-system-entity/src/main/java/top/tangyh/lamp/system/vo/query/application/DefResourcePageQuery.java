@@ -60,6 +60,12 @@ public class DefResourcePageQuery implements Serializable {
     @Schema(description = "描述")
     private String describe;
     /**
+     * 是否隐藏菜单;
+     * resource_type=20时生效
+     */
+    @Schema(description = "是否隐藏菜单")
+    private Boolean isHidden;
+    /**
      * 地址栏路径;用于resource_type=菜单和视图
      */
     @Schema(description = "地址栏路径")

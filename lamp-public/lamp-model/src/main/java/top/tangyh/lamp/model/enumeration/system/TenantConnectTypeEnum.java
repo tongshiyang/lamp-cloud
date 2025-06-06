@@ -30,8 +30,7 @@ public enum TenantConnectTypeEnum implements BaseEnum {
     /**
      * CUSTOM="自定义数据源"
      */
-    CUSTOM("自定义数据源"),
-    ;
+    CUSTOM("自定义数据源");
 
     @Schema(description = "描述")
     private String desc;

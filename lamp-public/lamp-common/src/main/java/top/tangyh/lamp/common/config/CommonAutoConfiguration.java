@@ -43,6 +43,4 @@ public class CommonAutoConfiguration {
             log.info("检查到配置文件中：{}.cachePrefix={}", SystemProperties.PREFIX, systemProperties.getCachePrefix());
         }
     }
-
-
 }

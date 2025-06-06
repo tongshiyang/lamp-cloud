@@ -23,9 +23,7 @@ public enum ClientTypeEnum implements BaseEnum {
     LAMP_WEB("01", "开源版"),
     LAMP_WEB_PRO_VBEN("02", "基于vben的前端"),
     LAMP_WEB_PRO_SOYBEAN("03", "基于soybean前端"),
-    LAMP_WEB_PRO_VBEN5("04", "基于vben5的前端"),
-
-    ;
+    LAMP_WEB_PRO_VBEN5("04", "基于vben5的前端");
 
     @Schema(description = "code")
     private String code;

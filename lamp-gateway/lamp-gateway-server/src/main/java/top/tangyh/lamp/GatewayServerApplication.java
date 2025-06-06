@@ -33,5 +33,4 @@ public class GatewayServerApplication extends ServerApplication {
     public static void main(String[] args) throws UnknownHostException {
         start(GatewayServerApplication.class, args);
     }
-
 }

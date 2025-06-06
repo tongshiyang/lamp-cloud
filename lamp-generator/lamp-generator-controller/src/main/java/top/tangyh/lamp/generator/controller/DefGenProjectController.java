@@ -72,7 +72,6 @@ public class DefGenProjectController implements DownloadController<Long, DefGenT
         write(download.getData(), download.getFileName(), response);
     }
 
-
     @Operation(summary = "生成项目", description = "生成项目")
     @PostMapping("/generator")
     @WebLog(value = "生成项目")

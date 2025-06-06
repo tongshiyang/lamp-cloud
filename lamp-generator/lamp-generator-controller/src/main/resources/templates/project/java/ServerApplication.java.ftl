@@ -22,7 +22,7 @@ import java.net.UnknownHostException;
  * ${pg.description}启动类
  *
  * @author ${pg.author}
- * @date ${datetime}
+ * @since ${datetime}
  */
 @SpringBootApplication
 @EnableDiscoveryClient

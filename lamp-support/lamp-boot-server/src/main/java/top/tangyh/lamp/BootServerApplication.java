@@ -16,7 +16,7 @@ import static top.tangyh.lamp.common.constant.BizConstant.BUSINESS_PACKAGE;
 import static top.tangyh.lamp.common.constant.BizConstant.UTIL_PACKAGE;
 
 /**
- * 基础服务启动类
+ * 单体版 启动类
  *
  * @author zuihou
  * @date 2021-10-08

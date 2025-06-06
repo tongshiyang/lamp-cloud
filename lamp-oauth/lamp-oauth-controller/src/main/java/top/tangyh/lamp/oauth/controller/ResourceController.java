@@ -40,9 +40,9 @@ import java.util.List;
 public class ResourceController {
     private final IgnoreProperties ignoreProperties;
     private final ResourceBiz oauthResourceBiz;
-
     private final BaseRoleService baseRoleService;
     private final StpInterfaceBiz stpInterfaceBiz;
+
 
     /**
      * 查询用户可用的所有资源
@@ -91,6 +91,7 @@ public class ResourceController {
     public R<Boolean> checkEmployeeHaveApplication(@RequestParam Long applicationId) {
         return R.success(oauthResourceBiz.checkEmployeeHaveApplication(ContextUtil.getEmployeeId(), applicationId));
     }
+
 
     @Operation(summary = "查询用户的资源权限列表", description = "查询用户的资源权限列表")
     @GetMapping("/anyone/getPermissionList")

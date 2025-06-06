@@ -68,6 +68,7 @@ public class FileServiceImpl extends SuperServiceImpl<FileManager, Long, File> i
         if (StrUtil.containsAny(file.getOriginalFilename(), "../", "./")) {
             throw new BizException("文件名不能含有特殊字符");
         }
+
         File fileFile = fileContext.upload(file, fileUploadVO);
         fileManager.save(fileFile);
         return BeanPlusUtil.toBean(fileFile, FileResultVO.class);
@@ -101,7 +102,6 @@ public class FileServiceImpl extends SuperServiceImpl<FileManager, Long, File> i
     public void download(HttpServletRequest request, HttpServletResponse response, List<Long> ids) throws Exception {
         List<File> list = fileManager.listByIds(ids);
         ArgumentAssert.notEmpty(list, "请配置正确的文件存储类型");
-
         fileContext.download(request, response, list);
     }
 
