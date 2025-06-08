@@ -11,7 +11,7 @@
  Target Server Version : 80031 (8.0.31)
  File Encoding         : 65001
 
- Date: 22/04/2025 14:24:45
+ Date: 08/06/2025 16:14:10
 */
 
 SET NAMES utf8mb4;
@@ -1667,7 +1667,7 @@ CREATE TABLE `def_user` (
 -- ----------------------------
 BEGIN;
 INSERT INTO `def_user` (`id`, `username`, `nick_name`, `email`, `mobile`, `id_card`, `wx_open_id`, `dd_open_id`, `readonly`, `nation`, `education`, `sex`, `state`, `work_describe`, `password_error_last_time`, `password_error_num`, `password_expire_time`, `password`, `salt`, `last_login_time`, `created_by`, `created_time`, `updated_by`, `updated_time`) VALUES (1, 'superAdmin', '超管', NULL, '13000000000', NULL, NULL, NULL, b'0', '01', '02', '1', b'1', '', NULL, 0, NULL, '640d6794dd34072cc613199a5246bbf05fb5cd66edabdb2d40bb5eae4986a597', 'mie9yvvuinijost6j8s7', '2021-11-22 11:22:42', 1452186486253289472, '2021-11-21 16:45:24', 1452186486253289472, '2021-11-21 16:45:24');
-INSERT INTO `def_user` (`id`, `username`, `nick_name`, `email`, `mobile`, `id_card`, `wx_open_id`, `dd_open_id`, `readonly`, `nation`, `education`, `sex`, `state`, `work_describe`, `password_error_last_time`, `password_error_num`, `password_expire_time`, `password`, `salt`, `last_login_time`, `created_by`, `created_time`, `updated_by`, `updated_time`) VALUES (2, 'lamp', '内置超管-啊汤哥', '306479353@qq.com', '15211111111', '522121199204163000', '1', '2', b'0', '04', '02', '1', b'1', '老子今天不上班，爽翻，巴适得板。', NULL, 0, NULL, '47f7a9c31a8c1bc0f11b1f7d57dd7642578839b5fa502c517a4c730c39d15af9', 'u7lftmhjpppsio79ld7e', '2025-04-22 09:51:41', 1, '2021-10-24 16:13:33', 2, '2024-06-11 15:52:24');
+INSERT INTO `def_user` (`id`, `username`, `nick_name`, `email`, `mobile`, `id_card`, `wx_open_id`, `dd_open_id`, `readonly`, `nation`, `education`, `sex`, `state`, `work_describe`, `password_error_last_time`, `password_error_num`, `password_expire_time`, `password`, `salt`, `last_login_time`, `created_by`, `created_time`, `updated_by`, `updated_time`) VALUES (2, 'lamp', '内置超管-啊汤哥', '306479353@qq.com', '15211111111', '522121199204163000', '1', '2', b'0', '04', '02', '1', b'1', '老子今天不上班，爽翻，巴适得板。', NULL, 0, NULL, '47f7a9c31a8c1bc0f11b1f7d57dd7642578839b5fa502c517a4c730c39d15af9', 'u7lftmhjpppsio79ld7e', '2025-06-07 01:08:49', 1, '2021-10-24 16:13:33', 2, '2024-06-11 15:52:24');
 INSERT INTO `def_user` (`id`, `username`, `nick_name`, `email`, `mobile`, `id_card`, `wx_open_id`, `dd_open_id`, `readonly`, `nation`, `education`, `sex`, `state`, `work_describe`, `password_error_last_time`, `password_error_num`, `password_expire_time`, `password`, `salt`, `last_login_time`, `created_by`, `created_time`, `updated_by`, `updated_time`) VALUES (1454329823852756992, 'test1', '门店管理员-最后哥', NULL, '15211111112', NULL, '', '', b'0', '02', '02', '1', b'1', '', NULL, 0, NULL, '1f3d5bb28b0ad4f52bb911a6a54fd367904a569f4cb614ebeaa79d483e324bef', 'u7lftmhjpppsio79ld7e', '2025-04-21 23:30:15', 1, '2021-10-30 14:10:25', 1, '2021-11-22 13:14:04');
 INSERT INTO `def_user` (`id`, `username`, `nick_name`, `email`, `mobile`, `id_card`, `wx_open_id`, `dd_open_id`, `readonly`, `nation`, `education`, `sex`, `state`, `work_describe`, `password_error_last_time`, `password_error_num`, `password_expire_time`, `password`, `salt`, `last_login_time`, `created_by`, `created_time`, `updated_by`, `updated_time`) VALUES (1457904455960756224, 'test2', '普通用户-小沙比', NULL, '15211111113', NULL, '', '', b'0', '02', '06', '1', b'1', '', NULL, 0, NULL, '1f3d5bb28b0ad4f52bb911a6a54fd367904a569f4cb614ebeaa79d483e324bef', 'u7lftmhjpppsio79ld7e', '2024-05-21 12:33:24', 1, '2021-11-09 10:54:44', 1, '2021-11-22 13:14:05');
 INSERT INTO `def_user` (`id`, `username`, `nick_name`, `email`, `mobile`, `id_card`, `wx_open_id`, `dd_open_id`, `readonly`, `nation`, `education`, `sex`, `state`, `work_describe`, `password_error_last_time`, `password_error_num`, `password_expire_time`, `password`, `salt`, `last_login_time`, `created_by`, `created_time`, `updated_by`, `updated_time`) VALUES (1459157721822527488, 'test3', '测试号', NULL, '15211111114', NULL, '', '', b'0', '', NULL, '2', b'1', '', NULL, 0, NULL, '3834d8640e723952345f9d4d8373dceac3e3fb5665e1931590192bdf44b362b0', 'f93zwp2mgg12wslbdbu2', '2022-03-06 22:08:04', 1452186486253289472, '2021-11-12 21:54:45', 1452186486253289472, '2021-11-21 17:08:32');
@@ -1776,6 +1776,7 @@ CREATE TABLE `extend_msg` (
 -- Records of extend_msg
 -- ----------------------------
 BEGIN;
+INSERT INTO `extend_msg` (`id`, `template_code`, `type`, `status`, `channel`, `param`, `title`, `content`, `send_time`, `biz_id`, `biz_type`, `remind_mode`, `author`, `created_by`, `created_time`, `updated_by`, `updated_time`, `created_org_id`) VALUES (640510173659761670, NULL, '03', 'SUCCESS', 'APP', NULL, '12', '<p>123</p>', NULL, NULL, NULL, '02', NULL, 2, '2025-06-07 01:09:11', 2, '2025-06-07 01:09:11', 1451532821628715008);
 COMMIT;
 
 -- ----------------------------
@@ -1799,6 +1800,7 @@ CREATE TABLE `extend_msg_recipient` (
 -- Records of extend_msg_recipient
 -- ----------------------------
 BEGIN;
+INSERT INTO `extend_msg_recipient` (`id`, `msg_id`, `recipient`, `ext`, `created_by`, `created_time`, `updated_by`, `updated_time`) VALUES (640510173659761671, 640510173659761670, '1452186486492364800', NULL, 2, '2025-06-07 01:09:11', 2, '2025-06-07 01:09:11');
 COMMIT;
 
 -- ----------------------------
@@ -1834,6 +1836,7 @@ CREATE TABLE `extend_notice` (
 -- Records of extend_notice
 -- ----------------------------
 BEGIN;
+INSERT INTO `extend_notice` (`id`, `msg_id`, `biz_id`, `biz_type`, `recipient_id`, `remind_mode`, `title`, `content`, `author`, `url`, `target_`, `auto_read`, `handle_time`, `read_time`, `is_read`, `is_handle`, `created_time`, `created_by`, `updated_time`, `updated_by`, `created_org_id`) VALUES (640510173659761672, 640510173659761670, NULL, NULL, 1452186486492364800, '02', '12', '<p>123</p>', NULL, NULL, NULL, b'1', NULL, NULL, b'0', b'0', '2025-06-07 01:09:11', 2, '2025-06-07 01:09:11', 2, 1451532821628715008);
 COMMIT;
 
 -- ----------------------------
@@ -1872,7 +1875,7 @@ CREATE TABLE `worker_node` (
   `modified` timestamp NULL DEFAULT NULL COMMENT '修改时间',
   `created` timestamp NULL DEFAULT NULL COMMENT '创建时间',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=219 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci COMMENT='DB;WorkerID Assigner for UID Generator';
+) ENGINE=InnoDB AUTO_INCREMENT=228 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci COMMENT='DB;WorkerID Assigner for UID Generator';
 
 -- ----------------------------
 -- Records of worker_node
@@ -1985,6 +1988,15 @@ INSERT INTO `worker_node` (`id`, `host_name`, `port`, `type`, `launch_date`, `mo
 INSERT INTO `worker_node` (`id`, `host_name`, `port`, `type`, `launch_date`, `modified`, `created`) VALUES (216, '192.168.1.139', '1745286289192-74614', 2, '2025-04-22', '2025-04-22 09:44:49', '2025-04-22 09:44:49');
 INSERT INTO `worker_node` (`id`, `host_name`, `port`, `type`, `launch_date`, `modified`, `created`) VALUES (217, '192.168.1.139', '1745286517339-18020', 2, '2025-04-22', '2025-04-22 09:48:37', '2025-04-22 09:48:37');
 INSERT INTO `worker_node` (`id`, `host_name`, `port`, `type`, `launch_date`, `modified`, `created`) VALUES (218, '192.168.1.139', '1745286580213-33673', 2, '2025-04-22', '2025-04-22 09:49:40', '2025-04-22 09:49:40');
+INSERT INTO `worker_node` (`id`, `host_name`, `port`, `type`, `launch_date`, `modified`, `created`) VALUES (219, '240e:338:a12:3e90:d56a:a365:a61:3a58%en0', '1745336709986-45208', 2, '2025-04-22', '2025-04-22 23:45:10', '2025-04-22 23:45:10');
+INSERT INTO `worker_node` (`id`, `host_name`, `port`, `type`, `launch_date`, `modified`, `created`) VALUES (220, '240e:338:a12:3e90:d56a:a365:a61:3a58%en0', '1745337574949-95505', 2, '2025-04-22', '2025-04-22 23:59:35', '2025-04-22 23:59:35');
+INSERT INTO `worker_node` (`id`, `host_name`, `port`, `type`, `launch_date`, `modified`, `created`) VALUES (221, '240e:338:a12:3e90:d56a:a365:a61:3a58%en0', '1745337599352-51962', 2, '2025-04-22', '2025-04-22 23:59:59', '2025-04-22 23:59:59');
+INSERT INTO `worker_node` (`id`, `host_name`, `port`, `type`, `launch_date`, `modified`, `created`) VALUES (222, '240e:338:a12:3e90:d56a:a365:a61:3a58%en0', '1745338138574-16176', 2, '2025-04-23', '2025-04-23 00:08:59', '2025-04-23 00:08:59');
+INSERT INTO `worker_node` (`id`, `host_name`, `port`, `type`, `launch_date`, `modified`, `created`) VALUES (223, '240e:338:a12:3e90:d56a:a365:a61:3a58%en0', '1745338148933-86224', 2, '2025-04-23', '2025-04-23 00:09:09', '2025-04-23 00:09:09');
+INSERT INTO `worker_node` (`id`, `host_name`, `port`, `type`, `launch_date`, `modified`, `created`) VALUES (224, '240e:338:a12:3e90:d56a:a365:a61:3a58%en0', '1745338149706-16458', 2, '2025-04-23', '2025-04-23 00:09:10', '2025-04-23 00:09:10');
+INSERT INTO `worker_node` (`id`, `host_name`, `port`, `type`, `launch_date`, `modified`, `created`) VALUES (225, '240e:338:a12:3e90:d56a:a365:a61:3a58%en0', '1745338151567-71787', 2, '2025-04-23', '2025-04-23 00:09:12', '2025-04-23 00:09:12');
+INSERT INTO `worker_node` (`id`, `host_name`, `port`, `type`, `launch_date`, `modified`, `created`) VALUES (226, '240e:338:a12:3e90:d56a:a365:a61:3a58%en0', '1745338331203-32339', 2, '2025-04-23', '2025-04-23 00:12:11', '2025-04-23 00:12:11');
+INSERT INTO `worker_node` (`id`, `host_name`, `port`, `type`, `launch_date`, `modified`, `created`) VALUES (227, '240e:338:a12:3e90:45ec:285f:c0d9:666f%en0', '1749229595610-14671', 2, '2025-06-07', '2025-06-07 01:06:36', '2025-06-07 01:06:36');
 COMMIT;
 
 SET FOREIGN_KEY_CHECKS = 1;
