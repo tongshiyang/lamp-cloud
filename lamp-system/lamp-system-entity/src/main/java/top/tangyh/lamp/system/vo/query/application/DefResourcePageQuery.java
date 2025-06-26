@@ -71,6 +71,11 @@ public class DefResourcePageQuery implements Serializable {
     @Schema(description = "地址栏路径")
     private String path;
     /**
+     * 网址
+     */
+    @Schema(description = "地址栏路径")
+    private String link;
+    /**
      * 页面路径;用于resource_type=菜单和视图
      */
     @Schema(description = "页面路径")

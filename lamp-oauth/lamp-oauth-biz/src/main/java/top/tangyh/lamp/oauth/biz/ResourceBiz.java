@@ -220,12 +220,13 @@ public class ResourceBiz {
             meta.setIcon(item.getIcon());
             if (ResourceOpenWithEnum.INNER_CHAIN.eq(item.getOpenWith())) {
                 //  是否内嵌页面
-                meta.setFrameSrc(item.getComponent());
+                meta.setFrameSrc(item.getLink());
                 item.setComponent(BizConstant.IFRAME);
                 meta.setComponent("sys/iframe/index");
             } else if (ResourceOpenWithEnum.OUTER_CHAIN.eq(item.getOpenWith())) {
                 // 是否外链
                 item.setComponent(BizConstant.IFRAME);
+                item.setPath(item.getLink());
             }
 
 
@@ -270,11 +271,11 @@ public class ResourceBiz {
             meta.setIcon(item.getIcon());
             if (ResourceOpenWithEnum.INNER_CHAIN.eq(item.getOpenWith())) {
                 //  是否内嵌页面
-                meta.setIframeSrc(item.getComponent());
+                meta.setIframeSrc(item.getLink());
                 item.setComponent(BizConstant.IFRAME);
             } else if (ResourceOpenWithEnum.OUTER_CHAIN.eq(item.getOpenWith())) {
                 // 是否外链
-                meta.setLink(item.getPath());
+                meta.setLink(item.getLink());
                 item.setComponent(BizConstant.IFRAME);
             }
 
@@ -359,16 +360,15 @@ public class ResourceBiz {
 
                 if (ResourceOpenWithEnum.INNER_CHAIN.eq(item.getOpenWith())) {
                     //  是否内嵌页面
-                    meta.setFrameSrc(item.getComponent());
+                    meta.setFrameSrc(item.getLink());
                     item.setComponent(BizConstant.IFRAME.toLowerCase());
                     meta.setComponent("_builtin/iframe/index");
                 } else if (ResourceOpenWithEnum.OUTER_CHAIN.eq(item.getOpenWith())) {
                     // 是否外链
                     item.setComponent(BizConstant.IFRAME.toLowerCase());
-                    meta.setHref(item.getPath());
-
-                    item.setPath("/" + BizConstant.IFRAME);
+                    meta.setHref(item.getLink());
                 }
+
 
             } else {
                 meta = item.getMeta();

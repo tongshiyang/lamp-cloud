@@ -70,7 +70,11 @@ public class DefResource extends TreeEntity<DefResource, Long> {
      */
     @TableField(value = "path", condition = LIKE)
     private String path;
-
+    /**
+     * 网址
+     */
+    @TableField(value = "link", condition = LIKE)
+    private String link;
     /**
      * 打开方式 [01-组件 02-内链 03-外链]
      */
