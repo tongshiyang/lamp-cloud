@@ -104,7 +104,7 @@
     <select id="getMainDeptIdByEmployeeId" resultMap="OrgResultMap">
         select
         <include refid="O_Column_List"/>
-        from base_org o left join base_employee e on o.id = e.last_dept_id
+        from base_org o left join base_employee e on o.id = COALESCE(e.last_dept_id, e.last_company_id)
         where e.id = #{employeeId}
     </select>
 
