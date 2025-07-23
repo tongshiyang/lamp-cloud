@@ -109,10 +109,7 @@ lamp:
   xss:
     # 是否开启 xss 过滤器  详情看：XssProperties
     enabled: true
-    # 是否启用 RequestBody 注解标记的参数 反序列化时过滤XSS
     requestBodyEnabled: false
-    ignoreParamValues:
-      - noxss
   captcha:
     # 登录界面的验证码配置 详情看：CaptchaProperties
     type: ARITHMETIC
@@ -126,40 +123,6 @@ lamp:
     queueCapacity: 10000
     keepAliveSeconds: 300
     threadNamePrefix: 'lamp-async-executor-'
-  file:
-    storageType: LOCAL #  FAST_DFS LOCAL MIN_IO ALI_OSS HUAWEI_OSS QINIU_OSS
-    delFile: false
-    suffix: doc,docx,gif,jpeg,jpg,pdf,png,rar,zip,xls,xlsx,txt,file,bin,egp,egpx,apk,xml,rpx,rpg,html,htm,wps,xbid,db
-    local:
-      storage-path: /Users/tangyh/data/projects/uploadfile/file/     # 文件存储路径  （ 某些版本的 window 需要改成  D:\\data\\projects\\uploadfile\\file\\  ）
-      urlPrefix: http://127.0.0.1/file/   # 文件访问 （部署nginx后，配置nginx的ip，并配置nginx静态代理storage-path地址的静态资源）
-      inner-url-prefix: null  #  内网的url前缀
-    fastDfs:
-      urlPrefix: https://fastdfs.tangyh.top/
-    ali:
-      # 请填写自己的阿里云存储配置
-      uriPrefix: "http://zuihou-admin-cloud.oss-cn-beijing.aliyuncs.com/"
-      bucket-name: "zuihou-admin-cloud"
-      endpoint: "oss-cn-beijing.aliyuncs.com"
-      access-key-id: "填写你的id"
-      access-key-secret: "填写你的秘钥"
-    minIo:
-      endpoint: "http://127.0.0.1:9000/"
-      accessKey: "lamp"
-      secretKey: "lamp"
-      bucket: "dev"
-    huawei:
-      uriPrefix: "dev.obs.cn-southwest-2.myhuaweicloud.com"
-      endpoint: "obs.cn-southwest-2.myhuaweicloud.com"
-      accessKey: "1"
-      secretKey: "2"
-      location: "cn-southwest-2"
-      bucket: "dev"
-    qiNiu:
-      zone: "z0"
-      accessKey: "1"
-      secretKey: "2"
-      bucket: "zuihou_admin_cloud"
   generator:
     outputDir: /Users/tangyh/github/lamp-cloud
     frontOutputDir: /Users/tangyh/github/lamp-web
@@ -227,8 +190,6 @@ lamp:
       formatMapperFileName: ''
       formatXmlFileName: ''
       mapperAnnotation: false
-      #    columnAnnotationTablePrefix:
-      #      - xxx
       baseResultMap: true
       cache: false
       baseColumnList: true
@@ -296,6 +257,14 @@ spring:
     multipart:
       max-file-size: 512MB
       max-request-size: 512MB
+  main:
+    allow-bean-definition-overriding: true
+  application:
+    name: '@project.artifactId@'
+    # 单体版不需要配置这个配置
+    path: ''
+  profiles:
+    active: '@profile.active@'
 
 server:
   # 优雅停机
@@ -305,12 +274,6 @@ server:
       enabled: true
       charset: UTF-8
       force: true
-#  undertow:
-#    threads:
-#      io: 4 # 设置IO线程数, 它主要执行非阻塞的任务,它们会负责多个连接, 默认设置每个CPU核心一个线程
-#      worker: 80  # 阻塞任务线程池, 当执行类似servlet请求阻塞操作, undertow会从这个线程池中取得线程,它的值设置取决于系统的负载
-#    buffer-size: 2048  # 以下的配置会影响buffer,这些buffer会用于服务器连接的IO操作,有点类似netty的池化内存管理 , 每块buffer的空间大小,越小的空间被利用越充分
-#    direct-buffers: true  # 是否分配的直接内存
 
 management:
   endpoints:
@@ -319,30 +282,34 @@ management:
       exposure:
         include: '*'
   endpoint:
+    shutdown:
+      access: unrestricted
     health:
       show-details: ALWAYS
-      enabled: true
 
-feign:
-  httpclient:
-    enabled: false
-  okhttp:
-    enabled: true
-  hystrix:
-    enabled: false
-  sentinel:
-    enabled: true
-  client:
-    config:
-      default:
-        # feign client 调用全局超时时间
-        connectTimeout: 60000
-        readTimeout: 60000
-    #支持压缩的mime types
-  compression: # 请求压缩
-    request:
-      enabled: true
-      mime-types: text/xml,application/xml,application/json
-      min-request-size: 2048
-    response: # 响应压缩
-      enabled: true
+
+logging:
+  file:
+    path: '@logging.file.path@'
+    name: ${logging.file.path}/${spring.application.name}/root.log
+  level:
+    root: INFO
+    # 关闭不必要的日志
+    org.reflections.Reflections: off
+    com.alibaba.nacos.client: error
+    com.alibaba.nacos.common.remote.client: error
+    com.ulisesbocchio: error
+    # 开发、调试需要的日志
+    top.tangyh: info
+    org.springframework: info
+  pattern:
+    dateformat: yyyy-MM-dd HH:mm:ss.SSS
+    console: "[${spring.application.name}:%X{TenantId}:%X{UserId}] %d{yyyy-MM-dd HH:mm:ss.SSS}[%5p] ${PID} [%X{trace}] [%t:%r] [%logger{50}.%M:%L] %m%n"
+  logback:
+    rollingpolicy:
+      max-file-size: 64MB
+
+info:
+  name: '@project.name@'
+  description: '@project.description@'
+  version: '@project.version@'

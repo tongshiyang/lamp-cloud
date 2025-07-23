@@ -7,63 +7,73 @@ lamp:
     namespace: ${NACOS_NAMESPACE:@nacos.namespace@}
     username: ${NACOS_USERNAME:@nacos.username@}
     password: ${NACOS_PASSWORD:@nacos.password@}
+    group: DEFAULT_GROUP
   seata:
     ip: ${SEATA_IP:@seata.ip@}
     port: ${SEATA_PORT:@seata.port@}
     namespace: ${SEATA_NAMESPACE:@seata.namespace@}
   sentinel:
     dashboard: ${SENTINEL_DASHBOARD:@sentinel.dashboard@}
+
 spring:
   main:
     allow-bean-definition-overriding: true
   application:
     name: '@project.artifactId@'
+    # lamp自定义配置，用于lamp-scan-starter扫描接口时，拼接uri前缀。 需要和网关配置的前缀一致
+    path: /oauth
   profiles:
     active: '@profile.active@'
+  config:
+    import:
+      - nacos:common.yml?group=${lamp.nacos.group}&refresh=true
+      - nacos:redis.yml?group=${lamp.nacos.group}&refresh=true
+      - nacos:@database.type@?group=${lamp.nacos.group}&refresh=true
+      - nacos:rabbitmq.yml?group=${lamp.nacos.group}&refresh=true
+      - nacos:${spring.application.name}.yml?refresh=true
   cloud:
     sentinel:
       enabled: true
       filter:
         enabled: true
-      eager: true
+      eager: true  # 取消Sentinel控制台懒加载
       transport:
         dashboard: ${lamp.sentinel.dashboard}
     nacos:
+      server-addr: ${lamp.nacos.ip}:${lamp.nacos.port}
+      username: ${lamp.nacos.username}
+      password: ${lamp.nacos.password}
       config:
-        server-addr: ${lamp.nacos.ip}:${lamp.nacos.port}
         file-extension: yml
         namespace: ${lamp.nacos.namespace}
-        shared-configs:
-          - dataId: common.yml
-            refresh: true
-          - dataId: redis.yml
-            refresh: false
-          - dataId: '@database.type@'
-            refresh: true
-          - dataId: rabbitmq.yml
-            refresh: false
         enabled: true
-        username: ${lamp.nacos.username}
-        password: ${lamp.nacos.password}
       discovery:
-        username: ${lamp.nacos.username}
-        password: ${lamp.nacos.password}
         server-addr: ${lamp.nacos.ip}:${lamp.nacos.port}
         namespace: ${lamp.nacos.namespace}
         metadata: # 元数据，用于权限服务实时获取各个服务的所有接口
           management.context-path: ${server.servlet.context-path:}${spring.mvc.servlet.path:}${management.endpoints.web.base-path:}
           gray_version: zuihou
-  autoconfigure:
-    exclude: org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration
-# 只能配置在bootstrap.yml ，否则会生成 log.path_IS_UNDEFINED 文件夹
-# window会自动在 代码所在盘 根目录下自动创建文件夹，  如： D:/data/projects/logs
+
 logging:
   file:
-    # 为什么要用绝对路径，而非相对路径？ 正式环境服务器磁盘通常是外挂到某个目录的，所以需要指定这个路径。 开发环境将所有系统日志存放在一起，便于后期清理日志文件，不用一个项目一个项目删除。
     path: '@logging.file.path@'
     name: ${logging.file.path}/${spring.application.name}/root.log
-  config: classpath:logback-spring.xml
-
+  level:
+    root: INFO
+    # 关闭不必要的日志
+    org.reflections.Reflections: off
+    com.alibaba.nacos.client: error
+    com.alibaba.nacos.common.remote.client: error
+    com.ulisesbocchio: error
+    # 开发、调试需要的日志
+    top.tangyh: info
+    org.springframework: info
+  pattern:
+    dateformat: yyyy-MM-dd HH:mm:ss.SSS
+    console: "[${spring.application.name}:%X{TenantId}:%X{UserId}] %d{yyyy-MM-dd HH:mm:ss.SSS}[%5p] ${PID} [%X{trace}] [%t:%r] [%logger{50}.%M:%L] %m%n"
+  logback:
+    rollingpolicy:
+      max-file-size: 64MB
 # 用于/actuator/info
 info:
   name: '@project.name@'

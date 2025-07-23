@@ -1,8 +1,26 @@
 # 代码生成
 lamp:
+  swagger:
+    version: '@project.version@'
+  nacos:
+    ip: ${NACOS_IP:@nacos.ip@}
+    port: ${NACOS_PORT:@nacos.port@}
+    namespace: ${NACOS_NAMESPACE:@nacos.namespace@}
+    username: ${NACOS_USERNAME:@nacos.username@}
+    password: ${NACOS_PASSWORD:@nacos.password@}
+    group: DEFAULT_GROUP
+  seata:
+    ip: ${SEATA_IP:@seata.ip@}
+    port: ${SEATA_PORT:@seata.port@}
+    namespace: ${SEATA_NAMESPACE:@seata.namespace@}
+  sentinel:
+    dashboard: ${SENTINEL_DASHBOARD:@sentinel.dashboard@}
+
   generator:
     outputDir: /Users/tangyh/gitlab/lamp-cloud
     frontOutputDir: /Users/tangyh/gitlab/lamp-web
+    frontSoyOutputDir: /Users/tangyh/gitlab/lamp-web-pro-soybean
+    frontVben5OutputDir: /Users/tangyh/gitlab/lamp-web-vben-max/apps/web-antd
     # 作者
     author: zuihou
     # 默认项目
@@ -107,6 +125,74 @@ lamp:
       DateType: top.tangyh.lamp.model.enumeration.base.DateType
       DictClassifyEnum: top.tangyh.lamp.model.enumeration.system.DictClassifyEnum
       DataTypeEnum: top.tangyh.lamp.model.enumeration.system.DataTypeEnum
+
+
+spring:
+  main:
+    allow-bean-definition-overriding: true
+  application:
+    name: @project.artifactId@
+    # 此参数一定要和 lamp-gateway-server.yml 文件中配置的 路由前缀(predicates参数) 一致！ （可以参考 system或base 服务）
+    path: /generator
+  profiles:
+    active: '@profile.active@'
+  config:
+    import:
+      - nacos:common.yml?group=${lamp.nacos.group}&refresh=true
+      - nacos:redis.yml?group=${lamp.nacos.group}&refresh=true
+      - nacos:@database.type@?group=${lamp.nacos.group}&refresh=true
+      - nacos:rabbitmq.yml?group=${lamp.nacos.group}&refresh=true
+      - nacos:${spring.application.name}.yml?refresh=true
+  cloud:
+    sentinel:
+      enabled: true
+      filter:
+        enabled: true
+      eager: true  # 取消Sentinel控制台懒加载
+      transport:
+        dashboard: ${lamp.sentinel.dashboard}
+    nacos:
+      server-addr: ${lamp.nacos.ip}:${lamp.nacos.port}
+      username: ${lamp.nacos.username}
+      password: ${lamp.nacos.password}
+      config:
+        file-extension: yml
+        namespace: ${lamp.nacos.namespace}
+        enabled: true
+      discovery:
+        server-addr: ${lamp.nacos.ip}:${lamp.nacos.port}
+        namespace: ${lamp.nacos.namespace}
+        metadata: # 元数据，用于权限服务实时获取各个服务的所有接口
+          management.context-path: ${server.servlet.context-path:}${spring.mvc.servlet.path:}${management.endpoints.web.base-path:}
+          gray_version: zuihou
+
+logging:
+  file:
+    path: '@logging.file.path@'
+    name: ${logging.file.path}/${spring.application.name}/root.log
+  level:
+    root: INFO
+    # 关闭不必要的日志
+    org.reflections.Reflections: off
+    com.alibaba.nacos.client: error
+    com.alibaba.nacos.common.remote.client: error
+    com.ulisesbocchio: error
+    # 开发、调试需要的日志
+    top.tangyh: info
+    org.springframework: info
+  pattern:
+    dateformat: yyyy-MM-dd HH:mm:ss.SSS
+    console: "[${spring.application.name}:%X{TenantId}:%X{UserId}] %d{yyyy-MM-dd HH:mm:ss.SSS}[%5p] ${PID} [%X{trace}] [%t:%r] [%logger{50}.%M:%L] %m%n"
+  logback:
+    rollingpolicy:
+      max-file-size: 64MB
+# 用于/actuator/info
+info:
+  name: '@project.name@'
+  description: '@project.description@'
+  version: '@project.version@'
+
+
 server:
   port: 18764
 
