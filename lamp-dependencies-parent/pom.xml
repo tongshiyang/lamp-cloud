@@ -2,32 +2,32 @@
 <project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xmlns="http://maven.apache.org/POM/4.0.0"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-
     <parent>
         <!--
-        这个依赖爆红，怀疑代码没给全？
+            这个依赖爆红，怀疑代码没给全？
             拜托你能不能先看文档，了解清楚项目的依赖关系！别一来就折腾代码。
-            这个依赖在独立的 lamp-util 项目
+            这个依赖在独立的 lamp-util 项目，请先下载lamp-util并将其编译至本地maven仓库后，本项目才能编译成功。
         -->
         <groupId>top.tangyh.basic</groupId>
         <artifactId>lamp-parent</artifactId>
-        <version>5.4.0</version>
+        <version>5.5.0</version>
         <relativePath/>
     </parent>
 
     <groupId>top.tangyh.lamp</groupId>
     <artifactId>lamp-dependencies-parent</artifactId>
-    <version>5.4.0</version>
+    <version>${revision}</version>
 
     <packaging>pom</packaging>
     <modelVersion>4.0.0</modelVersion>
-
     <name>${project.artifactId}</name>
     <description>lamp项目业务父pom</description>
     <url>https://github.com/dromara/lamp-cloud</url>
     <properties>
-        <lamp-util.version>5.4.0</lamp-util.version>
-        <lamp-project.version>5.4.0</lamp-project.version>
+        <!-- 本项目的版本 -->
+        <revision>5.5.0</revision>
+        <!-- lamp-util基础库的版本 -->
+        <lamp-util.version>5.5.0</lamp-util.version>
         <docker.image.prefix>zuihou</docker.image.prefix>
     </properties>
 
@@ -35,7 +35,12 @@
         <dependencies>
             <dependency>
                 <groupId>top.tangyh.basic</groupId>
-                <artifactId>lamp-all</artifactId>
+                <artifactId>lamp-all-cloud</artifactId>
+                <version>${lamp-util.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>top.tangyh.basic</groupId>
+                <artifactId>lamp-all-boot</artifactId>
                 <version>${lamp-util.version}</version>
             </dependency>
             <dependency>
@@ -117,6 +122,11 @@
             <dependency>
                 <groupId>top.tangyh.basic</groupId>
                 <artifactId>lamp-xss-starter</artifactId>
+                <version>${lamp-util.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>top.tangyh.basic</groupId>
+                <artifactId>fastdfs-client</artifactId>
                 <version>${lamp-util.version}</version>
             </dependency>
         </dependencies>

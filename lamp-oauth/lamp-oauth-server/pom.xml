@@ -5,7 +5,7 @@
     <parent>
         <artifactId>lamp-oauth</artifactId>
         <groupId>top.tangyh.lamp</groupId>
-        <version>5.4.0</version>
+        <version>${revision}</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
     <modelVersion>4.0.0</modelVersion>
@@ -18,35 +18,36 @@
         <dependency>
             <groupId>top.tangyh.lamp</groupId>
             <artifactId>lamp-oauth-controller</artifactId>
-            <version>${lamp-project.version}</version>
+            <version>${revision}</version>
         </dependency>
         <dependency>
             <groupId>top.tangyh.lamp</groupId>
             <artifactId>lamp-database-mode</artifactId>
-            <version>${lamp-project.version}</version>
+            <version>${revision}</version>
         </dependency>
         <!-- 用户信息注入 - 微服务版实现类 -->
         <dependency>
             <groupId>top.tangyh.lamp</groupId>
             <artifactId>lamp-login-user-cloud-impl</artifactId>
-            <version>${lamp-project.version}</version>
+            <version>${revision}</version>
         </dependency>
+
         <dependency>
             <groupId>top.tangyh.lamp</groupId>
             <artifactId>lamp-sa-token-ext</artifactId>
-            <version>${project.version}</version>
+            <version>${revision}</version>
         </dependency>
 
         <!-- 基础服务相关接口 - 微服务版实现类 -->
         <dependency>
             <groupId>top.tangyh.lamp</groupId>
             <artifactId>lamp-base-cloud-impl</artifactId>
-            <version>${lamp-project.version}</version>
+            <version>${revision}</version>
         </dependency>
 
         <dependency>
             <groupId>top.tangyh.basic</groupId>
-            <artifactId>lamp-all</artifactId>
+            <artifactId>lamp-all-cloud</artifactId>
         </dependency>
     </dependencies>
 
@@ -75,7 +76,7 @@
                 <version>${dockerfile-maven-plugin.version}</version>
                 <configuration>
                     <repository>${docker.image.prefix}/${project.artifactId}</repository>
-                    <tag>${lamp-project.version}</tag>
+                    <tag>${revision}</tag>
                     <buildArgs>
                         <JAR_FILE>target/${project.build.finalName}.jar</JAR_FILE>
                     </buildArgs>

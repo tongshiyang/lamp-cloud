@@ -5,7 +5,7 @@
     <parent>
         <groupId>top.tangyh.lamp</groupId>
         <artifactId>lamp-oauth</artifactId>
-        <version>5.4.0</version>
+        <version>${revision}</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
     <modelVersion>4.0.0</modelVersion>
@@ -18,17 +18,17 @@
         <dependency>
             <groupId>top.tangyh.lamp</groupId>
             <artifactId>lamp-common</artifactId>
-            <version>${lamp-project.version}</version>
+            <version>${revision}</version>
         </dependency>
         <dependency>
             <groupId>top.tangyh.lamp</groupId>
             <artifactId>lamp-base-entity</artifactId>
-            <version>${lamp-project.version}</version>
+            <version>${revision}</version>
         </dependency>
         <dependency>
             <groupId>top.tangyh.lamp</groupId>
             <artifactId>lamp-system-entity</artifactId>
-            <version>${lamp-project.version}</version>
+            <version>${revision}</version>
         </dependency>
     </dependencies>
 
