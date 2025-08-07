@@ -181,7 +181,7 @@ public class DictServiceImpl implements DictService {
                         return false;
                     })
                     .map(item -> Option.builder().label(item.getName())
-                            .text(item.getName()).value(item.getKey()).color(item.getCssClass()).build()).toList();
+                            .remark(item.getRemark()).value(item.getKey()).color(item.getCssClass()).build()).toList();
             options.addAll(optionList);
             if (codeQuery != null && !extendFirst && codeQuery.getExtend() != null) {
                 options.add(codeQuery.getExtend());

@@ -89,7 +89,7 @@ public class GateController {
                         PredicateDefinition predicateDefinition = route.getPredicates().get(0);
                         predicateDefinition.getArgs().forEach((k, v) -> {
                             list.add(Option.builder()
-                                    .value(StrUtil.subBetween(v, "/", "/**")).text(service).label(service)
+                                    .value(StrUtil.subBetween(v, "/", "/**")).remark(service).label(service)
                                     .build());
                         });
                     }

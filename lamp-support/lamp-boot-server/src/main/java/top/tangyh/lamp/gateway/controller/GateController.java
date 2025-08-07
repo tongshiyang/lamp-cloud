@@ -41,9 +41,9 @@ public class GateController {
     @GetMapping("/gateway/findOnlineService")
     public R<List<Option>> findOnlineService() {
         List<Option> list = new ArrayList<>();
-        list.add(Option.builder().value("base").text(application).label("lamp-base").build());
-        list.add(Option.builder().value("system").text(application).label("lamp-system").build());
-        list.add(Option.builder().value("generator").text(application).label("lamp-generator").build());
+        list.add(Option.builder().value("base").remark(application).label("lamp-base").build());
+        list.add(Option.builder().value("system").remark(application).label("lamp-system").build());
+        list.add(Option.builder().value("generator").remark(application).label("lamp-generator").build());
         return R.success(list);
     }
 }

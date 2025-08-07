@@ -26,16 +26,17 @@ import java.util.List;
 @Accessors(chain = true)
 @AllArgsConstructor
 @Builder
-@Schema(description = "下拉、多选组件选项")
+@Schema(title = "Option", description = "下拉、多选组件选项")
 public class Option {
     private String label;
-    private String text;
     private String value;
     private String color;
+    private String remark;
 
 
     public static List<Option> mapOptions(BaseEnum[] values) {
-        return Arrays.stream(values).map(item -> Option.builder().label(item.getDesc())
-                .text(item.getDesc()).value(item.getCode()).color(item.getExtra()).build()).toList();
+        return Arrays.stream(values).map(item -> Option.builder().label(item.getDesc()).remark(item.getDesc())
+                .value(item.getCode()).color(item.getExtra()).build()).toList();
     }
+
 }
