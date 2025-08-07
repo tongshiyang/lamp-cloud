@@ -69,9 +69,9 @@ public class DefDictItemServiceImpl extends SuperServiceImpl<DefDictManager, Lon
         DefDictItemUpdateVO itemUpdateVO = (DefDictItemUpdateVO) updateVO;
         DefDict model = BeanUtil.toBean(itemUpdateVO, DefDict.class);
         DefDict old = getById(model.getId());
-        ArgumentAssert.notNull(old, "您要删除的字典项不存在或已被删除！");
+        ArgumentAssert.notNull(old, "您要修改的字典项不存在或已被删除！");
         DefDict parent = getById(model.getParentId());
-        ArgumentAssert.notNull(parent, "您要删除的字典不存在或已被删除！");
+        ArgumentAssert.notNull(parent, "您要修改的字典不存在或已被删除！");
         model.setParentKey(parent.getKey());
         model.setClassify(DictClassifyEnum.SYSTEM.getCode());
         superManager.updateById(model);
