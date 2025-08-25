@@ -33,6 +33,12 @@ spring:
         metadata: # 元数据，用于权限服务实时获取各个服务的所有接口
           management.context-path: ${server.servlet.context-path:}${spring.mvc.servlet.path:}${management.endpoints.web.base-path:}
           gray_version: zuihou
+  boot:
+    admin:
+      discovery:
+        ignored-instances-metadata:
+          sba: ignore
+          meta-v: 1.0.0
 
 
 # 用于/actuator/info
