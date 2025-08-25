@@ -60,16 +60,3 @@ info:
   name: '@project.name@'
   description: '@project.description@'
   version: '@project.version@'
-
-
-server:
-  port: 18764
-
-springdoc:
-  group-configs:
-    - group: 'generator'
-      displayName: 'generator'
-      paths-to-match: '/**'
-      packages-to-scan:
-        - top.tangyh.lamp.generator
-        - top.tangyh.lamp.test.controller
