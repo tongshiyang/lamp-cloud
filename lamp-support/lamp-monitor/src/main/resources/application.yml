@@ -34,26 +34,6 @@ spring:
           management.context-path: ${server.servlet.context-path:}${spring.mvc.servlet.path:}${management.endpoints.web.base-path:}
           gray_version: zuihou
 
-logging:
-  file:
-    path: '@logging.file.path@'
-    name: ${logging.file.path}/${spring.application.name}/root.log
-  level:
-    root: INFO
-    # 关闭不必要的日志
-    org.reflections.Reflections: off
-    com.alibaba.nacos.client: error
-    com.alibaba.nacos.common.remote.client: error
-    com.ulisesbocchio: error
-    # 开发、调试需要的日志
-    top.tangyh: info
-    org.springframework: info
-  pattern:
-    dateformat: yyyy-MM-dd HH:mm:ss.SSS
-    console: "[${spring.application.name}] %d{yyyy-MM-dd HH:mm:ss.SSS}[%5p] ${PID} [%t:%r] [%logger{50}.%M:%L] %m%n"
-  logback:
-    rollingpolicy:
-      max-file-size: 64MB
 
 # 用于/actuator/info
 info:
