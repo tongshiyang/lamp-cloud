@@ -48,7 +48,6 @@ spring:
         namespace: ${lamp.nacos.namespace}
         enabled: true
       discovery:
-        server-addr: ${lamp.nacos.ip}:${lamp.nacos.port}
         namespace: ${lamp.nacos.namespace}
         metadata: # 元数据，用于权限服务实时获取各个服务的所有接口
           management.context-path: ${server.servlet.context-path:}${spring.mvc.servlet.path:}${management.endpoints.web.base-path:}
