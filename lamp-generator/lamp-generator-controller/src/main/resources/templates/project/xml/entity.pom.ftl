@@ -5,7 +5,7 @@
     <parent>
         <groupId>${pg.groupId}</groupId>
         <artifactId>${projectPrefix}-${serviceName}</artifactId>
-        <version>${pg.version}</version>
+        <version>${r"${revision}"}</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
 
@@ -18,7 +18,7 @@
         <dependency>
             <groupId>${pg.groupId}</groupId>
             <artifactId>${projectPrefix}-common</artifactId>
-            <version>${r"${"}${projectPrefix}-project.version${r"}"}</version>
+            <version>${r"${revision}"}</version>
         </dependency>
     </dependencies>
 

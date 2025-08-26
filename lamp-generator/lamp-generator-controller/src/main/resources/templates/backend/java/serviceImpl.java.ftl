@@ -21,7 +21,8 @@ import ${pageQueryPackage};
  * </p>
  *
  * @author ${author}
- * @since ${datetime}
+ * @date ${datetime}
+ * @create [${datetime}] [${author}] [代码生成器生成]
  */
 <#if table.isDs>
 @DS(${dsVal})

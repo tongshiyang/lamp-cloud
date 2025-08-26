@@ -16,7 +16,8 @@ import ${entityPackage};
  * </p>
  *
  * @author ${author}
- * @since ${datetime}
+ * @date ${datetime}
+ * @create [${datetime}] [${author}] [代码生成器生成]
  */
 <#if superServiceClass??>
 public interface ${serviceName} extends ${superServiceClass}<${pkField.javaType}, ${table.entityName}> {

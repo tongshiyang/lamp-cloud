@@ -5,7 +5,7 @@
     <parent>
         <groupId>${pg.groupId}</groupId>
         <artifactId>${projectPrefix}-dependencies-parent</artifactId>
-        <version>${pg.version}</version>
+        <version>${r"${revision}"}</version>
         <relativePath>../${projectPrefix}-dependencies-parent/pom.xml</relativePath>
     </parent>
 

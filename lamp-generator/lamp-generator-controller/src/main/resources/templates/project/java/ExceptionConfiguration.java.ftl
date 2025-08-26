@@ -18,7 +18,7 @@ import jakarta.servlet.Servlet;
  * ${pg.description}-全局异常处理
  *
  * @author ${pg.author}
- * @since ${datetime}
+ * @date ${datetime}
  */
 @Configuration
 @ConditionalOnClass({Servlet.class, DispatcherServlet.class})

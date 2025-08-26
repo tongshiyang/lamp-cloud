@@ -11,7 +11,7 @@ import org.springframework.context.annotation.Configuration;
  * ${pg.description}-Web配置
  *
  * @author ${pg.author}
- * @since ${datetime}
+ * @date ${datetime}
  */
 @Configuration
 public class ${serviceNameUpper}WebConfiguration extends BaseConfig {

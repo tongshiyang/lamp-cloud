@@ -5,7 +5,7 @@
     <parent>
         <artifactId>${projectPrefix}-${serviceName}</artifactId>
         <groupId>${pg.groupId}</groupId>
-        <version>${pg.version}</version>
+        <version>${r"${revision}"}</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
 
@@ -18,47 +18,47 @@
         <dependency>
             <groupId>${pg.groupId}</groupId>
             <artifactId>${projectPrefix}-${serviceName}-controller</artifactId>
-            <version>${r"${"}${projectPrefix}-project.version${r"}"}</version>
+            <version>${r"${revision}"}</version>
         </dependency>
         <!-- 用户信息注入 - 微服务版实现类 -->
         <dependency>
             <groupId>${pg.groupId}</groupId>
             <artifactId>${projectPrefix}-login-user-cloud-impl</artifactId>
-            <version>${r"${"}${projectPrefix}-project.version${r"}"}</version>
+            <version>${r"${revision}"}</version>
         </dependency>
         <dependency>
             <groupId>${pg.groupId}</groupId>
             <artifactId>${projectPrefix}-oauth-api</artifactId>
-            <version>${r"${"}${projectPrefix}-project.version${r"}"}</version>
+            <version>${r"${revision}"}</version>
         </dependency>
         <dependency>
             <groupId>${pg.groupId}</groupId>
             <artifactId>${projectPrefix}-oauth-cloud-impl</artifactId>
-            <version>${r"${"}${projectPrefix}-project.version${r"}"}</version>
+            <version>${r"${revision}"}</version>
         </dependency>
         <dependency>
             <groupId>${pg.groupId}</groupId>
             <artifactId>${projectPrefix}-base-cloud-impl</artifactId>
-            <version>${r"${"}${projectPrefix}-project.version${r"}"}</version>
+            <version>${r"${revision}"}</version>
         </dependency>
         <dependency>
             <groupId>${pg.groupId}</groupId>
             <artifactId>${projectPrefix}-database-mode</artifactId>
-            <version>${r"${"}${projectPrefix}-project.version${r"}"}</version>
+            <version>${r"${revision}"}</version>
         </dependency>
         <dependency>
             <groupId>${pg.groupId}</groupId>
             <artifactId>${projectPrefix}-data-scope-sdk</artifactId>
-            <version>${r"${"}${projectPrefix}-project.version${r"}"}</version>
+            <version>${r"${revision}"}</version>
         </dependency>
         <dependency>
             <groupId>${pg.utilGroupId}</groupId>
-            <artifactId>${projectPrefix}-all</artifactId>
+            <artifactId>${projectPrefix}-all-cloud</artifactId>
         </dependency>
         <dependency>
             <groupId>${pg.groupId}</groupId>
             <artifactId>${projectPrefix}-sa-token-ext</artifactId>
-            <version>${r"${"}${projectPrefix}-project.version${r"}"}</version>
+            <version>${r"${revision}"}</version>
         </dependency>
         <#if pg.seata?? && pg.seata>
         <!-- 想使用seata请加入以下依赖 -->
@@ -117,7 +117,7 @@
                 <version>${r"${"}dockerfile-maven-plugin.version${r"}"}</version>
                 <configuration>
                     <repository>${r"${"}docker.image.prefix${r"}"}/${r"${"}project.artifactId${r"}"}</repository>
-                    <tag>${r"${"}${projectPrefix}-project.version${r"}"}</tag>
+                    <tag>${r"${revision}"}</tag>
                     <buildArgs>
                         <JAR_FILE>target/${r"${"}project.build.finalName${r"}"}.jar</JAR_FILE>
                     </buildArgs>

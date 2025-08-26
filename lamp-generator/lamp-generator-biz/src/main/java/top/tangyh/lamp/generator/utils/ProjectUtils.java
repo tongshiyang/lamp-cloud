@@ -50,8 +50,6 @@ import java.util.zip.ZipOutputStream;
 import static top.tangyh.lamp.generator.utils.GenCodeConstant.API_SERVICE_SUFFIX;
 import static top.tangyh.lamp.generator.utils.GenCodeConstant.APPLICATION_SUFFIX;
 import static top.tangyh.lamp.generator.utils.GenCodeConstant.BIZ_SERVICE_SUFFIX;
-import static top.tangyh.lamp.generator.utils.GenCodeConstant.BOOTSTRAP_DEV_SUFFIX;
-import static top.tangyh.lamp.generator.utils.GenCodeConstant.BOOTSTRAP_SUFFIX;
 import static top.tangyh.lamp.generator.utils.GenCodeConstant.BOOT_IMPL_SERVICE_SUFFIX;
 import static top.tangyh.lamp.generator.utils.GenCodeConstant.CLOUD_IMPL_SERVICE_SUFFIX;
 import static top.tangyh.lamp.generator.utils.GenCodeConstant.CONTROLLER_SERVICE_SUFFIX;
@@ -60,11 +58,8 @@ import static top.tangyh.lamp.generator.utils.GenCodeConstant.EXCEPTION_CONFIGUR
 import static top.tangyh.lamp.generator.utils.GenCodeConstant.FACADE_SERVICE_SUFFIX;
 import static top.tangyh.lamp.generator.utils.GenCodeConstant.GATEWAY_SERVER_SUFFIX;
 import static top.tangyh.lamp.generator.utils.GenCodeConstant.JAVA_FORMAT;
-import static top.tangyh.lamp.generator.utils.GenCodeConstant.LOGBACK_SPRING_DEV_SUFFIX;
-import static top.tangyh.lamp.generator.utils.GenCodeConstant.LOGBACK_SPRING_SUFFIX;
 import static top.tangyh.lamp.generator.utils.GenCodeConstant.POM_FORMAT;
 import static top.tangyh.lamp.generator.utils.GenCodeConstant.POM_NAME;
-import static top.tangyh.lamp.generator.utils.GenCodeConstant.RESOURCE_XML_FORMAT;
 import static top.tangyh.lamp.generator.utils.GenCodeConstant.RESOURCE_YML_FORMAT;
 import static top.tangyh.lamp.generator.utils.GenCodeConstant.ROOT;
 import static top.tangyh.lamp.generator.utils.GenCodeConstant.RUN_APPLICATION_SUFFIX;
@@ -237,11 +232,11 @@ public class ProjectUtils {
             writer(objectMap, StrUtil.format(JAVA_FORMAT, EXCEPTION_CONFIGURATION_SUFFIX), Paths.get(configPath, serviceNameUpper + EXCEPTION_CONFIGURATION_SUFFIX).toString());
 
             // resources
-            writer(objectMap, StrUtil.format(RESOURCE_YML_FORMAT, BOOTSTRAP_SUFFIX), Paths.get(resourcePath, BOOTSTRAP_SUFFIX).toString());
-            writer(objectMap, StrUtil.format(RESOURCE_YML_FORMAT, BOOTSTRAP_DEV_SUFFIX), Paths.get(resourcePath, BOOTSTRAP_DEV_SUFFIX).toString());
+//            writer(objectMap, StrUtil.format(RESOURCE_YML_FORMAT, BOOTSTRAP_SUFFIX), Paths.get(resourcePath, BOOTSTRAP_SUFFIX).toString());
+//            writer(objectMap, StrUtil.format(RESOURCE_YML_FORMAT, BOOTSTRAP_DEV_SUFFIX), Paths.get(resourcePath, BOOTSTRAP_DEV_SUFFIX).toString());
             writer(objectMap, StrUtil.format(RESOURCE_YML_FORMAT, APPLICATION_SUFFIX), Paths.get(resourcePath, APPLICATION_SUFFIX).toString());
-            writer(objectMap, StrUtil.format(RESOURCE_XML_FORMAT, LOGBACK_SPRING_SUFFIX), Paths.get(resourcePath, LOGBACK_SPRING_SUFFIX).toString());
-            writer(objectMap, StrUtil.format(RESOURCE_XML_FORMAT, LOGBACK_SPRING_DEV_SUFFIX), Paths.get(resourcePath, LOGBACK_SPRING_DEV_SUFFIX).toString());
+//            writer(objectMap, StrUtil.format(RESOURCE_XML_FORMAT, LOGBACK_SPRING_SUFFIX), Paths.get(resourcePath, LOGBACK_SPRING_SUFFIX).toString());
+//            writer(objectMap, StrUtil.format(RESOURCE_XML_FORMAT, LOGBACK_SPRING_DEV_SUFFIX), Paths.get(resourcePath, LOGBACK_SPRING_DEV_SUFFIX).toString());
             String gateway = vo.getProjectPrefix() + StrPool.DASH + GATEWAY_SERVER_SUFFIX;
             writer(objectMap, StrUtil.format(RESOURCE_YML_FORMAT, GATEWAY_SERVER_SUFFIX), Paths.get(resourcePath, gateway).toString());
         } else {
@@ -251,10 +246,10 @@ public class ProjectUtils {
                                     <dependency>
                                         <groupId>{}</groupId>
                                         <artifactId>{}-{}-controller</artifactId>
-                                        <version>\\${{}-project.version}</version>
+                                        <version>\\${revision}</version>
                                     </dependency>
                             """,
-                    vo.getGroupId(), projectPrefix, vo.getServiceName(), projectPrefix);
+                    vo.getGroupId(), projectPrefix, vo.getServiceName());
             Map<String, String> map = MapUtil.of("server.pom.xml", dependencyStr);
             // 项目 lamp-boot-server/pom.xml 的存放位置
             String zipOutputFile = Paths.get(outputDir, StrUtil.format("{}-support/{}-boot-server/pom.xml", projectPrefix, projectPrefix)).toString();
@@ -442,11 +437,11 @@ public class ProjectUtils {
             writeZip(objectMap, zip, StrUtil.format(JAVA_FORMAT, EXCEPTION_CONFIGURATION_SUFFIX), Paths.get(configPath, serviceNameUpper + EXCEPTION_CONFIGURATION_SUFFIX).toString());
 
             // resources
-            writeZip(objectMap, zip, StrUtil.format(RESOURCE_YML_FORMAT, BOOTSTRAP_SUFFIX), Paths.get(resourcePath, BOOTSTRAP_SUFFIX).toString());
-            writeZip(objectMap, zip, StrUtil.format(RESOURCE_YML_FORMAT, BOOTSTRAP_DEV_SUFFIX), Paths.get(resourcePath, BOOTSTRAP_DEV_SUFFIX).toString());
+//            writeZip(objectMap, zip, StrUtil.format(RESOURCE_YML_FORMAT, BOOTSTRAP_SUFFIX), Paths.get(resourcePath, BOOTSTRAP_SUFFIX).toString());
+//            writeZip(objectMap, zip, StrUtil.format(RESOURCE_YML_FORMAT, BOOTSTRAP_DEV_SUFFIX), Paths.get(resourcePath, BOOTSTRAP_DEV_SUFFIX).toString());
             writeZip(objectMap, zip, StrUtil.format(RESOURCE_YML_FORMAT, APPLICATION_SUFFIX), Paths.get(resourcePath, APPLICATION_SUFFIX).toString());
-            writeZip(objectMap, zip, StrUtil.format(RESOURCE_XML_FORMAT, LOGBACK_SPRING_SUFFIX), Paths.get(resourcePath, LOGBACK_SPRING_SUFFIX).toString());
-            writeZip(objectMap, zip, StrUtil.format(RESOURCE_XML_FORMAT, LOGBACK_SPRING_DEV_SUFFIX), Paths.get(resourcePath, LOGBACK_SPRING_DEV_SUFFIX).toString());
+//            writeZip(objectMap, zip, StrUtil.format(RESOURCE_XML_FORMAT, LOGBACK_SPRING_SUFFIX), Paths.get(resourcePath, LOGBACK_SPRING_SUFFIX).toString());
+//            writeZip(objectMap, zip, StrUtil.format(RESOURCE_XML_FORMAT, LOGBACK_SPRING_DEV_SUFFIX), Paths.get(resourcePath, LOGBACK_SPRING_DEV_SUFFIX).toString());
             String gateway = vo.getProjectPrefix() + StrPool.DASH + GATEWAY_SERVER_SUFFIX;
             writeZip(objectMap, zip, StrUtil.format(RESOURCE_YML_FORMAT, GATEWAY_SERVER_SUFFIX), Paths.get(resourcePath, gateway).toString());
         } else {
@@ -457,9 +452,9 @@ public class ProjectUtils {
                                     <dependency>
                                         <groupId>{}</groupId>
                                         <artifactId>{}-{}-controller</artifactId>
-                                        <version>${{}-project.version}</version>
+                                        <version>\\${revision}</version>
                                     </dependency>
-                            """, vo.getGroupId(), projectPrefix, vo.getServiceName(), projectPrefix);
+                            """, vo.getGroupId(), projectPrefix, vo.getServiceName());
 
             tips.append("1. 请在 lamp-boot-server/pom.xml 中加入以下代码：\n");
             tips.append(dependencyStr);

@@ -17,7 +17,7 @@ import java.io.Serial;
  * </p>
  *
  * @author ${author}
- * @since ${datetime}
+ * @date ${datetime}
  */
 <#if table.isLombok>
 @Data

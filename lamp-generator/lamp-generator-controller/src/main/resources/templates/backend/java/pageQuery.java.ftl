@@ -14,7 +14,7 @@ import java.io.Serializable;
  * </p>
  *
  * @author ${author}
- * @since ${datetime}
+ * @date ${datetime}
  */
 <#if table.isLombok>
 @Data

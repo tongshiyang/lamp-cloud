@@ -25,7 +25,8 @@ import org.springframework.stereotype.Controller;
  * </p>
  *
  * @author ${author}
- * @since ${datetime}
+ * @date ${datetime}
+ * @create [${datetime}] [${author}] [代码生成器生成]
  */
 <#if table.isLombok>
 @Slf4j

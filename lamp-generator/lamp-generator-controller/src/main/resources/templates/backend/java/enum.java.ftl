@@ -11,7 +11,7 @@ import ${pkg};
  * </p>
  *
  * @author ${author}
- * @since ${datetime}
+ * @date ${datetime}
  */
 @Getter
 @AllArgsConstructor
