@@ -83,6 +83,9 @@ public class FileContext {
      * @return 是否成功
      */
     public boolean delete(List<File> list) {
+        if (CollUtil.isEmpty(list)) {
+            return false;
+        }
         if (!fileServerProperties.getDelFile()) {
             return true;
         }
@@ -106,12 +109,18 @@ public class FileContext {
      * @return
      */
     public Map<String, String> findUrlByPath(List<String> paths) {
+        if (CollUtil.isEmpty(paths)) {
+            return Collections.emptyMap();
+        }
         List<File> pathFiles = fileMapper.selectList(Wraps.<File>lbQ().in(File::getPath, paths));
 
         return findUrl(pathFiles);
     }
 
     private Map<String, String> findUrl(List<File> pathFiles) {
+        if (CollUtil.isEmpty(pathFiles)) {
+            return Collections.emptyMap();
+        }
         Map<String, List<File>> pathMap = pathFiles.stream().collect(Collectors.groupingBy(File::getPath, LinkedHashMap::new, toList()));
 
         Map<String, String> map = new LinkedHashMap<>(CollHelper.initialCapacity(pathMap.size()));
@@ -136,6 +145,9 @@ public class FileContext {
     }
 
     public Map<Long, String> findUrlById(List<Long> ids) {
+        if (CollUtil.isEmpty(ids)) {
+            return Collections.emptyMap();
+        }
         List<File> pathFiles = fileMapper.selectList(Wraps.<File>lbQ().in(File::getId, ids));
 
         Map<Long, List<File>> pathMap = pathFiles.stream().collect(Collectors.groupingBy(File::getId, LinkedHashMap::new, toList()));
