@@ -15,7 +15,7 @@ import top.tangyh.basic.interfaces.BaseEnum;
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor
-@Schema(description = "资源类型-枚举")
+@Schema(title = "ResourceTypeEnum", description = "资源类型-枚举")
 public enum ResourceTypeEnum implements BaseEnum {
     /**
      * 菜单

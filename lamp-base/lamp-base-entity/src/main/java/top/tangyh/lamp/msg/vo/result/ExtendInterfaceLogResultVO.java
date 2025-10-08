@@ -38,7 +38,7 @@ public class ExtendInterfaceLogResultVO extends Entity<Long> implements Serializ
     private static final long serialVersionUID = 1L;
 
     @Builder.Default
-    private Map<String, Object> echoMap = MapUtil.newHashMap();
+    private final Map<String, Object> echoMap = MapUtil.newHashMap();
 
     @Schema(description = "")
     private Long id;

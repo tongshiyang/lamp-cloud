@@ -18,7 +18,7 @@ import java.util.stream.Stream;
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor
-@Schema(description = "生成方式")
+@Schema(title = "ComponentEnum", description = "生成方式")
 public enum VxeComponentEnum implements BaseEnum {
     /**
      * 输入框

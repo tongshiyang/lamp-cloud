@@ -1,5 +1,6 @@
 package top.tangyh.lamp.generator.enumeration;
 
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -29,6 +30,7 @@ import top.tangyh.basic.interfaces.BaseEnum;
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
+@Schema(title = "SuperClassEnum", description = "父类")
 public enum SuperClassEnum implements BaseEnum {
     /**
      * 增删改查

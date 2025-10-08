@@ -36,6 +36,7 @@ public class HeaderThreadLocalInterceptor implements AsyncHandlerInterceptor {
         if (!(handler instanceof HandlerMethod)) {
             return true;
         }
+        ContextUtil.setLocale(WebUtils.getHeader(request, ContextConstants.LOCALE_HEADER));
         ContextUtil.setPath(WebUtils.getHeader(request, ContextConstants.PATH_HEADER));
 
         ContextUtil.setApplicationId(WebUtils.getHeader(request, ContextConstants.APPLICATION_ID_HEADER));

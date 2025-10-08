@@ -26,22 +26,23 @@ public enum TaskStatus implements BaseEnum {
     /**
      * DRAFT
      */
-    DRAFT("草稿"),
+    DRAFT("草稿", "default"),
     /**
      * WAITING
      */
-    WAITING("等待执行"),
+    WAITING("等待执行", "warning"),
     /**
      * SUCCESS
      */
-    SUCCESS("执行成功"),
+    SUCCESS("执行成功", "success"),
     /**
      * FAIL
      */
-    FAIL("执行失败");
+    FAIL("执行失败", "error");
 
     @Schema(description = "描述")
     private String desc;
+    private String extra;
 
     /**
      * 根据当前枚举的name匹配
@@ -68,6 +69,11 @@ public enum TaskStatus implements BaseEnum {
     @Schema(description = "数据库中的值")
     public String getValue() {
         return this.name();
+    }
+
+    @Override
+    public String getExtra() {
+        return this.extra;
     }
 
 }

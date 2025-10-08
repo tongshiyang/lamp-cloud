@@ -22,7 +22,7 @@ import java.util.List;
 @Data
 @NoArgsConstructor
 @ToString(callSuper = true)
-@EqualsAndHashCode
+@EqualsAndHashCode(of = "value")
 @Accessors(chain = true)
 @AllArgsConstructor
 @Builder
@@ -38,5 +38,6 @@ public class Option {
         return Arrays.stream(values).map(item -> Option.builder().label(item.getDesc()).remark(item.getDesc())
                 .value(item.getCode()).color(item.getExtra()).build()).toList();
     }
+
 
 }

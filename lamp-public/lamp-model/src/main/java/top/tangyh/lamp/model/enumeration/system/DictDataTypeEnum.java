@@ -7,30 +7,34 @@ import top.tangyh.basic.interfaces.BaseEnum;
 import java.util.stream.Stream;
 
 /**
- * 数据类型
- * 必须和数据字典【EchoDictType.Global.DATA_TYPE】 保持一致
+ * 字典数据类型
+ * 必须和数据字典【EchoDictType.System.DATA_TYPE】 保持一致
  *
  * @author tangyh
  * @date 2021/3/15 3:34 下午
  */
 @Getter
-@Schema(title = "DataTypeEnum", description = "数据类型-枚举")
-public enum DataTypeEnum implements BaseEnum {
+@Schema(title = "DictDataTypeEnum", description = "字典数据类型-枚举")
+public enum DictDataTypeEnum implements BaseEnum {
 
     /**
-     * 应用授权
+     * 字符串
      */
-    SYSTEM("10", "系统值"),
+    STRING("1", "字符串"),
 
     /**
-     * 应用续期
+     * 整型
      */
-    BUSINESS("20", "业务值");
+    NUMBER("2", "整型"),
+    /**
+     * 布尔
+     */
+    BOOLEAN("3", "布尔");
 
     private final String code;
     private final String desc;
 
-    DataTypeEnum(String code, String desc) {
+    DictDataTypeEnum(String code, String desc) {
         this.code = code;
         this.desc = desc;
     }
@@ -38,22 +42,16 @@ public enum DataTypeEnum implements BaseEnum {
     /**
      * 根据当前枚举的name匹配
      */
-    public static DataTypeEnum match(String val, DataTypeEnum def) {
+    public static DictDataTypeEnum match(String val, DictDataTypeEnum def) {
         return Stream.of(values()).parallel().filter(item -> item.name().equalsIgnoreCase(val)).findAny().orElse(def);
     }
 
-    public static DataTypeEnum get(String val) {
+    public static DictDataTypeEnum get(String val) {
         return match(val, null);
     }
 
-    public boolean eq(DataTypeEnum val) {
+    public boolean eq(DictDataTypeEnum val) {
         return val != null && eq(val.name());
-    }
-
-    @Override
-    @Schema(description = "编码", allowableValues = "10,20", example = "20")
-    public String getCode() {
-        return this.code;
     }
 
 }

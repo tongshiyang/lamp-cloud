@@ -9,28 +9,31 @@ import lombok.NoArgsConstructor;
 import lombok.ToString;
 import lombok.experimental.Accessors;
 
+import java.io.Serial;
 import java.io.Serializable;
 import java.util.List;
 
+
 /**
  * <p>
- * 实体类
- * 字典项
+ * 表单查询条件VO
+ * 字典
  * </p>
  *
  * @author zuihou
- * @since 2021-10-04
+ * @date 2025-09-29 09:59:59
  */
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@Accessors(chain = true)
 @ToString(callSuper = true)
-@EqualsAndHashCode(callSuper = false)
+@Accessors(chain = true)
+@EqualsAndHashCode
 @Builder
-@Schema(description = "字典项")
+@Schema(title = "DefDictItemPageQuery", description = "字典项")
 public class DefDictItemPageQuery implements Serializable {
 
+    @Serial
     private static final long serialVersionUID = 1L;
 
     /**
@@ -40,10 +43,23 @@ public class DefDictItemPageQuery implements Serializable {
     private Long parentId;
 
     /**
-     * 分类;[10-系统字典 20-业务字典]@Echo(api = EchoApi.DICTIONARY_ITEM_FEIGN_CLASS, dictType = EchoDictType.System.DICT_CLASSIFY)
+     * 字典分组
+     */
+    @Schema(description = "字典分组")
+    private String dictGroup;
+    /**
+     * 分类
+     * [10-系统字典 20-业务字典]
+     * @Echo(api = EchoApi.DICTIONARY_ITEM_FEIGN_CLASS, dictType = EchoDictType.System.DICT_CLASSIFY)
      */
     @Schema(description = "分类")
     private List<String> classify;
+    /**
+     * 数据类型
+     * [1-字符串 2-整型 3-布尔]
+     */
+    @Schema(description = "数据类型")
+    private String dataType;
     /**
      * 标识
      */
@@ -84,5 +100,18 @@ public class DefDictItemPageQuery implements Serializable {
      */
     @Schema(description = "css类元素")
     private String cssClass;
+    /**
+     * 组件属性
+     * 用于Tag时，用于配置color属性
+     * 用于Button时，用于配置type属性
+     */
+    @Schema(description = "组件属性")
+    private String propType;
+    /**
+     * 国际化配置
+     */
+    @Schema(description = "国际化配置")
+    private String i18nJson;
+
 
 }

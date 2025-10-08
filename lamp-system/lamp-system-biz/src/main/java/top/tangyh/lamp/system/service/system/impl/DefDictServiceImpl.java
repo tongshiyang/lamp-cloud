@@ -2,6 +2,9 @@ package top.tangyh.lamp.system.service.system.impl;
 
 import cn.hutool.core.bean.copier.CopyOptions;
 import cn.hutool.core.collection.CollUtil;
+import com.baidu.fsg.uid.UidGenerator;
+import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
+import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -11,6 +14,7 @@ import top.tangyh.basic.cache.repository.CachePlusOps;
 import top.tangyh.basic.database.mybatis.conditions.Wraps;
 import top.tangyh.basic.database.mybatis.conditions.query.LbQueryWrap;
 import top.tangyh.basic.model.cache.CacheHashKey;
+import top.tangyh.basic.model.cache.CacheKey;
 import top.tangyh.basic.utils.ArgumentAssert;
 import top.tangyh.basic.utils.BeanPlusUtil;
 import top.tangyh.lamp.common.cache.tenant.base.DictCacheKeyBuilder;
@@ -19,6 +23,8 @@ import top.tangyh.lamp.model.enumeration.system.DictClassifyEnum;
 import top.tangyh.lamp.system.entity.system.DefDict;
 import top.tangyh.lamp.system.manager.system.DefDictManager;
 import top.tangyh.lamp.system.service.system.DefDictService;
+import top.tangyh.lamp.system.vo.result.system.DefDictItemResultVO;
+import top.tangyh.lamp.system.vo.result.system.DefDictResultVO;
 import top.tangyh.lamp.system.vo.save.system.DefDictItemSaveVO;
 import top.tangyh.lamp.system.vo.save.system.DefDictSaveVO;
 import top.tangyh.lamp.system.vo.update.system.DefDictItemUpdateVO;
@@ -26,6 +32,8 @@ import top.tangyh.lamp.system.vo.update.system.DefDictUpdateVO;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 /**
  * <p>
@@ -40,10 +48,10 @@ import java.util.List;
 @Service
 @RequiredArgsConstructor
 @Transactional(readOnly = true)
-
 public class DefDictServiceImpl extends SuperServiceImpl<DefDictManager, Long, DefDict> implements DefDictService {
 
     private final CachePlusOps cachePlusOps;
+    private final UidGenerator uidGenerator;
 
     @Override
     public boolean checkByKey(String key, Long id) {
@@ -79,7 +87,7 @@ public class DefDictServiceImpl extends SuperServiceImpl<DefDictManager, Long, D
                 itemList.add(item);
 
                 CacheHashKey hashKey = DictCacheKeyBuilder.builder(item.getParentKey(), item.getKey());
-                cachePlusOps.hSet(hashKey, item.getName());
+                cachePlusOps.hSet(hashKey, item);
             });
             superManager.saveBatch(itemList);
         }
@@ -101,7 +109,7 @@ public class DefDictServiceImpl extends SuperServiceImpl<DefDictManager, Long, D
                 cachePlusOps.hDel(oldHashKey);
                 // 设置新缓存
                 CacheHashKey hashKey = DictCacheKeyBuilder.builder(item.getParentKey(), item.getKey());
-                cachePlusOps.hSet(hashKey, item.getName());
+                cachePlusOps.hSet(hashKey, item);
             });
             superManager.updateBatchById(itemList);
         }
@@ -139,6 +147,15 @@ public class DefDictServiceImpl extends SuperServiceImpl<DefDictManager, Long, D
         dict.setParentId(DefValConstants.PARENT_ID);
         dict.setClassify(DictClassifyEnum.SYSTEM.getCode());
         superManager.updateById(dict);
+
+        LambdaUpdateWrapper<DefDict> updateWrapper = Wrappers.lambdaUpdate(DefDict.class)
+                .eq(DefDict::getParentId, dict.getId())
+                .set(DefDict::getParentKey, dict.getKey())
+                .set(DefDict::getDictGroup, dict.getDictGroup())
+                .set(DefDict::getDataType, dict.getDataType());
+        superManager.update(updateWrapper);
+        CacheKey hashKey = DictCacheKeyBuilder.builder(dict.getKey());
+        cachePlusOps.del(hashKey);
 
         superManager.removeItemByIds(dictUpdateVO.getDeleteList());
         updateItem(dictUpdateVO.getUpdateList(), dict, old);
@@ -178,6 +195,127 @@ public class DefDictServiceImpl extends SuperServiceImpl<DefDictManager, Long, D
         return dict;
     }
 
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public Boolean importDictByEnum(List<DefDictResultVO> list) {
+        if (CollUtil.isEmpty(list)) {
+            return true;
+        }
+
+        List<String> keyList = list.stream().map(DefDictResultVO::getKey).toList();
+        List<DefDict> existDictList = super.list(Wraps.<DefDict>lbQ().in(DefDict::getKey, keyList));
+
+        // 将已存在的字典按uniqKey分组，便于快速查找
+        Map<String, DefDict> existingDictMap = existDictList.stream()
+                .collect(Collectors.toMap(DefDict::getKey, dict -> dict));
+
+        // 区分需要新增和更新的数据
+        List<DefDict> toSave = new ArrayList<>();
+        List<DefDict> toSaveIictItemList = new ArrayList<>();
+
+        List<DefDict> toUpdate = new ArrayList<>();
+        List<DefDict> toUpdateIictItemList = new ArrayList<>();
+
+        for (DefDictResultVO vo : list) {
+            String uniqKey = vo.getKey();
+            // 检查是否已存在
+            if (existingDictMap.containsKey(uniqKey)) {
+                // 已存在则更新
+                DefDict existingDict = existingDictMap.get(uniqKey);
+                existingDict.setName(vo.getName());
+                existingDict.setClassify(DictClassifyEnum.ENUM.getCode());
+                toUpdate.add(existingDict);
+
+                List<DefDictItemResultVO> itemList = vo.getItemList();
+                if (CollUtil.isNotEmpty(itemList)) {
+
+                    List<String> itemKeyList = itemList.stream().map(DefDictItemResultVO::getKey).toList();
+                    // 已存在的字典项 list
+                    List<DefDict> existDictItemList = superManager.list(Wraps.<DefDict>lbQ().eq(DefDict::getParentId, existingDict.getId()).in(DefDict::getKey, itemKeyList));
+                    // 已存在的字典项 map
+                    Map<String, DefDict> existingDictItemMap = existDictItemList.stream().collect(Collectors.toMap(DefDict::getKey, dict -> dict));
+
+                    int weight = 0;
+                    for (DefDictItemResultVO itemVo : itemList) {
+                        String itemKey = itemVo.getKey();
+                        if (existingDictItemMap.containsKey(itemKey)) {
+                            // 修改
+                            DefDict item = existingDictItemMap.get(itemKey);
+                            item.setName(itemVo.getName());
+                            item.setDataType(existingDict.getDataType());
+                            item.setClassify(DictClassifyEnum.ENUM.getCode());
+
+                            toUpdateIictItemList.add(item);
+                        } else {
+                            DefDict item = new DefDict();
+                            item.setId(uidGenerator.getUid());
+                            item.setParentId(existingDict.getId());
+                            item.setParentKey(existingDict.getKey());
+                            item.setKey(itemVo.getKey());
+                            item.setName(itemVo.getName());
+                            item.setState(true);
+                            item.setSortValue(weight++);
+                            item.setClassify(DictClassifyEnum.ENUM.getCode());
+                            item.setDataType(existingDict.getDataType());
+                            toSaveIictItemList.add(item);
+                        }
+                    }
+                }
+
+            } else {
+                // 不存在则新增
+                DefDict newDict = new DefDict();
+                newDict.setId(uidGenerator.getUid());
+                newDict.setKey(uniqKey);
+                newDict.setRemark("枚举导入");
+                newDict.setName(vo.getName());
+                newDict.setState(true);
+                newDict.setClassify(DictClassifyEnum.ENUM.getCode());
+                newDict.setDictGroup(vo.getDictGroup());
+                newDict.setDataType(vo.getDataType());
+                toSave.add(newDict);
+
+                List<DefDictItemResultVO> itemList = vo.getItemList();
+                if (CollUtil.isNotEmpty(itemList)) {
+                    int weight = 0;
+                    for (DefDictItemResultVO itemVo : itemList) {
+                        DefDict item = new DefDict();
+                        item.setId(uidGenerator.getUid());
+                        item.setParentId(newDict.getId());
+                        item.setParentKey(newDict.getKey());
+                        item.setKey(itemVo.getKey());
+                        item.setName(itemVo.getName());
+                        item.setState(true);
+                        item.setSortValue(weight++);
+                        item.setClassify(DictClassifyEnum.ENUM.getCode());
+                        item.setDictGroup(vo.getDictGroup());
+                        item.setDataType(newDict.getDataType());
+                        toSaveIictItemList.add(item);
+                    }
+                }
+            }
+        }
+        // 执行批量操作
+        if (!toSave.isEmpty()) {
+            saveBatch(toSave);
+        }
+        if (!toSaveIictItemList.isEmpty()) {
+            superManager.saveBatch(toSaveIictItemList);
+        }
+        log.info("已经新增字典：{}条，字典项：{}条", toSave.size(), toSaveIictItemList.size());
+        if (!toUpdate.isEmpty()) {
+            superManager.updateBatchById(toUpdate);
+        }
+        if (!toUpdateIictItemList.isEmpty()) {
+            superManager.updateBatchById(toUpdateIictItemList);
+        }
+        log.info("已经更新字典：{}条，字典项：{}条", toUpdate.size(), toUpdateIictItemList.size());
+
+        // 淘汰缓存
+        List<CacheKey> cacheKeyList = keyList.stream().map(DictCacheKeyBuilder::builder).toList();
+        cachePlusOps.del(cacheKeyList);
+        return true;
+    }
 
     @Override
     public List<DefDict> findItemByDictId(Long id) {

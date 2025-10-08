@@ -43,7 +43,7 @@ public class File extends Entity<Long> implements EchoVO {
 
     private static final long serialVersionUID = 1L;
     @TableField(exist = false)
-    private Map<String, Object> echoMap = MapUtil.newHashMap();
+    private final Map<String, Object> echoMap = MapUtil.newHashMap();
 
     /**
      * 业务类型

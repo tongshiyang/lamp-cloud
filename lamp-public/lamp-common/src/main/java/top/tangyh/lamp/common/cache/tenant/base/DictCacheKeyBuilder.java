@@ -3,6 +3,7 @@ package top.tangyh.lamp.common.cache.tenant.base;
 
 import top.tangyh.basic.base.entity.SuperEntity;
 import top.tangyh.basic.model.cache.CacheHashKey;
+import top.tangyh.basic.model.cache.CacheKey;
 import top.tangyh.basic.model.cache.CacheKeyBuilder;
 import top.tangyh.lamp.common.cache.CacheKeyModular;
 import top.tangyh.lamp.common.cache.CacheKeyTable;
@@ -23,7 +24,7 @@ import java.io.Serializable;
  * @date 2020/9/20 6:45 下午
  */
 public class DictCacheKeyBuilder implements CacheKeyBuilder {
-    public static CacheHashKey builder(Serializable dictKey) {
+    public static CacheKey builder(Serializable dictKey) {
         return new DictCacheKeyBuilder().hashKey(dictKey);
     }
 

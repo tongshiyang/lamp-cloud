@@ -14,7 +14,7 @@ import java.util.stream.Stream;
  * @author zuihou
  */
 @Getter
-@Schema(description = "HTTP方法-枚举")
+@Schema(title = "HttpMethod", description = "HTTP方法-枚举")
 @AllArgsConstructor
 @NoArgsConstructor
 public enum HttpMethod implements BaseEnum {

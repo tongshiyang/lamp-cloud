@@ -12,6 +12,7 @@ import lombok.NoArgsConstructor;
 import lombok.ToString;
 import lombok.experimental.Accessors;
 
+import java.io.Serial;
 import java.io.Serializable;
 
 /**
@@ -26,13 +27,13 @@ import java.io.Serializable;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@Accessors(chain = true)
 @ToString(callSuper = true)
-@EqualsAndHashCode(callSuper = false)
+@Accessors(chain = true)
+@EqualsAndHashCode
 @Builder
-@Schema(description = "字典项")
+@Schema(title = "DefDictItemSaveVO", description = "字典项")
 public class DefDictItemSaveVO implements Serializable {
-
+    @Serial
     private static final long serialVersionUID = 1L;
 
     /**
@@ -41,6 +42,21 @@ public class DefDictItemSaveVO implements Serializable {
     @Schema(description = "字典ID")
     @NotNull(message = "请填写字典ID")
     private Long parentId;
+
+    /**
+     * 字典分组
+     */
+    @Schema(description = "字典分组")
+    @Size(max = 255, message = "字典分组长度不能超过{max}")
+    private String dictGroup;
+
+    /**
+     * 数据类型
+     * [1-字符串 2-整型 3-布尔]
+     */
+    @Schema(description = "数据类型")
+    @Size(max = 1, message = "数据类型长度不能超过{max}")
+    private String dataType;
     /**
      * 标识
      */
@@ -89,5 +105,20 @@ public class DefDictItemSaveVO implements Serializable {
     @Schema(description = "css类元素")
     @Size(max = 255, message = "css类元素长度不能超过{max}")
     private String cssClass;
+    /**
+     * 组件属性
+     * 用于Tag时，用于配置color属性
+     * 用于Button时，用于配置type属性
+     */
+    @Schema(description = "组件属性")
+    @Size(max = 255, message = "组件属性长度不能超过{max}")
+    private String propType;
+    /**
+     * 国际化配置
+     */
+    @Schema(description = "国际化配置")
+    @Size(max = 5120, message = "国际化配置长度不能超过{max}")
+    private String i18nJson;
+
 
 }

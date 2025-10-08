@@ -20,7 +20,7 @@ import java.util.stream.Stream;
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor
-@Schema(description = "状态-枚举")
+@Schema(description = "租户审核状态-枚举")
 public enum DefTenantStatusEnum implements BaseEnum {
 
     /**

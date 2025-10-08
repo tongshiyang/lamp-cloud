@@ -124,14 +124,16 @@ public class TokenContextFilter implements WebFilter, Ordered {
             }
 
         } catch (UnauthorizedException e) {
+            log.error(request.getPath().toString(), e);
             return errorResponse(response, e.getMessage(), e.getCode(), HttpStatus.UNAUTHORIZED);
         } catch (BizException e) {
+            log.error(request.getPath().toString(), e);
             return errorResponse(response, e.getMessage(), e.getCode(), HttpStatus.BAD_REQUEST);
         } catch (SaTokenException e) {
-            log.error(e.getMessage(), e);
+            log.error(request.getPath().toString(), e);
             return errorResponse(response, e.getMessage(), e.getCode(), HttpStatus.UNAUTHORIZED);
         } catch (Exception e) {
-            log.error(e.getMessage(), e);
+            log.error(request.getPath().toString(), e);
             return errorResponse(response, "验证token出错", R.FAIL_CODE, HttpStatus.BAD_REQUEST);
         }
 

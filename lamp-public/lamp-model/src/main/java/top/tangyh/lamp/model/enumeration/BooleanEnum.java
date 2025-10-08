@@ -1,7 +1,9 @@
 package top.tangyh.lamp.model.enumeration;
 
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import top.tangyh.basic.interfaces.BaseEnum;
 
 /**
  * 是否
@@ -11,7 +13,8 @@ import lombok.Getter;
  */
 @Getter
 @AllArgsConstructor
-public enum BooleanEnum {
+@Schema(description = "是否-枚举")
+public enum BooleanEnum implements BaseEnum {
     /**
      * true
      */
@@ -23,7 +26,13 @@ public enum BooleanEnum {
     private final Boolean bool;
     private final int integer;
     private final String str;
-    private final String describe;
+    private final String desc;
+
+    @Override
+    public String getCode() {
+        return this.bool.toString();
+    }
+
 
     public boolean eq(Integer val) {
         if (val == null) {

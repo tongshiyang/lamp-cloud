@@ -20,31 +20,27 @@ import java.util.stream.Stream;
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor
-@Schema(description = "性别-枚举")
+@Schema(title = "Sex", description = "性别-枚举")
 public enum Sex implements BaseEnum {
 
     /**
      * M="男"
      */
-    M("男"),
+    M("1", "男"),
     /**
      * W="女"
      */
-    W("女"),
-    /**
-     * N="未知"
-     */
-    N("未知");
+    W("2", "女");
 
+    private String code;
     @Schema(description = "描述")
     private String desc;
-
 
     /**
      * 根据当前枚举的name匹配
      */
     public static Sex match(String val, Sex def) {
-        return Stream.of(values()).parallel().filter(item -> item.name().equalsIgnoreCase(val)).findAny().orElse(def);
+        return Stream.of(values()).parallel().filter(item -> item.getCode().equalsIgnoreCase(val)).findAny().orElse(def);
     }
 
     public static Sex get(String val) {
@@ -52,13 +48,8 @@ public enum Sex implements BaseEnum {
     }
 
     public boolean eq(Sex val) {
-        return val != null && eq(val.name());
+        return val != null && eq(val.getCode());
     }
 
-    @Override
-    @Schema(description = "编码", allowableValues = "W,M,N", example = "W")
-    public String getCode() {
-        return this.name();
-    }
 
 }

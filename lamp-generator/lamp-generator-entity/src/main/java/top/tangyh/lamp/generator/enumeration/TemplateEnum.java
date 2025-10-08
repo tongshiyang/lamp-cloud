@@ -20,7 +20,7 @@ import java.util.stream.Stream;
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor
-@Schema(description = "代码模板")
+@Schema(title = "TemplateEnum", description = "代码模板")
 public enum TemplateEnum implements BaseEnum {
 
     /**

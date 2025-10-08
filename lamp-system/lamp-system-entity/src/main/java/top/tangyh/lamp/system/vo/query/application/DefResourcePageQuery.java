@@ -27,7 +27,7 @@ import java.io.Serializable;
 @ToString(callSuper = true)
 @EqualsAndHashCode(callSuper = false)
 @Builder
-@Schema(description = "资源")
+@Schema(title = "DefResourcePageQuery", description = "资源")
 public class DefResourcePageQuery implements Serializable {
 
     private static final long serialVersionUID = 1L;

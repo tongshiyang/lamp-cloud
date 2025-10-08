@@ -10,9 +10,12 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import top.tangyh.basic.annotation.log.WebLog;
 import top.tangyh.basic.base.R;
 import top.tangyh.basic.base.controller.SuperController;
 import top.tangyh.basic.base.request.PageParams;
@@ -82,4 +85,10 @@ public class DefDictController extends SuperController<DefDictService, Long, Def
         return success(superService.checkByKey(key, id));
     }
 
+    @Operation(summary = "通过枚举导入字典", description = "通过枚举导入字典")
+    @PostMapping("/importDictByEnum")
+    @WebLog("通过枚举导入字典")
+    public R<Boolean> importDictByEnum(@RequestBody List<DefDictResultVO> list) {
+        return R.success(superService.importDictByEnum(list));
+    }
 }

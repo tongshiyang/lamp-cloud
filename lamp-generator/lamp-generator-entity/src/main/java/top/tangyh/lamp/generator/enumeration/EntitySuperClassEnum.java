@@ -1,5 +1,6 @@
 package top.tangyh.lamp.generator.enumeration;
 
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import top.tangyh.basic.base.entity.Entity;
@@ -19,6 +20,7 @@ import java.util.stream.Stream;
  */
 @Getter
 @AllArgsConstructor
+@Schema(title = "EntitySuperClassEnum", description = "父类实体类型")
 public enum EntitySuperClassEnum implements BaseEnum {
     /**
      * 只有id

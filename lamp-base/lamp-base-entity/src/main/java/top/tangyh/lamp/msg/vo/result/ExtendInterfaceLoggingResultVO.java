@@ -41,7 +41,7 @@ public class ExtendInterfaceLoggingResultVO extends Entity<Long> implements Seri
     private static final long serialVersionUID = 1L;
 
     @Builder.Default
-    private Map<String, Object> echoMap = MapUtil.newHashMap();
+    private final Map<String, Object> echoMap = MapUtil.newHashMap();
 
     @Schema(description = "")
     private Long id;

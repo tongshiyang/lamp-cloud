@@ -37,7 +37,7 @@ public interface EchoDictType {
         /**
          * 性别
          */
-        String SEX = "GLOBAL_SEX";
+        String SEX = "Sex";
         /**
          * 激活状态
          * [10-未激活 20-已激活]
@@ -55,11 +55,11 @@ public interface EchoDictType {
      */
     interface Base {
         // @lamp.generator auto insert Base
-        String MSG_INTERFACE_LOGGING_STATUS = "MSG_INTERFACE_LOGGING_STATUS";
-        String INTERFACE_EXEC_MODE = "INTERFACE_EXEC_MODE";
-        String MSG_TEMPLATE_TYPE = "MSG_TEMPLATE_TYPE";
+        String MSG_INTERFACE_LOGGING_STATUS = "MsgInterfaceLoggingStatusEnum";
+        String INTERFACE_EXEC_MODE = "InterfaceExecModeEnum";
+        String MSG_TEMPLATE_TYPE = "MsgTemplateTypeEnum";
         String NOTICE_TARGET = "NOTICE_TARGET";
-        String NOTICE_REMIND_MODE = "NOTICE_REMIND_MODE";
+        String NOTICE_REMIND_MODE = "NoticeRemindModeEnum";
 
         /**
          * 职位状态
@@ -71,13 +71,13 @@ public interface EchoDictType {
          * 机构类型
          * [10-单位 20-部门]
          */
-        String ORG_TYPE = "BASE_ORG_TYPE";
+        String ORG_TYPE = "OrgTypeEnum";
 
         /**
          * 角色类别
          * [10-功能角色 20-桌面角色 30-数据角色]
          */
-        String ROLE_CATEGORY = "BASE_ROLE_CATEGORY";
+        String ROLE_CATEGORY = "RoleCategoryEnum";
     }
 
     /**
@@ -86,23 +86,24 @@ public interface EchoDictType {
     interface System {
         // @lamp.generator auto insert System
 
+        String DefTenantRegisterTypeEnum = "DefTenantRegisterTypeEnum";
         /**
          * 数据范围 [01-全部 02-本单位及子级 03-本单位 04-本部门 05-本部门及子级 06-个人 07-自定义]
          */
-        String RESOURCE_DATA_SCOPE = "TENANT_RESOURCE_DATA_SCOPE";
+        String RESOURCE_DATA_SCOPE = "DataScopeEnum";
         /**
          * 资源类型 [10-应用 20-菜单 30-视图 40-按钮 50-字段 06-数据]
          */
-        String RESOURCE_TYPE = "TENANT_RESOURCE_TYPE";
+        String RESOURCE_TYPE = "ResourceTypeEnum";
         /**
          * 打开方式 [01-组件 02-内链 03-外链]
          */
-        String RESOURCE_OPEN_WITH = "TENANT_RESOURCE_OPEN_WITH";
+        String RESOURCE_OPEN_WITH = "ResourceOpenWithEnum";
 
         /**
          * 字典分类 [10-系统字典 20-业务字典]
          */
-        String DICT_CLASSIFY = "TENANT_DICT_CLASSIFY";
+        String DICT_CLASSIFY = "DictClassifyEnum";
 
         /**
          * 应用类型 [10-自建应用 20-第三方应用]
@@ -111,7 +112,7 @@ public interface EchoDictType {
         /**
          * 授权类型 [10-应用授权 20-应用续期 30-取消授权]
          */
-        String APPLICATION_GRANT_TYPE = "TENANT_APPLICATION_GRANT_TYPE";
+        String APPLICATION_GRANT_TYPE = "ApplicationGrantTypeEnum";
         /**
          * 参数类型 [10-系统参数 20-业务参数]
          */
@@ -130,12 +131,12 @@ public interface EchoDictType {
          * 租户审批状态
          * [05-正常 10-待初始化 15-已撤回 20-待审核 25-已拒绝 30-已同意]
          */
-        String TENANT_STATUS = "TENANT_TENANT_STATUS";
+        String TENANT_STATUS = "DefTenantStatusEnum";
         /**
          * 登录状态
          * [01-登录成功 02-验证码错误 03-密码错误 04-账号锁定 05-切换租户 06-短信验证码错误]
          */
-        String LOGIN_STATUS = "SYSTEM_LOGIN_STATUS";
+        String LOGIN_STATUS = "LoginStatusEnum";
 
 
     }

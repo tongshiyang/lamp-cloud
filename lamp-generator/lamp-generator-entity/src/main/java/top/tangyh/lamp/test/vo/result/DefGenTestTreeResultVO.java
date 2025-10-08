@@ -39,7 +39,7 @@ import java.util.Map;
 @Accessors(chain = true)
 @EqualsAndHashCode(callSuper = true)
 @Builder
-@Schema(description = "测试树结构")
+@Schema(title = "DefGenTestTreeResultVO", description = "测试树结构")
 public class DefGenTestTreeResultVO extends TreeEntity<DefGenTestTreeResultVO, Long> implements Serializable, EchoVO {
 
     private static final long serialVersionUID = 1L;
@@ -116,7 +116,7 @@ public class DefGenTestTreeResultVO extends TreeEntity<DefGenTestTreeResultVO, L
      * @Echo(api = "top.tangyh.lamp.common.api.DictApi", dictType="GLOBAL_SEX")
      */
     @Schema(description = "字符字典")
-    @Echo(api = "top.tangyh.lamp.common.api.DictApi", dictType = "GLOBAL_SEX")
+    @Echo(api = "top.tangyh.lamp.common.api.DictApi", dictType = "Sex")
     private String test7;
     /**
      * 整形字典;

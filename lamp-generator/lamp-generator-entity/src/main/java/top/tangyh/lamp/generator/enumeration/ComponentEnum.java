@@ -4,7 +4,6 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import top.tangyh.basic.interfaces.BaseEnum;
 
 import java.util.stream.Stream;
 
@@ -17,8 +16,8 @@ import java.util.stream.Stream;
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor
-@Schema(description = "生成方式")
-public enum ComponentEnum implements BaseEnum {
+@Schema(title = "ComponentEnum", description = "生成方式")
+public enum ComponentEnum {
     /**
      * 输入框
      */
@@ -169,13 +168,7 @@ public enum ComponentEnum implements BaseEnum {
     }
 
     public boolean eq(ComponentEnum val) {
-        return val != null && eq(val.name());
-    }
-
-    @Override
-    @Schema(description = "编码", example = "01")
-    public String getCode() {
-        return this.value;
+        return val != null && val.name().equals(this.name());
     }
 
 

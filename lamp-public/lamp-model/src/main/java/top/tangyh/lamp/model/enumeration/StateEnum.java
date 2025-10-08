@@ -1,7 +1,9 @@
 package top.tangyh.lamp.model.enumeration;
 
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import top.tangyh.basic.interfaces.BaseEnum;
 
 /**
  * 是否
@@ -11,7 +13,8 @@ import lombok.Getter;
  */
 @Getter
 @AllArgsConstructor
-public enum StateEnum {
+@Schema(description = "应用授权枚举")
+public enum StateEnum implements BaseEnum {
     /**
      * 启用
      */
@@ -23,7 +26,12 @@ public enum StateEnum {
     private final Boolean bool;
     private final int integer;
     private final String str;
-    private final String describe;
+    private final String desc;
+
+    @Override
+    public String getCode() {
+        return this.bool.toString();
+    }
 
     public static StateEnum match(String val, StateEnum... defs) {
         StateEnum def = defs.length > 0 ? defs[0] : DISABLE;

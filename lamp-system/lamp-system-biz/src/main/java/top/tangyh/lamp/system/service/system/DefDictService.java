@@ -2,6 +2,7 @@ package top.tangyh.lamp.system.service.system;
 
 import top.tangyh.basic.base.service.SuperService;
 import top.tangyh.lamp.system.entity.system.DefDict;
+import top.tangyh.lamp.system.vo.result.system.DefDictResultVO;
 
 import java.util.List;
 
@@ -55,4 +56,6 @@ public interface DefDictService extends SuperService<Long, DefDict> {
      * @create [2021/10/8 11:39 下午 ] [tangyh] [初始创建]
      */
     List<DefDict> findItemByDictId(Long id);
+
+    Boolean importDictByEnum(List<DefDictResultVO> list);
 }

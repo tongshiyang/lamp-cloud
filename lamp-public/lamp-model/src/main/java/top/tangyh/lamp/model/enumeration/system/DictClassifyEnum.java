@@ -14,16 +14,17 @@ import java.util.stream.Stream;
  * @date 2021/3/15 3:34 下午
  */
 @Getter
-@Schema(description = "字典分类-枚举")
+@Schema(title = "DictClassifyEnum", description = "字典分类-枚举")
 public enum DictClassifyEnum implements BaseEnum {
 
     /**
-     * 应用授权
+     * 系统字典
      */
     SYSTEM("10", "系统字典"),
+    ENUM("30", "枚举字典"),
 
     /**
-     * 应用续期
+     * 业务字典
      */
     BUSINESS("20", "业务字典");
 

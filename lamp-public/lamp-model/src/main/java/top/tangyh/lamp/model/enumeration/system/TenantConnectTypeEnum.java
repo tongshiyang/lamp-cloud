@@ -20,7 +20,7 @@ import java.util.stream.Stream;
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor
-@Schema(description = "数据源链接类型-枚举")
+@Schema(title = "TenantConnectTypeEnum", description = "数据源链接类型-枚举")
 public enum TenantConnectTypeEnum implements BaseEnum {
 
     /**

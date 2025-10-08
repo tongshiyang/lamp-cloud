@@ -1,13 +1,15 @@
 package top.tangyh.lamp.system.manager.system;
 
 import top.tangyh.basic.base.manager.SuperManager;
-import top.tangyh.basic.interfaces.echo.LoadService;
+import top.tangyh.lamp.model.vo.result.Option;
 import top.tangyh.lamp.system.entity.system.DefDict;
 import top.tangyh.lamp.system.vo.result.system.DefDictItemResultVO;
 
+import java.io.Serializable;
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 /**
  * 字典管理
@@ -17,7 +19,10 @@ import java.util.Map;
  * @date 2021/9/29 1:26 下午
  * @create [2021/9/29 1:26 下午 ] [tangyh] [初始创建]
  */
-public interface DefDictManager extends SuperManager<DefDict>, LoadService {
+public interface DefDictManager extends SuperManager<DefDict> {
+    Map<Serializable, DefDict> findByIds(Set<Serializable> dictKeys);
+
+    void syncEnumToDict(Map<Option, List<Option>> ennumMap);
 
     /**
      * 根据字典key查询系统默认的字典条目
