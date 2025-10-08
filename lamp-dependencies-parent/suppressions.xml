@@ -9,4 +9,5 @@
     <suppress files="CacheKeyModular.java" checks="VisibilityModifier"/>
     <suppress files="CacheKeyModular.java" checks="StaticVariableName"/>
     <suppress files="PackageUtils.java" checks="ParameterNumber"/>
+    <suppress files="EchoDictType.java" checks="ConstantName"/>
 </suppressions>
