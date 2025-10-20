@@ -81,13 +81,13 @@ Alibaba、SpringBoot、Mybatis、Seata、Sentinel、RabbitMQ、FastDFS/MinIO、S
 
 - 官网
     - [https://tangyh.top](https://tangyh.top)
-- 4.0版本演示地址 （账号密码都是 lamp）
+- 文档
+    - [https://tangyh.top/doc/%E7%AE%80%E4%BB%8B.html](https://tangyh.top/doc/%E7%AE%80%E4%BB%8B.html)
+- 演示地址 
     - 数据源模式（vben5版）：演示地址：   [https://max-datasource.tangyh.top](https://max-datasource.tangyh.top)
     - 数据源模式（vben2版）：演示地址：   [https://datasource.tangyh.top](https://datasource.tangyh.top)
-    - 数据源模式（soybean版）：演示地址：   [https://soy-datasource.tangyh.top](https://soy-datasource.tangyh.top)
     - 字段模式（vben5版）：演示地址：   [https://max-column.tangyh.top](https://max-column.tangyh.top)
     - 字段模式（vben2版）：演示地址：   [https://column.tangyh.top](https://column.tangyh.top)
-    - 字段模式（soybean版）：演示地址：   [https://soy-column.tangyh.top](https://soy-column.tangyh.top)
     - 非租户模式：演示地址：   [https://none.tangyh.top](https://none.tangyh.top)
 
 # 作者参与过或PR过的项目
