@@ -49,6 +49,11 @@
             <artifactId>lamp-base-cloud-impl</artifactId>
             <version>${revision}</version>
         </dependency>
+        <dependency>
+            <groupId>top.tangyh.lamp</groupId>
+            <artifactId>lamp-oauth-cloud-impl</artifactId>
+            <version>${revision}</version>
+        </dependency>
 
         <dependency>
             <groupId>top.tangyh.basic</groupId>
