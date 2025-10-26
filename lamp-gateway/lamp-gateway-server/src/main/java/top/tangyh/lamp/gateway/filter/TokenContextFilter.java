@@ -3,6 +3,7 @@ package top.tangyh.lamp.gateway.filter;
 import cn.dev33.satoken.config.SaTokenConfig;
 import cn.dev33.satoken.exception.SaTokenException;
 import cn.dev33.satoken.session.SaSession;
+import cn.dev33.satoken.spring.pathmatch.SaPathPatternParserUtil;
 import cn.dev33.satoken.stp.StpUtil;
 import cn.hutool.core.util.StrUtil;
 import cn.hutool.core.util.URLUtil;
@@ -173,11 +174,17 @@ public class TokenContextFilter implements WebFilter, Ordered {
     }
 
     private void parseClient(ServerHttpRequest request, ServerHttpRequest.Builder mutate) {
-        String base64Authorization = getHeader(CLIENT_KEY, request);
-        if (StrUtil.isNotEmpty(base64Authorization)) {
-            String[] client = Base64Util.getClient(base64Authorization);
-            ContextUtil.setClientId(client[0]);
-            addHeader(mutate, CLIENT_ID_HEADER, ContextUtil.getClientId());
+        try {
+            String pattern = "/actuator/**";
+            if (!SaPathPatternParserUtil.match(pattern, request.getPath().toString())) {
+                String base64Authorization = getHeader(CLIENT_KEY, request);
+                if (StrUtil.isNotEmpty(base64Authorization)) {
+                    String[] client = Base64Util.getClient(base64Authorization);
+                    ContextUtil.setClientId(client[0]);
+                    addHeader(mutate, CLIENT_ID_HEADER, ContextUtil.getClientId());
+                }
+            }
+        } catch (Exception ignore) {
         }
     }
 

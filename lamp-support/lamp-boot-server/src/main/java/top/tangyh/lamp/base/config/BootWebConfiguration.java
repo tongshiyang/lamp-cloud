@@ -2,8 +2,6 @@ package top.tangyh.lamp.base.config;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnExpression;
-import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.Ordered;
@@ -12,14 +10,9 @@ import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
-import top.tangyh.basic.boot.config.BaseConfig;
-import top.tangyh.basic.constant.Constants;
-import top.tangyh.basic.log.event.SysLogListener;
 import top.tangyh.lamp.base.interceptor.AuthenticationSaInterceptor;
 import top.tangyh.lamp.base.interceptor.TokenContextFilter;
 import top.tangyh.lamp.common.properties.IgnoreProperties;
-import top.tangyh.lamp.common.properties.SystemProperties;
-import top.tangyh.lamp.oauth.facade.LogFacade;
 import top.tangyh.lamp.system.facade.DefResourceFacade;
 
 /**
@@ -29,9 +22,8 @@ import top.tangyh.lamp.system.facade.DefResourceFacade;
  * @date 2021-10-08
  */
 @Configuration
-@EnableConfigurationProperties({IgnoreProperties.class, SystemProperties.class})
 @RequiredArgsConstructor
-public class BootWebConfiguration extends BaseConfig implements WebMvcConfigurer {
+public class BootWebConfiguration implements WebMvcConfigurer {
 
 
     private final IgnoreProperties ignoreProperties;
@@ -113,12 +105,4 @@ public class BootWebConfiguration extends BaseConfig implements WebMvcConfigurer
     }
 
 
-    /**
-     * lamp.log.enabled = true 并且 lamp.log.type=DB时实例该类
-     */
-    @Bean
-    @ConditionalOnExpression("${" + Constants.PROJECT_PREFIX + ".log.enabled:true} && 'DB'.equals('${" + Constants.PROJECT_PREFIX + ".log.type:LOGGER}')")
-    public SysLogListener sysLogListener(LogFacade logApi) {
-        return new SysLogListener(logApi::save);
-    }
 }

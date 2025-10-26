@@ -27,6 +27,11 @@
         </dependency>
         <dependency>
             <groupId>top.tangyh.lamp</groupId>
+            <artifactId>lamp-common-config</artifactId>
+            <version>${revision}</version>
+        </dependency>
+        <dependency>
+            <groupId>top.tangyh.lamp</groupId>
             <artifactId>lamp-login-user-cloud-impl</artifactId>
             <version>${revision}</version>
         </dependency>

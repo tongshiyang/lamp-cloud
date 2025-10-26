@@ -23,6 +23,11 @@
             <version>${revision}</version>
         </dependency>
         <dependency>
+            <groupId>top.tangyh.lamp</groupId>
+            <artifactId>lamp-common-config</artifactId>
+            <version>${revision}</version>
+        </dependency>
+        <dependency>
             <groupId>com.alibaba.cloud</groupId>
             <artifactId>spring-cloud-alibaba-commons</artifactId>
             <version>${spring-cloud-alibaba-dependencies.version}</version>

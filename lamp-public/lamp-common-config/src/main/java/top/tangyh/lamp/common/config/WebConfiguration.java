@@ -1,4 +1,4 @@
-package top.tangyh.lamp.base.config;
+package top.tangyh.lamp.common.config;
 
 import org.springframework.boot.autoconfigure.condition.ConditionalOnExpression;
 import org.springframework.context.annotation.Bean;
@@ -15,7 +15,7 @@ import top.tangyh.lamp.oauth.facade.LogFacade;
  * @date 2021-10-08
  */
 @Configuration
-public class BaseWebConfiguration extends BaseConfig {
+public class WebConfiguration extends BaseConfig {
 
     /**
      * lamp.log.enabled = true 并且 lamp.log.type=DB时实例该类

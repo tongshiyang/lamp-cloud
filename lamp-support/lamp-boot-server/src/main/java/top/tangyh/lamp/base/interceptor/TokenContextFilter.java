@@ -62,10 +62,13 @@ public class TokenContextFilter implements AsyncHandlerInterceptor {
 
 
     private void parseClient(HttpServletRequest request) {
-        String base64Authorization = getHeader(CLIENT_KEY, request);
-        if (StrUtil.isNotEmpty(base64Authorization)) {
-            String[] client = Base64Util.getClient(base64Authorization);
-            ContextUtil.setClientId(client[0]);
+        try {
+            String base64Authorization = getHeader(CLIENT_KEY, request);
+            if (StrUtil.isNotEmpty(base64Authorization)) {
+                String[] client = Base64Util.getClient(base64Authorization);
+                ContextUtil.setClientId(client[0]);
+            }
+        } catch (Exception ignored) {
         }
     }
 

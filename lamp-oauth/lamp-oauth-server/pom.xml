@@ -17,6 +17,11 @@
     <dependencies>
         <dependency>
             <groupId>top.tangyh.lamp</groupId>
+            <artifactId>lamp-common-config</artifactId>
+            <version>${revision}</version>
+        </dependency>
+        <dependency>
+            <groupId>top.tangyh.lamp</groupId>
             <artifactId>lamp-oauth-controller</artifactId>
             <version>${revision}</version>
         </dependency>

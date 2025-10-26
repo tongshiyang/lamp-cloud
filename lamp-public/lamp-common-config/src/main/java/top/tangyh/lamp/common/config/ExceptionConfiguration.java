@@ -1,4 +1,4 @@
-package top.tangyh.lamp.base.config;
+package top.tangyh.lamp.common.config;
 
 import jakarta.servlet.Servlet;
 import lombok.extern.slf4j.Slf4j;
@@ -12,15 +12,16 @@ import org.springframework.web.servlet.DispatcherServlet;
 import top.tangyh.basic.boot.handler.AbstractGlobalExceptionHandler;
 
 /**
- * 基础服务-全局异常处理
+ * 全局异常处理
  *
  * @author zuihou
- * @date 2021-10-08
+ * @date 2020年01月02日17:19:27
  */
 @Configuration
 @ConditionalOnClass({Servlet.class, DispatcherServlet.class})
 @ConditionalOnWebApplication(type = ConditionalOnWebApplication.Type.SERVLET)
 @RestControllerAdvice(annotations = {RestController.class, Controller.class})
 @Slf4j
-public class BaseExceptionConfiguration extends AbstractGlobalExceptionHandler {
+public class ExceptionConfiguration extends AbstractGlobalExceptionHandler {
+
 }

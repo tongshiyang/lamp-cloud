@@ -7,6 +7,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
+import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -20,6 +21,8 @@ import top.tangyh.basic.converter.String2LocalTimeConverter;
 import top.tangyh.basic.interfaces.echo.EchoService;
 import top.tangyh.basic.jackson.LampJacksonModule;
 import top.tangyh.basic.utils.SpringUtils;
+import top.tangyh.lamp.common.properties.IgnoreProperties;
+import top.tangyh.lamp.common.properties.SystemProperties;
 import top.tangyh.lamp.gateway.service.GarbageEchoServiceImpl;
 
 import java.text.SimpleDateFormat;
@@ -38,6 +41,7 @@ import static top.tangyh.basic.utils.DateUtils.DEFAULT_DATE_TIME_FORMAT;
  * @date 2021/12/9 18:52
  */
 @Configuration
+@EnableConfigurationProperties({SystemProperties.class, IgnoreProperties.class})
 public class GatewayWebConfig {
     /**
      * 这个类仅仅是为了防止在gateway启动报错

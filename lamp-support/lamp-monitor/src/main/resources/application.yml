@@ -38,6 +38,9 @@ spring:
         ignored-instances-metadata:
           sba: ignore
           meta-v: 1.0.0
+      instance-auth:
+        default-user-name: actuator-admin
+        default-password: Secure@2025
 
 
 # 用于/actuator/info
