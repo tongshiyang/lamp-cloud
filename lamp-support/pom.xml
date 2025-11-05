@@ -1,16 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0"
-         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+<project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xmlns="http://maven.apache.org/POM/4.0.0"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <parent>
         <groupId>top.tangyh.lamp</groupId>
-        <artifactId>lamp-cloud</artifactId>
-        <version>3.5.1</version>
-        <relativePath>../pom.xml</relativePath>
+        <artifactId>lamp-dependencies-parent</artifactId>
+        <version>${revision}</version>
+        <relativePath>../lamp-dependencies-parent/pom.xml</relativePath>
     </parent>
+    <artifactId>lamp-support</artifactId>
 
     <modelVersion>4.0.0</modelVersion>
-    <artifactId>lamp-support</artifactId>
     <packaging>pom</packaging>
     <name>${project.artifactId}</name>
     <description>支撑模块</description>
@@ -18,6 +18,10 @@
     <modules>
         <!-- 监控和全链路调用监控 开发环境可以不用启动 -->
         <module>lamp-monitor</module>
+        <!-- 定时任务执行器，启动该项目时，需要先启动 lamp-job（开源版） 或 lamp-job-pro（赞助版） -->
+        <module>lamp-job-executor</module>
+        <!-- 单体版 -->
+        <module>lamp-boot-server</module>
     </modules>
 
 </project>

@@ -1,7 +1,7 @@
 package top.tangyh.lamp.common.cache;
 
 
-import top.tangyh.basic.cache.model.CacheKeyBuilder;
+import top.tangyh.basic.model.cache.CacheKeyBuilder;
 
 import java.time.Duration;
 
@@ -13,8 +13,8 @@ import java.time.Duration;
  */
 public class VerificationCodeCacheKeyBuilder implements CacheKeyBuilder {
     @Override
-    public String getPrefix() {
-        return CacheKeyDefinition.REGISTER_USER;
+    public String getTable() {
+        return CacheKeyTable.REGISTER_USER;
     }
 
     @Override

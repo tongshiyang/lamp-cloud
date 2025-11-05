@@ -16,29 +16,24 @@
 
 package top.tangyh.lamp.oauth.granter;
 
+import cn.dev33.satoken.config.SaTokenConfig;
+import cn.dev33.satoken.session.SaSession;
+import cn.dev33.satoken.stp.SaLoginModel;
+import cn.dev33.satoken.stp.StpUtil;
+import cn.dev33.satoken.temp.SaTempUtil;
+import cn.hutool.json.JSONObject;
+import cn.hutool.json.JSONUtil;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import top.tangyh.basic.base.R;
-import top.tangyh.basic.context.ContextConstants;
-import top.tangyh.basic.database.properties.DatabaseProperties;
-import top.tangyh.basic.jwt.TokenUtil;
-import top.tangyh.basic.jwt.model.AuthInfo;
-import top.tangyh.basic.utils.SpringUtils;
-import top.tangyh.basic.utils.StrHelper;
-import top.tangyh.lamp.authority.dto.auth.LoginParamDTO;
-import top.tangyh.lamp.authority.dto.auth.Online;
-import top.tangyh.lamp.authority.entity.auth.User;
-import top.tangyh.lamp.authority.service.auth.ApplicationService;
-import top.tangyh.lamp.authority.service.auth.OnlineService;
-import top.tangyh.lamp.authority.service.auth.UserService;
-import top.tangyh.lamp.common.properties.SystemProperties;
-import top.tangyh.lamp.file.service.AppendixService;
-import top.tangyh.lamp.oauth.event.LoginEvent;
-import top.tangyh.lamp.oauth.event.model.LoginStatusDTO;
-import top.tangyh.lamp.tenant.service.TenantService;
+import top.tangyh.basic.exception.BizException;
+import top.tangyh.lamp.oauth.vo.result.LoginResultVO;
 
-import java.time.LocalDateTime;
-
-import static top.tangyh.lamp.oauth.granter.RefreshTokenGranter.GRANT_TYPE;
+import static top.tangyh.basic.context.ContextConstants.JWT_KEY_COMPANY_ID;
+import static top.tangyh.basic.context.ContextConstants.JWT_KEY_DEPT_ID;
+import static top.tangyh.basic.context.ContextConstants.JWT_KEY_EMPLOYEE_ID;
+import static top.tangyh.basic.context.ContextConstants.JWT_KEY_TOP_COMPANY_ID;
+import static top.tangyh.basic.context.ContextConstants.JWT_KEY_USER_ID;
 
 /**
  * RefreshTokenGranter
@@ -47,60 +42,61 @@ import static top.tangyh.lamp.oauth.granter.RefreshTokenGranter.GRANT_TYPE;
  * @author zuihou
  * @date 2020年03月31日10:23:53
  */
-@Component(GRANT_TYPE)
-public class RefreshTokenGranter extends AbstractTokenGranter implements TokenGranter {
+@Component
+@Slf4j
+public class RefreshTokenGranter {
 
-    public static final String GRANT_TYPE = "refresh_token";
+    @Autowired
+    protected SaTokenConfig saTokenConfig;
 
-    public RefreshTokenGranter(TokenUtil tokenUtil, UserService userService, TenantService tenantService, AppendixService appendixService,
-                               ApplicationService applicationService, DatabaseProperties databaseProperties,
-                               OnlineService onlineService, SystemProperties systemProperties) {
-        super(tokenUtil, userService, tenantService, applicationService,
-                databaseProperties, onlineService, systemProperties, appendixService);
+    public LoginResultVO refresh(String refreshToken) {
+        // 1、验证
+        Object str = SaTempUtil.parseToken(refreshToken);
+
+        JSONObject obj = JSONUtil.parseObj(str);
+        Long userId = obj.getLong(JWT_KEY_USER_ID);
+        log.info("token={},obj={}", refreshToken, obj);
+        if (userId == null) {
+            // 刷新token过期，重新登录
+            throw new BizException("回话过期，请重新登陆");
+        }
+
+        Long topCompanyId = obj.getLong(JWT_KEY_TOP_COMPANY_ID);
+        Long companyId = obj.getLong(JWT_KEY_COMPANY_ID);
+        Long deptId = obj.getLong(JWT_KEY_DEPT_ID);
+        Long employeeId = obj.getLong(JWT_KEY_EMPLOYEE_ID);
+
+        // 2、为其生成新的短 token
+        StpUtil.login(userId, new SaLoginModel().setDevice("PC"));
+
+        SaSession tokenSession = StpUtil.getTokenSession();
+        tokenSession.setLoginId(userId);
+        if (topCompanyId != null) {
+            tokenSession.set(JWT_KEY_TOP_COMPANY_ID, topCompanyId);
+        } else {
+            tokenSession.delete(JWT_KEY_TOP_COMPANY_ID);
+        }
+        if (companyId != null) {
+            tokenSession.set(JWT_KEY_COMPANY_ID, companyId);
+        } else {
+            tokenSession.delete(JWT_KEY_COMPANY_ID);
+        }
+        if (deptId != null) {
+            tokenSession.set(JWT_KEY_DEPT_ID, deptId);
+        } else {
+            tokenSession.delete(JWT_KEY_DEPT_ID);
+        }
+        if (employeeId != null) {
+            tokenSession.set(JWT_KEY_EMPLOYEE_ID, employeeId);
+        } else {
+            tokenSession.delete(JWT_KEY_EMPLOYEE_ID);
+        }
+
+        LoginResultVO resultVO = new LoginResultVO();
+        resultVO.setToken(tokenSession.getToken());
+        resultVO.setExpire(StpUtil.getTokenTimeout());
+        resultVO.setRefreshToken(SaTempUtil.createToken(obj.toString(), 2 * saTokenConfig.getTimeout()));
+        return resultVO;
     }
 
-    @Override
-    public R<AuthInfo> grant(LoginParamDTO loginParam) {
-        String grantType = loginParam.getGrantType();
-        String refreshTokenStr = loginParam.getRefreshToken();
-        if (StrHelper.isAnyBlank(grantType, refreshTokenStr) || !GRANT_TYPE.equals(grantType)) {
-            return R.fail("加载用户信息失败");
-        }
-        // 2.检测client是否可用
-        R<String[]> checkClient = checkClient();
-        if (!checkClient.getIsSuccess()) {
-            return R.fail(checkClient.getMsg());
-        }
-
-        AuthInfo authInfo = tokenUtil.parseRefreshToken(refreshTokenStr);
-
-        if (!ContextConstants.REFRESH_TOKEN_KEY.equals(authInfo.getTokenType())) {
-            return R.fail("refreshToken无效，无法加载用户信息");
-        }
-
-        User user = userService.getByIdCache(authInfo.getUserId());
-
-        if (user == null || !user.getState()) {
-            String msg = "您已被禁用！";
-            SpringUtils.publishEvent(new LoginEvent(LoginStatusDTO.fail(authInfo.getUserId(), msg)));
-            return R.fail(msg);
-        }
-
-        // 密码过期
-        if (user.getPasswordExpireTime() != null && LocalDateTime.now().isAfter(user.getPasswordExpireTime())) {
-            String msg = "用户密码已过期，请修改密码或者联系管理员重置!";
-            SpringUtils.publishEvent(new LoginEvent(LoginStatusDTO.fail(user.getId(), msg)));
-            return R.fail(msg);
-        }
-
-
-        AuthInfo newAuth = createToken(user);
-        Online online = getOnline(checkClient.getData()[0], newAuth);
-
-        //成功登录事件
-        LoginStatusDTO.success(user.getId(), online);
-        onlineService.save(online);
-        return R.success(newAuth);
-
-    }
 }

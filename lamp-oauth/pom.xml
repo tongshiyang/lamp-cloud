@@ -3,19 +3,20 @@
          xmlns="http://maven.apache.org/POM/4.0.0"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <parent>
-        <artifactId>lamp-cloud</artifactId>
         <groupId>top.tangyh.lamp</groupId>
-        <version>3.5.1</version>
-        <relativePath>../pom.xml</relativePath>
+        <artifactId>lamp-dependencies-parent</artifactId>
+        <version>${revision}</version>
+        <relativePath>../lamp-dependencies-parent/pom.xml</relativePath>
     </parent>
-    <modelVersion>4.0.0</modelVersion>
-
     <artifactId>lamp-oauth</artifactId>
+
+    <modelVersion>4.0.0</modelVersion>
     <name>${project.artifactId}</name>
     <description>认证服务</description>
     <packaging>pom</packaging>
     <modules>
-        <module>lamp-oauth-api</module>
+        <module>lamp-oauth-facade</module>
+        <module>lamp-oauth-entity</module>
         <module>lamp-oauth-controller</module>
         <module>lamp-oauth-biz</module>
         <module>lamp-oauth-server</module>

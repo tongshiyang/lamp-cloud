@@ -1,18 +1,18 @@
 package top.tangyh.lamp.oauth.controller;
 
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
+import io.swagger.v3.oas.annotations.Hidden;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-import springfox.documentation.annotations.ApiIgnore;
-import top.tangyh.basic.annotation.base.IgnoreResponseBodyAdvice;
-import top.tangyh.lamp.authority.service.auth.UserService;
-import top.tangyh.lamp.authority.service.common.DictionaryService;
-import top.tangyh.lamp.authority.service.core.OrgService;
-import top.tangyh.lamp.authority.service.core.StationService;
+import top.tangyh.basic.annotation.response.IgnoreResponseBodyAdvice;
+import top.tangyh.lamp.base.service.user.BaseOrgService;
+import top.tangyh.lamp.base.service.user.BasePositionService;
+import top.tangyh.lamp.oauth.service.DictService;
 
 import java.io.Serializable;
 import java.util.Map;
@@ -26,36 +26,31 @@ import java.util.Set;
  */
 @Slf4j
 @RestController
-@AllArgsConstructor
+@AllArgsConstructor()
+@RequestMapping("/echo")
 @IgnoreResponseBodyAdvice
-@Api(value = "数据注入查询接口", tags = "数据注入查询接口， 不建议前端调用")
-@ApiIgnore
+@Tag(name = "数据注入查询接口， 不建议前端调用")
+@Hidden
 public class EchoController {
-    private final DictionaryService dictionaryService;
-    private final OrgService orgService;
-    private final StationService stationService;
-    private final UserService userService;
+    private final DictService dictService;
+    private final BaseOrgService baseOrgService;
+    private final BasePositionService basePositionService;
 
 
-    @ApiOperation(value = "根据id查询用户", notes = "根据id查询用户")
-    @GetMapping("/user/findByIds")
-    public Map<Serializable, Object> findUserByIds(@RequestParam(value = "ids") Set<Serializable> ids) {
-        return userService.findByIds(ids);
-    }
-
-    @GetMapping("/station/findByIds")
+    @PostMapping("/position/findByIds")
     public Map<Serializable, Object> findStationByIds(@RequestParam("ids") Set<Serializable> ids) {
-        return stationService.findByIds(ids);
+        return basePositionService.findByIds(ids);
     }
 
-    @GetMapping("/org/findByIds")
+    @PostMapping("/org/findByIds")
     public Map<Serializable, Object> findOrgByIds(@RequestParam("ids") Set<Serializable> ids) {
-        return orgService.findByIds(ids);
+        return baseOrgService.findByIds(ids);
     }
 
-    @ApiOperation(value = "查询字典项", notes = "根据字典编码查询字典项")
-    @GetMapping("/dictionary/findByIds")
+    @Operation(summary = "查询字典项", description = "根据字典编码查询字典项")
+    @PostMapping("/dict/findByIds")
     public Map<Serializable, Object> findDictByIds(@RequestParam("ids") Set<Serializable> ids) {
-        return this.dictionaryService.findByIds(ids);
+        return this.dictService.findByIds(ids);
     }
+
 }

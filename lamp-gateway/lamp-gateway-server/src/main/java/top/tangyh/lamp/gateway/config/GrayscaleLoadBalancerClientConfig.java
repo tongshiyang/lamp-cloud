@@ -1,8 +1,5 @@
 package top.tangyh.lamp.gateway.config;
 
-import top.tangyh.lamp.gateway.filter.GrayscaleReactiveLoadBalancerClientFilter;
-import top.tangyh.lamp.gateway.rule.GrayVersionLoadBalancer;
-import top.tangyh.lamp.gateway.rule.GrayscaleLoadBalancer;
 import org.springframework.boot.autoconfigure.AutoConfigureBefore;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnWebApplication;
@@ -13,6 +10,10 @@ import org.springframework.cloud.gateway.config.GatewayReactiveLoadBalancerClien
 import org.springframework.cloud.gateway.filter.ReactiveLoadBalancerClientFilter;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import top.tangyh.basic.constant.Constants;
+import top.tangyh.lamp.gateway.filter.GrayscaleReactiveLoadBalancerClientFilter;
+import top.tangyh.lamp.gateway.rule.GrayVersionLoadBalancer;
+import top.tangyh.lamp.gateway.rule.GrayscaleLoadBalancer;
 
 /**
  * 灰度负载模式自动装配
@@ -22,7 +23,7 @@ import org.springframework.context.annotation.Configuration;
  */
 @Configuration
 @EnableConfigurationProperties(GatewayLoadBalancerProperties.class)
-@ConditionalOnProperty(value = "lamp.grayscale.enabled", havingValue = "true", matchIfMissing = true)
+@ConditionalOnProperty(value = Constants.PROJECT_PREFIX + ".grayscale.enabled", havingValue = "true", matchIfMissing = true)
 @AutoConfigureBefore(GatewayReactiveLoadBalancerClientAutoConfiguration.class)
 @ConditionalOnWebApplication(type = ConditionalOnWebApplication.Type.REACTIVE)
 public class GrayscaleLoadBalancerClientConfig {

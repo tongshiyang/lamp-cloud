@@ -1,9 +1,9 @@
 package top.tangyh.lamp.common.cache.common;
 
 
-import top.tangyh.basic.cache.model.CacheKey;
-import top.tangyh.basic.cache.model.CacheKeyBuilder;
-import top.tangyh.lamp.common.cache.CacheKeyDefinition;
+import top.tangyh.basic.model.cache.CacheKey;
+import top.tangyh.basic.model.cache.CacheKeyBuilder;
+import top.tangyh.lamp.common.cache.CacheKeyTable;
 
 /**
  * 参数 KEY
@@ -18,7 +18,7 @@ public class TotalPvCacheKeyBuilder implements CacheKeyBuilder {
     }
 
     @Override
-    public String getPrefix() {
-        return CacheKeyDefinition.TOTAL_PV;
+    public String getTable() {
+        return CacheKeyTable.TOTAL_PV;
     }
 }

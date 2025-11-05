@@ -1,9 +1,9 @@
 package top.tangyh.lamp.common.cache.common;
 
 
-import top.tangyh.basic.cache.model.CacheKey;
-import top.tangyh.basic.cache.model.CacheKeyBuilder;
-import top.tangyh.lamp.common.cache.CacheKeyDefinition;
+import top.tangyh.basic.model.cache.CacheKey;
+import top.tangyh.basic.model.cache.CacheKeyBuilder;
+import top.tangyh.lamp.common.cache.CacheKeyTable;
 
 import java.time.Duration;
 import java.time.LocalDate;
@@ -22,8 +22,8 @@ public class TodayPvCacheKeyBuilder implements CacheKeyBuilder {
     }
 
     @Override
-    public String getPrefix() {
-        return CacheKeyDefinition.TODAY_PV;
+    public String getTable() {
+        return CacheKeyTable.TODAY_PV;
     }
 
     @Override

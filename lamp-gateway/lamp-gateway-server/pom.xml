@@ -5,7 +5,7 @@
     <parent>
         <artifactId>lamp-gateway</artifactId>
         <groupId>top.tangyh.lamp</groupId>
-        <version>3.5.1</version>
+        <version>${revision}</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
     <modelVersion>4.0.0</modelVersion>
@@ -17,45 +17,60 @@
     <dependencies>
         <dependency>
             <groupId>top.tangyh.lamp</groupId>
-            <artifactId>lamp-common</artifactId>
-            <version>${lamp-project.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.mybatis</groupId>
-            <artifactId>mybatis-spring</artifactId>
+            <artifactId>lamp-gateway-biz</artifactId>
+            <version>${revision}</version>
+            <exclusions>
+                <exclusion>
+                    <artifactId>spring-boot-starter-undertow</artifactId>
+                    <groupId>org.springframework.boot</groupId>
+                </exclusion>
+            </exclusions>
         </dependency>
         <dependency>
             <groupId>top.tangyh.lamp</groupId>
-            <artifactId>lamp-oauth-api</artifactId>
-            <version>${lamp-project.version}</version>
+            <artifactId>lamp-system-api</artifactId>
+            <version>${revision}</version>
         </dependency>
         <dependency>
-            <groupId>top.tangyh.basic</groupId>
-            <artifactId>lamp-jwt-starter</artifactId>
+            <groupId>top.tangyh.lamp</groupId>
+            <artifactId>lamp-base-cloud-impl</artifactId>
+            <version>${revision}</version>
+        </dependency>
+        <dependency>
+            <groupId>top.tangyh.lamp</groupId>
+            <artifactId>lamp-system-cloud-impl</artifactId>
+            <version>${revision}</version>
             <exclusions>
                 <exclusion>
-                    <groupId>org.springframework</groupId>
+                    <artifactId>lamp-validator-starter</artifactId>
+                    <groupId>top.tangyh.basic</groupId>
+                </exclusion>
+                <exclusion>
                     <artifactId>spring-webmvc</artifactId>
+                    <groupId>org.springframework</groupId>
                 </exclusion>
             </exclusions>
         </dependency>
+
         <dependency>
-            <groupId>top.tangyh.basic</groupId>
-            <artifactId>lamp-boot-util</artifactId>
-            <exclusions>
-                <exclusion>
-                    <groupId>org.springframework</groupId>
-                    <artifactId>spring-webmvc</artifactId>
-                </exclusion>
-                <exclusion>
-                    <groupId>org.springframework.boot</groupId>
-                    <artifactId>spring-boot-starter-undertow</artifactId>
-                </exclusion>
-            </exclusions>
+            <groupId>top.tangyh.lamp</groupId>
+            <artifactId>lamp-model</artifactId>
+            <version>${revision}</version>
         </dependency>
         <dependency>
-            <groupId>top.tangyh.basic</groupId>
-            <artifactId>lamp-cache-starter</artifactId>
+            <groupId>top.tangyh.lamp</groupId>
+            <artifactId>lamp-database-mode</artifactId>
+            <version>${revision}</version>
+            <exclusions>
+                <exclusion>
+                    <artifactId>spring-webmvc</artifactId>
+                    <groupId>org.springframework</groupId>
+                </exclusion>
+                <exclusion>
+                    <artifactId>lamp-validator-starter</artifactId>
+                    <groupId>top.tangyh.basic</groupId>
+                </exclusion>
+            </exclusions>
         </dependency>
         <dependency>
             <groupId>top.tangyh.basic</groupId>
@@ -73,10 +88,25 @@
             <artifactId>lamp-log-starter</artifactId>
             <exclusions>
                 <exclusion>
-                    <groupId>org.springframework</groupId>
                     <artifactId>spring-webmvc</artifactId>
+                    <groupId>org.springframework</groupId>
                 </exclusion>
             </exclusions>
+        </dependency>
+
+        <dependency>
+            <groupId>cn.dev33</groupId>
+            <artifactId>sa-token-reactor-spring-boot3-starter</artifactId>
+        </dependency>
+
+        <!-- Sa-Token 整合 Redis （使用 jackson 序列化方式） -->
+        <dependency>
+            <groupId>cn.dev33</groupId>
+            <artifactId>sa-token-redis-jackson</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-pool2</artifactId>
         </dependency>
 
         <dependency>
@@ -85,36 +115,33 @@
         </dependency>
 
         <dependency>
-            <groupId>io.springfox</groupId>
-            <artifactId>springfox-swagger2</artifactId>
-            <exclusions>
-                <exclusion>
-                    <groupId>io.swagger</groupId>
-                    <artifactId>swagger-models</artifactId>
-                </exclusion>
-            </exclusions>
-        </dependency>
-        <dependency>
-            <groupId>io.swagger</groupId>
-            <artifactId>swagger-models</artifactId>
-        </dependency>
-        <dependency>
             <groupId>com.github.xiaoymin</groupId>
-            <artifactId>knife4j-spring-ui</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>io.springfox</groupId>
-            <artifactId>springfox-bean-validators</artifactId>
+            <artifactId>knife4j-openapi3-ui</artifactId>
         </dependency>
 
         <dependency>
             <groupId>org.springframework.cloud</groupId>
-            <artifactId>spring-cloud-starter-gateway</artifactId>
+            <artifactId>spring-cloud-starter-gateway-server-webflux</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.alibaba.cloud</groupId>
+            <artifactId>spring-cloud-alibaba-sentinel-gateway</artifactId>
+            <exclusions>
+                <exclusion>
+                    <groupId>com.alibaba.csp</groupId>
+                    <artifactId>sentinel-zuul-adapter</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+        <dependency>
+            <groupId>com.alibaba.csp</groupId>
+            <artifactId>sentinel-datasource-nacos</artifactId>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-webflux</artifactId>
         </dependency>
+
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-test</artifactId>
@@ -132,10 +159,7 @@
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
             </plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-compiler-plugin</artifactId>
-            </plugin>
+
             <!-- docker打包插件 -->
             <plugin>
                 <groupId>com.spotify</groupId>
@@ -143,7 +167,7 @@
                 <version>${dockerfile-maven-plugin.version}</version>
                 <configuration>
                     <repository>${docker.image.prefix}/${project.artifactId}</repository>
-                    <tag>${lamp-project.version}</tag>
+                    <tag>${revision}</tag>
                     <buildArgs>
                         <JAR_FILE>target/${project.build.finalName}.jar</JAR_FILE>
                     </buildArgs>

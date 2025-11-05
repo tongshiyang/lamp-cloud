@@ -26,8 +26,7 @@ public interface ParameterKey {
         /**
          * 一个用户只能登录一次， 后面的用户T掉前面的用户LOGIN_POLICY
          */
-        ONLY_ONE,
-        ;
+        ONLY_ONE;
 
         public boolean eq(String val) {
             return this.name().equalsIgnoreCase(val);

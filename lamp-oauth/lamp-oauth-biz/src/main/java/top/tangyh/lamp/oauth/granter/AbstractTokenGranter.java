@@ -12,49 +12,57 @@
  */
 package top.tangyh.lamp.oauth.granter;
 
+import cn.dev33.satoken.config.SaTokenConfig;
+import cn.dev33.satoken.session.SaSession;
+import cn.dev33.satoken.stp.StpUtil;
+import cn.dev33.satoken.temp.SaTempUtil;
+import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.convert.Convert;
-import cn.hutool.core.util.StrUtil;
-import cn.hutool.crypto.SecureUtil;
-import cn.hutool.extra.servlet.ServletUtil;
-import lombok.RequiredArgsConstructor;
+import cn.hutool.extra.servlet.JakartaServletUtil;
+import cn.hutool.json.JSONObject;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import top.tangyh.basic.base.R;
 import top.tangyh.basic.boot.utils.WebUtils;
 import top.tangyh.basic.context.ContextUtil;
-import top.tangyh.basic.database.properties.DatabaseProperties;
-import top.tangyh.basic.database.properties.MultiTenantType;
+import top.tangyh.basic.exception.BizException;
+import top.tangyh.basic.exception.UnauthorizedException;
 import top.tangyh.basic.exception.code.ExceptionCode;
-import top.tangyh.basic.jwt.TokenUtil;
-import top.tangyh.basic.jwt.model.AuthInfo;
-import top.tangyh.basic.jwt.model.JwtUserInfo;
-import top.tangyh.basic.jwt.utils.JwtUtil;
 import top.tangyh.basic.utils.ArgumentAssert;
-import top.tangyh.basic.utils.BeanPlusUtil;
-import top.tangyh.basic.utils.DateUtils;
 import top.tangyh.basic.utils.SpringUtils;
-import top.tangyh.basic.utils.StrHelper;
 import top.tangyh.basic.utils.StrPool;
-import top.tangyh.lamp.authority.dto.auth.LoginParamDTO;
-import top.tangyh.lamp.authority.dto.auth.Online;
-import top.tangyh.lamp.authority.entity.auth.Application;
-import top.tangyh.lamp.authority.entity.auth.User;
-import top.tangyh.lamp.authority.service.auth.ApplicationService;
-import top.tangyh.lamp.authority.service.auth.OnlineService;
-import top.tangyh.lamp.authority.service.auth.UserService;
-import top.tangyh.lamp.common.constant.AppendixType;
+import top.tangyh.basic.utils.TreeUtil;
+import top.tangyh.lamp.base.entity.user.BaseEmployee;
+import top.tangyh.lamp.base.entity.user.BaseOrg;
+import top.tangyh.lamp.base.service.user.BaseEmployeeService;
+import top.tangyh.lamp.base.service.user.BaseOrgService;
+import top.tangyh.lamp.base.vo.result.user.BaseEmployeeResultVO;
 import top.tangyh.lamp.common.properties.SystemProperties;
-import top.tangyh.lamp.common.vo.result.AppendixResultVO;
-import top.tangyh.lamp.file.service.AppendixService;
+import top.tangyh.lamp.common.utils.Base64Util;
+import top.tangyh.lamp.model.enumeration.StateEnum;
+import top.tangyh.lamp.model.enumeration.base.OrgTypeEnum;
+import top.tangyh.lamp.model.enumeration.base.UserStatusEnum;
 import top.tangyh.lamp.oauth.event.LoginEvent;
 import top.tangyh.lamp.oauth.event.model.LoginStatusDTO;
-import top.tangyh.lamp.tenant.entity.Tenant;
-import top.tangyh.lamp.tenant.enumeration.TenantStatusEnum;
-import top.tangyh.lamp.tenant.service.TenantService;
+import top.tangyh.lamp.oauth.vo.param.LoginParamVO;
+import top.tangyh.lamp.oauth.vo.result.LoginResultVO;
+import top.tangyh.lamp.system.entity.system.DefClient;
+import top.tangyh.lamp.system.entity.tenant.DefUser;
+import top.tangyh.lamp.system.enumeration.system.LoginStatusEnum;
+import top.tangyh.lamp.system.service.system.DefClientService;
+import top.tangyh.lamp.system.service.tenant.DefUserService;
 
-import java.time.LocalDateTime;
+import java.util.List;
 
-import static top.tangyh.basic.context.ContextConstants.BASIC_HEADER_KEY;
-import static top.tangyh.basic.utils.ArgumentAssert.notNull;
+import static top.tangyh.basic.context.ContextConstants.CLIENT_KEY;
+import static top.tangyh.basic.context.ContextConstants.JWT_KEY_COMPANY_ID;
+import static top.tangyh.basic.context.ContextConstants.JWT_KEY_DEPT_ID;
+import static top.tangyh.basic.context.ContextConstants.JWT_KEY_EMPLOYEE_ID;
+import static top.tangyh.basic.context.ContextConstants.JWT_KEY_TOP_COMPANY_ID;
+import static top.tangyh.basic.context.ContextConstants.JWT_KEY_USER_ID;
 
 /**
  * 验证码TokenGranter
@@ -62,164 +70,433 @@ import static top.tangyh.basic.utils.ArgumentAssert.notNull;
  * @author zuihou
  */
 @Slf4j
-@RequiredArgsConstructor
 public abstract class AbstractTokenGranter implements TokenGranter {
-    protected final TokenUtil tokenUtil;
-    protected final UserService userService;
-    protected final TenantService tenantService;
-    protected final ApplicationService applicationService;
-    protected final DatabaseProperties databaseProperties;
-    protected final OnlineService onlineService;
-    protected final SystemProperties systemProperties;
-    protected final AppendixService appendixService;
 
+    @Autowired
+    protected SystemProperties systemProperties;
+    @Autowired
+    protected DefClientService defClientService;
+    @Autowired
+    protected DefUserService defUserService;
+    @Autowired
+    protected BaseEmployeeService baseEmployeeService;
+    @Autowired
+    protected BaseOrgService baseOrgService;
+    @Autowired
+    protected SaTokenConfig saTokenConfig;
+
+
+    @Override
+    public R<LoginResultVO> login(LoginParamVO loginParam) {
+        // 0. 参数校验
+        R<LoginResultVO> result = checkParam(loginParam);
+        if (!result.getIsSuccess()) {
+            return result;
+        }
+        result = checkClient();
+        if (!result.getIsSuccess()) {
+            return result;
+        }
+
+        // 1. 验证码
+        result = checkCaptcha(loginParam);
+        if (!result.getIsSuccess()) {
+            return result;
+        }
+
+
+        // 2. 查找用户
+        DefUser defUser = getUser(loginParam);
+
+        // 3. 判断密码
+        result = checkUserPassword(loginParam, defUser);
+        if (!result.getIsSuccess()) {
+            return result;
+        }
+
+        // 4. 检查用户状态
+        result = checkUserState(defUser);
+        if (!result.getIsSuccess()) {
+            return result;
+        }
+
+        // 5. 获取员工和租户
+        Employee employee = getEmployee(defUser);
+
+        // 6. 查询单位、部门
+        Org org = findOrg(employee);
+
+        // 7. 封装token
+        LoginResultVO loginResultVO = buildResult(employee, org, defUser);
+        LoginStatusDTO loginStatus = LoginStatusDTO.success(defUser.getId(), employee.getEmployeeId());
+        SpringUtils.publishEvent(new LoginEvent(loginStatus));
+        return R.success(loginResultVO);
+    }
 
     /**
-     * 处理登录逻辑
+     * 检查参数
      *
      * @param loginParam 登录参数
-     * @return 认证信息
+     * @return top.tangyh.basic.base.R<top.tangyh.lamp.oauth.vo.result.LoginResultVO>
+     * @author tangyh
+     * @date 2022/10/5 12:38 PM
+     * @create [2022/10/5 12:38 PM ] [tangyh] [初始创建]
      */
-    protected R<AuthInfo> login(LoginParamDTO loginParam) {
-        if (StrHelper.isAnyBlank(loginParam.getAccount(), loginParam.getPassword())) {
-            return R.fail("请输入用户名或密码");
-        }
-        // 1，检测租户是否可用
-        if (!MultiTenantType.NONE.eq(databaseProperties.getMultiTenantType())) {
-            Tenant tenant = this.tenantService.getByCode(ContextUtil.getTenant());
-            notNull(tenant, "企业不存在");
-            ArgumentAssert.equals(TenantStatusEnum.NORMAL, tenant.getStatus(), "企业不可用~");
-            if (tenant.getExpirationTime() != null) {
-                ArgumentAssert.isFalse(LocalDateTime.now().isAfter(tenant.getExpirationTime()), "企业服务已到期!");
-            }
-        }
-
-        // 2.检测client是否可用
-        R<String[]> checkClient = checkClient();
-        if (!checkClient.getIsSuccess()) {
-            return R.fail(checkClient.getMsg());
-        }
-
-        // 3. 验证登录
-        R<User> result = this.getUser(loginParam.getAccount(), loginParam.getPassword());
-        if (!result.getIsSuccess()) {
-            return R.fail(result.getCode(), result.getMsg());
-        }
-
-        // 4.生成 token
-        User user = result.getData();
-        AuthInfo authInfo = this.createToken(user);
-
-        Online online = getOnline(checkClient.getData()[0], authInfo);
-
-        //成功登录事件
-        LoginStatusDTO loginStatus = LoginStatusDTO.success(user.getId(), online);
-        SpringUtils.publishEvent(new LoginEvent(loginStatus));
-
-        onlineService.save(online);
-        return R.success(authInfo);
-    }
-
-    protected Online getOnline(String clientId, AuthInfo authInfo) {
-        Online online = new Online();
-        BeanPlusUtil.copyProperties(authInfo, online);
-        online.setClientId(clientId);
-        online.setExpireTime(authInfo.getExpiration());
-        online.setLoginTime(LocalDateTime.now());
-        return online;
-    }
-
+    protected abstract R<LoginResultVO> checkParam(LoginParamVO loginParam);
 
     /**
-     * 检测 client
-     */
-    protected R<String[]> checkClient() {
-        String basicHeader = ServletUtil.getHeader(WebUtils.request(), BASIC_HEADER_KEY, StrPool.UTF_8);
-        String[] client = JwtUtil.getClient(basicHeader);
-        Application application = applicationService.getByClient(client[0], client[1]);
-
-        if (application == null) {
-            return R.fail("请填写正确的客户端ID或者客户端秘钥");
-        }
-        if (!application.getState()) {
-            return R.fail("客户端[%s]已被禁用", application.getClientId());
-        }
-        return R.success(client);
-    }
-
-
-    /**
-     * 检测用户密码是否正确
+     * 检测客户端
      *
-     * @param account  账号
-     * @param password 密码
-     * @return 用户信息
+     * @return top.tangyh.basic.base.R<top.tangyh.lamp.oauth.vo.result.LoginResultVO>
+     * @author tangyh
+     * @date 2022/10/5 12:38 PM
+     * @create [2022/10/5 12:38 PM ] [tangyh] [初始创建]
      */
-    protected R<User> getUser(String account, String password) {
-        User user = this.userService.getByAccount(account);
-        // 密码错误
-        if (user == null) {
-            return R.fail(ExceptionCode.JWT_USER_INVALID);
-        }
+    protected R<LoginResultVO> checkClient() {
+        String basicHeader = JakartaServletUtil.getHeader(WebUtils.request(), CLIENT_KEY, StrPool.UTF_8);
+        String[] client = Base64Util.getClient(basicHeader);
+        DefClient defClient = defClientService.getClient(client[0], client[1]);
 
-        // 方便开发、测试、演示环境 开发者登录别人的账号，生产环境禁用。
-        if (!systemProperties.getVerifyPassword()) {
-            return R.success(user);
+        if (defClient == null) {
+            return R.fail("请在.env文件中配置正确的客户端ID或者客户端秘钥");
         }
-
-        String passwordMd5 = SecureUtil.sha256(password + user.getSalt());
-        if (!passwordMd5.equalsIgnoreCase(user.getPassword())) {
-            String msg = "用户名或密码错误!";
-            // 密码错误事件
-            SpringUtils.publishEvent(new LoginEvent(LoginStatusDTO.pwdError(user.getId(), msg)));
-            return R.fail(msg);
+        if (!defClient.getState()) {
+            return R.fail("客户端[%s]已被禁用", defClient.getClientId());
         }
+        return R.success(null);
+    }
 
-        // 密码过期
-        if (user.getPasswordExpireTime() != null && LocalDateTime.now().isAfter(user.getPasswordExpireTime())) {
-            String msg = "用户密码已过期，请修改密码或者联系管理员重置!";
-            SpringUtils.publishEvent(new LoginEvent(LoginStatusDTO.fail(user.getId(), msg)));
-            return R.fail(msg);
-        }
 
+    /**
+     * 检查验证码
+     *
+     * @param loginParam 登录参数
+     * @return top.tangyh.basic.base.R<top.tangyh.lamp.oauth.vo.result.LoginResultVO>
+     * @author tangyh
+     * @date 2022/10/5 12:38 PM
+     * @create [2022/10/5 12:38 PM ] [tangyh] [初始创建]
+     */
+    protected R<LoginResultVO> checkCaptcha(LoginParamVO loginParam) {
+        return R.success(null);
+    }
+
+    /**
+     * 查询用户
+     *
+     * @param loginParam 登录参数
+     * @return top.tangyh.lamp.system.entity.tenant.DefUser
+     * @author tangyh
+     * @date 2022/10/5 12:38 PM
+     * @create [2022/10/5 12:38 PM ] [tangyh] [初始创建]
+     */
+    protected abstract DefUser getUser(LoginParamVO loginParam);
+
+    /**
+     * 检查用户账号密码是否正确
+     *
+     * @param loginParam loginParam
+     * @param user       user
+     * @param tenantId       tenantId
+     * @return top.tangyh.basic.base.R<top.tangyh.lamp.oauth.vo.result.LoginResultVO>
+     * @author tangyh
+     * @date 2022/10/5 12:38 PM
+     * @create [2022/10/5 12:38 PM ] [tangyh] [初始创建]
+     */
+
+    protected R<LoginResultVO> checkUserPassword(LoginParamVO loginParam, DefUser user) {
+        return R.success(null);
+    }
+
+    /**
+     * 检查用户状态是否正常
+     *
+     * @param user user
+     * @return top.tangyh.basic.base.R<top.tangyh.lamp.oauth.vo.result.LoginResultVO>
+     * @author tangyh
+     * @date 2022/10/5 12:38 PM
+     * @create [2022/10/5 12:38 PM ] [tangyh] [初始创建]
+     */
+    protected R<LoginResultVO> checkUserState(DefUser user) {
+        // 用户被禁用
         if (!user.getState()) {
-            String msg = "用户被禁用，请联系管理员！";
-            SpringUtils.publishEvent(new LoginEvent(LoginStatusDTO.fail(user.getId(), msg)));
+            String msg = "您已被禁用，请联系管理员开通账号！";
+            SpringUtils.publishEvent(new LoginEvent(LoginStatusDTO.fail(user.getId(), LoginStatusEnum.USER_ERROR, msg)));
             return R.fail(msg);
         }
-
-        // 用户锁定
-        Integer maxPasswordErrorNum = systemProperties.getMaxPasswordErrorNum();
-        Integer passwordErrorNum = Convert.toInt(user.getPasswordErrorNum(), 0);
-        if (maxPasswordErrorNum > 0 && passwordErrorNum >= maxPasswordErrorNum) {
-            log.info("[{}][{}], 输错密码次数：{}, 最大限制次数:{}", user.getName(), user.getId(), passwordErrorNum, maxPasswordErrorNum);
-
-            LocalDateTime passwordErrorLockTime = DateUtils.conversionDateTime(systemProperties.getPasswordErrorLockUserTime());
-            log.info("passwordErrorLockTime={}", passwordErrorLockTime);
-            if (passwordErrorLockTime.isAfter(user.getPasswordErrorLastTime())) {
-                // 登录失败事件
-                String msg = StrUtil.format("密码连续输错次数已达到{}次,用户已被锁定~", maxPasswordErrorNum);
-                SpringUtils.publishEvent(new LoginEvent(LoginStatusDTO.fail(user.getId(), msg)));
-                return R.fail(msg);
-            }
-        }
-        return R.success(user);
+        return R.success(null);
     }
 
     /**
-     * 创建用户TOKEN
+     * 查询员工信息
      *
-     * @param user 用户
-     * @return token
+     * @param defUser 用户信息
+     * @return top.tangyh.lamp.oauth.granter.AbstractTokenGranter.Employee
+     * @author tangyh
+     * @date 2022/10/5 12:38 PM
+     * @create [2022/10/5 12:38 PM ] [tangyh] [初始创建]
      */
-    protected AuthInfo createToken(User user) {
-        JwtUserInfo userInfo = new JwtUserInfo(user.getId(), user.getAccount(), user.getName());
-        AuthInfo authInfo = tokenUtil.createAuthInfo(userInfo, null);
-        AppendixResultVO appendixResultVO = appendixService.getByBiz(user.getId(), AppendixType.Authority.BASE_USER_AVATAR);
-        authInfo.setAvatarId(appendixResultVO != null ? appendixResultVO.getId() : null);
-        authInfo.setWorkDescribe(user.getWorkDescribe());
-        return authInfo;
+    protected Employee getEmployee(DefUser defUser) {
+        // 用户被禁用无法登陆， 员工被禁用无法访问当前企业的数据， 企业被禁用所有员工无法
+        List<BaseEmployeeResultVO> employeeList = baseEmployeeService.listEmployeeByUserId(defUser.getId());
+        Long employeeId = null;
+        Long userId = defUser.getId();
+        UserStatusEnum userStatus = UserStatusEnum.NORMAL;
+        if (CollUtil.isNotEmpty(employeeList)) {
+            BaseEmployeeResultVO defaultEmployee = employeeList.get(0);
+            // 正常状态
+            if (StateEnum.ENABLE.eq(defaultEmployee.getState())) {
+                employeeId = defaultEmployee.getId();
+            } else {
+                userStatus = UserStatusEnum.USER_DISABLE;
+            }
+        } else {
+            userStatus = UserStatusEnum.USER_DISABLE;
+        }
+        log.info("userStatus={}, userId={}, employeeId={}", userStatus, userId, employeeId);
+        return Employee.builder().employeeId(employeeId).build();
     }
 
+    /**
+     * 查询单位和部门信息
+     *
+     * @param employee 员工信息
+     * @return top.tangyh.lamp.oauth.granter.AbstractTokenGranter.Org
+     * @author tangyh
+     * @date 2022/10/5 12:40 PM
+     * @create [2022/10/5 12:40 PM ] [tangyh] [初始创建]
+     */
+    protected Org findOrg(Employee employee) {
+        Long employeeId = employee.getEmployeeId();
+
+        // 当前所属部门
+        Long currentDeptId = null;
+        // 当前所属单位
+        Long currentCompanyId = null;
+        // 当前所属顶级单位
+        Long currentTopCompanyId = null;
+        if (employeeId != null) {
+            BaseEmployee baseEmployee = baseEmployeeService.getByIdCache(employeeId);
+
+            // 当前用户尚不属于任意租户
+            if (baseEmployee == null) {
+                return Org.builder()
+                        .currentTopCompanyId(null)
+                        .currentCompanyId(null)
+                        .currentDeptId(null).build();
+            }
+
+            boolean flag = false;
+            // 上次登录的部门
+            if (baseEmployee.getLastDeptId() != null) {
+                currentDeptId = baseEmployee.getLastDeptId();
+                // TODO 若用户变更了部门，是否有问题
+            } else {
+                // 上次登录部门为空，则随机选择一个部门
+                List<BaseOrg> deptList = baseOrgService.findDeptByEmployeeId(employeeId, null);
+                BaseOrg defaultDept = baseOrgService.getDefaultOrg(deptList, null);
+
+                currentDeptId = defaultDept != null ? defaultDept.getId() : null;
+                baseEmployee.setLastDeptId(currentDeptId);
+
+                flag = currentDeptId != null;
+            }
+
+            BaseOrg defaultCompany;
+            if (baseEmployee.getLastCompanyId() != null) {
+                currentCompanyId = baseEmployee.getLastCompanyId();
+
+                defaultCompany = baseOrgService.getByIdCache(currentCompanyId);
+            } else {
+                if (currentDeptId != null) {
+                    defaultCompany = baseOrgService.getCompanyByDeptId(currentDeptId);
+                } else {
+                    // currentDeptId 为空，员工可能直接挂在单位下、也可能挂不属于任何部门
+                    List<BaseOrg> companyList = baseOrgService.findCompanyByEmployeeId(employeeId);
+                    defaultCompany = baseOrgService.getDefaultOrg(companyList, baseEmployee.getLastCompanyId());
+                }
+
+                currentCompanyId = defaultCompany != null ? defaultCompany.getId() : null;
+                baseEmployee.setLastCompanyId(currentCompanyId);
+                flag = flag || currentCompanyId != null;
+
+            }
+
+            if (defaultCompany != null) {
+                Long rootId = TreeUtil.getTopNodeId(defaultCompany.getTreePath());
+                BaseOrg rootCompany;
+                if (rootId != null) {
+                    rootCompany = baseOrgService.getByIdCache(rootId);
+                } else {
+                    rootCompany = defaultCompany;
+                }
+                currentTopCompanyId = rootCompany != null ? rootCompany.getId() : null;
+            }
+
+            if (flag) {
+                baseEmployeeService.updateById(baseEmployee);
+            }
+        }
+        return Org.builder()
+                .currentTopCompanyId(currentTopCompanyId)
+                .currentCompanyId(currentCompanyId)
+                .currentDeptId(currentDeptId).build();
+    }
+
+    /**
+     * 构建返回值
+     *
+     * @param employee 员工信息
+     * @param org      机构信息
+     * @param defUser  用户信息
+     * @return top.tangyh.lamp.oauth.vo.result.LoginResultVO
+     * @author tangyh
+     * @date 2022/10/5 12:41 PM
+     * @create [2022/10/5 12:41 PM ] [tangyh] [初始创建]
+     */
+    protected LoginResultVO buildResult(Employee employee, Org org, DefUser defUser) {
+        //此登录接口登录web端
+        StpUtil.login(defUser.getId(), "PC");
+        SaSession tokenSession = StpUtil.getTokenSession();
+        tokenSession.setLoginId(defUser.getId());
+        if (org.getCurrentTopCompanyId() != null) {
+            tokenSession.set(JWT_KEY_TOP_COMPANY_ID, org.getCurrentTopCompanyId());
+        } else {
+            tokenSession.delete(JWT_KEY_TOP_COMPANY_ID);
+        }
+        if (org.getCurrentCompanyId() != null) {
+            tokenSession.set(JWT_KEY_COMPANY_ID, org.getCurrentCompanyId());
+        } else {
+            tokenSession.delete(JWT_KEY_COMPANY_ID);
+        }
+        if (org.getCurrentDeptId() != null) {
+            tokenSession.set(JWT_KEY_DEPT_ID, org.getCurrentDeptId());
+        } else {
+            tokenSession.delete(JWT_KEY_DEPT_ID);
+        }
+        if (employee.getEmployeeId() != null) {
+            tokenSession.set(JWT_KEY_EMPLOYEE_ID, employee.getEmployeeId());
+        } else {
+            tokenSession.delete(JWT_KEY_EMPLOYEE_ID);
+        }
+
+        LoginResultVO resultVO = new LoginResultVO();
+        resultVO.setToken(StpUtil.getTokenValue());
+        resultVO.setExpire(StpUtil.getTokenTimeout());
+
+        JSONObject obj = new JSONObject();
+        obj.set(JWT_KEY_USER_ID, defUser.getId());
+        obj.set(JWT_KEY_TOP_COMPANY_ID, tokenSession.get(JWT_KEY_TOP_COMPANY_ID));
+        obj.set(JWT_KEY_COMPANY_ID, tokenSession.get(JWT_KEY_COMPANY_ID));
+        obj.set(JWT_KEY_DEPT_ID, tokenSession.get(JWT_KEY_DEPT_ID));
+        obj.set(JWT_KEY_EMPLOYEE_ID, tokenSession.get(JWT_KEY_EMPLOYEE_ID));
+
+        resultVO.setRefreshToken(SaTempUtil.createToken(obj.toString(), 2 * saTokenConfig.getTimeout()));
+
+
+        log.info("用户：{}  {} 登录成功", defUser.getUsername(), defUser.getNickName());
+        return resultVO;
+    }
+
+    @Override
+    public R<Boolean> logout() {
+        try {
+            StpUtil.logout();
+        } catch (Exception e) {
+            log.debug("token已经过期，无需清理缓存");
+        }
+        return R.success(true);
+    }
+
+    @Override
+    public LoginResultVO switchOrg(Long orgId) {
+        StpUtil.checkLogin();
+        Long userId = ContextUtil.getUserId();
+        DefUser defUser = defUserService.getByIdCache(userId);
+        if (defUser == null) {
+            throw UnauthorizedException.wrap(ExceptionCode.JWT_TOKEN_EXPIRED);
+        }
+
+        if (!Convert.toBool(defUser.getState(), true)) {
+            throw UnauthorizedException.wrap(ExceptionCode.JWT_USER_DISABLE);
+        }
+
+        BaseEmployee employee = baseEmployeeService.getEmployeeByUser(userId);
+        ArgumentAssert.notNull(employee, "您不属于该公司，无法切换");
+        if (!Convert.toBool(employee.getState(), true)) {
+            throw BizException.wrap(ExceptionCode.JWT_EMPLOYEE_DISABLE);
+        }
+
+        Long topCompanyId = null;
+        Long companyId = null;
+        Long deptId = null;
+        if (orgId != null) {
+            BaseOrg selectOrg = baseOrgService.getByIdCache(orgId);
+            ArgumentAssert.notNull(selectOrg, "该部门不存在");
+
+            if (OrgTypeEnum.COMPANY.eq(selectOrg.getType())) {
+                companyId = selectOrg.getId();
+
+                Long rootId = TreeUtil.getTopNodeId(selectOrg.getTreePath());
+                if (rootId != null) {
+                    BaseOrg rootCompany = baseOrgService.getByIdCache(rootId);
+                    topCompanyId = rootCompany != null ? rootCompany.getId() : companyId;
+                } else {
+                    topCompanyId = companyId;
+                }
+            } else {
+                deptId = selectOrg.getId();
+
+                BaseOrg company = baseOrgService.getCompanyByDeptId(deptId);
+                if (company != null) {
+                    companyId = company.getId();
+
+                    Long rootId = TreeUtil.getTopNodeId(company.getTreePath());
+                    if (rootId != null) {
+                        BaseOrg rootCompany = baseOrgService.getByIdCache(rootId);
+                        topCompanyId = rootCompany != null ? rootCompany.getId() : companyId;
+                    } else {
+                        topCompanyId = companyId;
+                    }
+                }
+            }
+
+            baseEmployeeService.updateOrgInfo(employee.getId(), companyId, deptId);
+        } else {
+            baseEmployeeService.updateOrgInfo(employee.getId(), companyId, deptId);
+        }
+
+
+        Employee e = Employee.builder()
+                .employeeId(employee.getId())
+                .build();
+
+        Org org = Org.builder()
+                .currentTopCompanyId(topCompanyId)
+                .currentCompanyId(companyId)
+                .currentDeptId(deptId)
+                .build();
+
+        LoginResultVO loginResultVO = buildResult(e, org, defUser);
+
+        LoginStatusDTO loginStatus = LoginStatusDTO.switchOrg(defUser.getId(), employee.getId());
+        SpringUtils.publishEvent(new LoginEvent(loginStatus));
+        return loginResultVO;
+    }
+
+    @Builder
+    @AllArgsConstructor
+    @Getter
+    private static class Employee {
+        private Long employeeId;
+    }
+
+    @Builder
+    @AllArgsConstructor
+    @Getter
+    private static class Org {
+        private Long currentCompanyId;
+        private Long currentTopCompanyId;
+        private Long currentDeptId;
+    }
 
 }

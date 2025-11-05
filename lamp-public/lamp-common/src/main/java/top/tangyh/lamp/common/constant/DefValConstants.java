@@ -1,6 +1,6 @@
 package top.tangyh.lamp.common.constant;
 
-import top.tangyh.basic.utils.StrPool;
+import top.tangyh.basic.utils.TreeUtil;
 
 /**
  * 默认值
@@ -9,21 +9,27 @@ import top.tangyh.basic.utils.StrPool;
  * @date 2020/11/20 2:41 下午
  */
 public interface DefValConstants {
+    /** 内置的租户 */
+    Long DEF_TENANT_ID = 1L;
+    /**
+     * 默认的树节点 分隔符
+     */
+    String TREE_PATH_SPLIT = TreeUtil.TREE_SPLIT;
 
     /**
-     * 默认的根节点path
+     * 默认树层级
      */
-    String ROOT_PATH = StrPool.DEF_ROOT_PATH;
+    Integer TREE_GRADE = 0;
     /**
      * 默认的父id
      */
-    Long PARENT_ID = StrPool.DEF_PARENT_ID;
+    Long PARENT_ID = TreeUtil.DEF_PARENT_ID;
+
     /**
      * 默认的排序
      */
     Integer SORT_VALUE = 0;
-    /**
-     * 字典占位符
-     */
-    String DICT_PLACEHOLDER = "###";
+
+    /** 防止字典空值导致的 缓存击穿问题 */
+    String DICT_NULL_VAL_KEY = "-999999999";
 }

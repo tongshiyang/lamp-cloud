@@ -1,6 +1,5 @@
 package top.tangyh.lamp.gateway.filter;
 
-import top.tangyh.lamp.gateway.rule.GrayscaleLoadBalancer;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.cloud.client.ServiceInstance;
 import org.springframework.cloud.client.loadbalancer.DefaultResponse;
@@ -14,6 +13,7 @@ import org.springframework.cloud.gateway.support.NotFoundException;
 import org.springframework.cloud.gateway.support.ServerWebExchangeUtils;
 import org.springframework.web.server.ServerWebExchange;
 import reactor.core.publisher.Mono;
+import top.tangyh.lamp.gateway.rule.GrayscaleLoadBalancer;
 
 import java.net.URI;
 
@@ -25,21 +25,20 @@ import java.net.URI;
  */
 @Slf4j
 public class GrayscaleReactiveLoadBalancerClientFilter extends ReactiveLoadBalancerClientFilter {
-    private static final int LOAD_BALANCER_CLIENT_FILTER_ORDER = 10150;
     private static final String LB = "lb";
     private GatewayLoadBalancerProperties properties;
 
     private GrayscaleLoadBalancer grayLoadBalancer;
 
     public GrayscaleReactiveLoadBalancerClientFilter(GatewayLoadBalancerProperties properties, GrayscaleLoadBalancer grayLoadBalancer) {
-        super(null, properties, null);
+        super(null, properties);
         this.properties = properties;
         this.grayLoadBalancer = grayLoadBalancer;
     }
 
     @Override
     public int getOrder() {
-        return LOAD_BALANCER_CLIENT_FILTER_ORDER;
+        return OrderedConstant.GRAY;
     }
 
     @Override

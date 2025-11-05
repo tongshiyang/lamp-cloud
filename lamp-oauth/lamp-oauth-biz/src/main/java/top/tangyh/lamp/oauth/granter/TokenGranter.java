@@ -17,8 +17,8 @@ package top.tangyh.lamp.oauth.granter;
 
 
 import top.tangyh.basic.base.R;
-import top.tangyh.basic.jwt.model.AuthInfo;
-import top.tangyh.lamp.authority.dto.auth.LoginParamDTO;
+import top.tangyh.lamp.oauth.vo.param.LoginParamVO;
+import top.tangyh.lamp.oauth.vo.result.LoginResultVO;
 
 /**
  * 授予token接口
@@ -35,6 +35,24 @@ public interface TokenGranter {
      * @param loginParam 授权参数
      * @return LoginDTO
      */
-    R<AuthInfo> grant(LoginParamDTO loginParam);
+    R<LoginResultVO> login(LoginParamVO loginParam);
+
+    /**
+     * 退出
+     *
+     * @return
+     */
+    R<Boolean> logout();
+
+    /**
+     * 切换企业和机构
+     *
+     * @param orgId    机构ID
+     * @return top.tangyh.lamp.oauth.vo.result.LoginResultVO
+     * @author tangyh
+     * @date 2022/9/16 1:14 PM
+     * @create [2022/9/16 1:14 PM ] [tangyh] [初始创建]
+     */
+    LoginResultVO switchOrg(Long orgId);
 
 }

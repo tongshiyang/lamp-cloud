@@ -1,12 +1,16 @@
 package top.tangyh.lamp.gateway.filter;
 
+import cn.dev33.satoken.config.SaTokenConfig;
+import cn.dev33.satoken.exception.SaTokenException;
+import cn.dev33.satoken.session.SaSession;
+import cn.dev33.satoken.spring.pathmatch.SaPathPatternParserUtil;
+import cn.dev33.satoken.stp.StpUtil;
 import cn.hutool.core.util.StrUtil;
 import cn.hutool.core.util.URLUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.slf4j.MDC;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.core.Ordered;
 import org.springframework.core.io.buffer.DataBuffer;
 import org.springframework.http.HttpHeaders;
@@ -20,27 +24,27 @@ import org.springframework.web.server.WebFilter;
 import org.springframework.web.server.WebFilterChain;
 import reactor.core.publisher.Mono;
 import top.tangyh.basic.base.R;
-import top.tangyh.basic.cache.model.CacheKey;
-import top.tangyh.basic.cache.repository.CacheOps;
 import top.tangyh.basic.context.ContextConstants;
 import top.tangyh.basic.context.ContextUtil;
 import top.tangyh.basic.exception.BizException;
 import top.tangyh.basic.exception.UnauthorizedException;
-import top.tangyh.basic.jwt.TokenUtil;
-import top.tangyh.basic.jwt.model.AuthInfo;
-import top.tangyh.basic.jwt.utils.JwtUtil;
 import top.tangyh.basic.utils.StrPool;
-import top.tangyh.lamp.common.cache.common.TokenUserIdCacheKeyBuilder;
-import top.tangyh.lamp.common.constant.BizConstant;
 import top.tangyh.lamp.common.properties.IgnoreProperties;
+import top.tangyh.lamp.common.utils.Base64Util;
 
-import static top.tangyh.basic.context.ContextConstants.BASIC_HEADER_KEY;
-import static top.tangyh.basic.context.ContextConstants.BEARER_HEADER_KEY;
-import static top.tangyh.basic.context.ContextConstants.JWT_KEY_CLIENT_ID;
-import static top.tangyh.basic.context.ContextConstants.JWT_KEY_SUB_TENANT;
-import static top.tangyh.basic.context.ContextConstants.JWT_KEY_TENANT;
-import static top.tangyh.basic.exception.code.ExceptionCode.JWT_NOT_LOGIN;
-import static top.tangyh.basic.exception.code.ExceptionCode.JWT_OFFLINE;
+import static top.tangyh.basic.context.ContextConstants.APPLICATION_ID_HEADER;
+import static top.tangyh.basic.context.ContextConstants.APPLICATION_ID_KEY;
+import static top.tangyh.basic.context.ContextConstants.CLIENT_ID_HEADER;
+import static top.tangyh.basic.context.ContextConstants.CLIENT_KEY;
+import static top.tangyh.basic.context.ContextConstants.CURRENT_COMPANY_ID_HEADER;
+import static top.tangyh.basic.context.ContextConstants.CURRENT_DEPT_ID_HEADER;
+import static top.tangyh.basic.context.ContextConstants.CURRENT_TOP_COMPANY_ID_HEADER;
+import static top.tangyh.basic.context.ContextConstants.EMPLOYEE_ID_HEADER;
+import static top.tangyh.basic.context.ContextConstants.JWT_KEY_COMPANY_ID;
+import static top.tangyh.basic.context.ContextConstants.JWT_KEY_DEPT_ID;
+import static top.tangyh.basic.context.ContextConstants.JWT_KEY_EMPLOYEE_ID;
+import static top.tangyh.basic.context.ContextConstants.JWT_KEY_TOP_COMPANY_ID;
+import static top.tangyh.basic.context.ContextConstants.USER_ID_HEADER;
 
 /**
  * 过滤器
@@ -51,15 +55,11 @@ import static top.tangyh.basic.exception.code.ExceptionCode.JWT_OFFLINE;
 @Component
 @Slf4j
 @RequiredArgsConstructor
-@EnableConfigurationProperties({IgnoreProperties.class})
 public class TokenContextFilter implements WebFilter, Ordered {
+    protected final SaTokenConfig saTokenConfig;
+    private final IgnoreProperties ignoreProperties;
     @Value("${spring.profiles.active:dev}")
     protected String profiles;
-    @Value("${lamp.database.multiTenantType:SCHEMA}")
-    protected String multiTenantType;
-    private final IgnoreProperties ignoreProperties;
-    private final TokenUtil tokenUtil;
-    private final CacheOps cacheOps;
 
     protected boolean isDev(String token) {
         return !StrPool.PROD.equalsIgnoreCase(profiles) && (StrPool.TEST_TOKEN.equalsIgnoreCase(token) || StrPool.TEST.equalsIgnoreCase(token));
@@ -67,22 +67,22 @@ public class TokenContextFilter implements WebFilter, Ordered {
 
     @Override
     public int getOrder() {
-        return -1000;
+        return OrderedConstant.TOKEN;
     }
 
 
     /**
      * 忽略 用户token
      */
-    protected boolean isIgnoreToken(String path) {
-        return ignoreProperties.isIgnoreToken(path);
+    protected boolean isIgnoreToken(ServerHttpRequest request) {
+        return ignoreProperties.isIgnoreUser(request.getMethod().name(), request.getPath().toString());
     }
 
     /**
      * 忽略 租户编码
      */
-    protected boolean isIgnoreTenant(String path) {
-        return ignoreProperties.isIgnoreTenant(path);
+    protected boolean isIgnoreTenant(ServerHttpRequest request) {
+        return ignoreProperties.isIgnoreTenant(request.getMethod().name(), request.getPath().toString());
     }
 
     protected String getHeader(String headerName, ServerHttpRequest request) {
@@ -110,23 +110,31 @@ public class TokenContextFilter implements WebFilter, Ordered {
 
         ContextUtil.setGrayVersion(getHeader(ContextConstants.GRAY_VERSION, request));
 
-        try {
-            //1, 解码 请求头中的租户信息
-            parseTenant(request, mutate);
 
+        try {
             // 2,解码 Authorization
             parseClient(request, mutate);
 
-            // 3，解码 并验证 token
-            Mono<Void> token = parseToken(exchange, chain);
+            // 3, 获取 应用id
+            parseApplication(request, mutate);
+
+
+            Mono<Void> token = parseToken(exchange, chain, mutate);
             if (token != null) {
                 return token;
             }
+
         } catch (UnauthorizedException e) {
+            log.error(request.getPath().toString(), e);
             return errorResponse(response, e.getMessage(), e.getCode(), HttpStatus.UNAUTHORIZED);
         } catch (BizException e) {
+            log.error(request.getPath().toString(), e);
             return errorResponse(response, e.getMessage(), e.getCode(), HttpStatus.BAD_REQUEST);
+        } catch (SaTokenException e) {
+            log.error(request.getPath().toString(), e);
+            return errorResponse(response, e.getMessage(), e.getCode(), HttpStatus.UNAUTHORIZED);
         } catch (Exception e) {
+            log.error(request.getPath().toString(), e);
             return errorResponse(response, "验证token出错", R.FAIL_CODE, HttpStatus.BAD_REQUEST);
         }
 
@@ -134,89 +142,58 @@ public class TokenContextFilter implements WebFilter, Ordered {
         return chain.filter(exchange.mutate().request(build).build());
     }
 
-
-    private Mono<Void> parseToken(ServerWebExchange exchange, WebFilterChain chain) {
+    private Mono<Void> parseToken(ServerWebExchange exchange, WebFilterChain chain, ServerHttpRequest.Builder mutate) {
         ServerHttpRequest request = exchange.getRequest();
         ServerHttpResponse response = exchange.getResponse();
-        ServerHttpRequest.Builder mutate = request.mutate();
         // 判断接口是否需要忽略token验证
-        if (isIgnoreToken(request.getPath().toString())) {
-            log.debug("当前接口：{}, 不解析用户token", request.getPath().toString());
+        if (isIgnoreToken(request)) {
+            log.debug("当前接口：{}, 不解析用户token", request.getPath());
             return chain.filter(exchange);
         }
 
-        // 获取请求头中的token
-        String token = getHeader(BEARER_HEADER_KEY, request);
+        HttpHeaders headers = request.getHeaders();
 
-        AuthInfo authInfo;
-        // 测试环境 && token=test 时，写死一个用户信息，便于测试
-        if (isDev(token)) {
-            authInfo = new AuthInfo().setAccount("lamp").setUserId(2L)
-                    .setTokenType(BEARER_HEADER_KEY).setName("超级管理员");
-        } else {
-            authInfo = tokenUtil.getAuthInfo(token);
+        SaSession tokenSession = StpUtil.getTokenSessionByToken(headers.getFirst(saTokenConfig.getTokenName()));
+        log.info("{}", tokenSession);
 
-            // 验证 是否在其他设备登录或被挤下线
-            String newToken = JwtUtil.getToken(token);
-            // TOKEN_USER_ID:{token} === T
-            CacheKey cacheKey = new TokenUserIdCacheKeyBuilder().key(newToken);
-            String tokenCache = cacheOps.get(cacheKey);
+        if (tokenSession != null) {
+            Long userId = (Long) tokenSession.getLoginId();
+            long topCompanyId = tokenSession.getLong(JWT_KEY_TOP_COMPANY_ID);
+            long companyId = tokenSession.getLong(JWT_KEY_COMPANY_ID);
+            long deptId = tokenSession.getLong(JWT_KEY_DEPT_ID);
+            long employeeId = tokenSession.getLong(JWT_KEY_EMPLOYEE_ID);
 
-            if (StrUtil.isEmpty(tokenCache)) {
-                return errorResponse(response, JWT_NOT_LOGIN.getMsg(), JWT_NOT_LOGIN.getCode(), HttpStatus.UNAUTHORIZED);
-            } else if (StrUtil.equals(BizConstant.LOGIN_STATUS, tokenCache)) {
-                return errorResponse(response, JWT_OFFLINE.getMsg(), JWT_OFFLINE.getCode(), HttpStatus.UNAUTHORIZED);
-            }
+            mutate.header(USER_ID_HEADER, String.valueOf(userId));
+            mutate.header(EMPLOYEE_ID_HEADER, String.valueOf(employeeId));
+            mutate.header(CURRENT_TOP_COMPANY_ID_HEADER, String.valueOf(topCompanyId));
+            mutate.header(CURRENT_COMPANY_ID_HEADER, String.valueOf(companyId));
+            mutate.header(CURRENT_DEPT_ID_HEADER, String.valueOf(deptId));
         }
 
-        // 将请求头中的token解析出来的用户信息重新封装到请求头，转发到业务服务
-        // 业务服务在利用HeaderThreadLocalInterceptor拦截器将请求头中的用户信息解析到ThreadLocal中
-        if (authInfo != null) {
-            addHeader(mutate, ContextConstants.JWT_KEY_ACCOUNT, authInfo.getAccount());
-            addHeader(mutate, ContextConstants.JWT_KEY_USER_ID, authInfo.getUserId());
-            addHeader(mutate, ContextConstants.JWT_KEY_NAME, authInfo.getName());
-
-            MDC.put(ContextConstants.JWT_KEY_USER_ID, String.valueOf(authInfo.getUserId()));
-        }
         return null;
     }
 
     private void parseClient(ServerHttpRequest request, ServerHttpRequest.Builder mutate) {
-        String base64Authorization = getHeader(BASIC_HEADER_KEY, request);
-        if (StrUtil.isNotEmpty(base64Authorization)) {
-            String[] client = JwtUtil.getClient(base64Authorization);
-            ContextUtil.setClientId(client[0]);
-            addHeader(mutate, JWT_KEY_CLIENT_ID, ContextUtil.getClientId());
+        try {
+            String pattern = "/actuator/**";
+            if (!SaPathPatternParserUtil.match(pattern, request.getPath().toString())) {
+                String base64Authorization = getHeader(CLIENT_KEY, request);
+                if (StrUtil.isNotEmpty(base64Authorization)) {
+                    String[] client = Base64Util.getClient(base64Authorization);
+                    ContextUtil.setClientId(client[0]);
+                    addHeader(mutate, CLIENT_ID_HEADER, ContextUtil.getClientId());
+                }
+            }
+        } catch (Exception ignore) {
         }
     }
 
-    private void parseTenant(ServerHttpRequest request, ServerHttpRequest.Builder mutate) {
-        // NONE模式 直接忽略tenant
-        if ("NONE".equals(multiTenantType)) {
-            addHeader(mutate, JWT_KEY_TENANT, "_NONE");
-            ContextUtil.setTenant("_NONE");
-            MDC.put(JWT_KEY_TENANT, StrPool.EMPTY);
-            return;
-        }
-        // 使请求忽略验证请求中的 租户编码(tenant) 参数
-        if (isIgnoreTenant(request.getPath().toString())) {
-            return;
-        }
-        String base64Tenant = getHeader(JWT_KEY_TENANT, request);
-        if (StrUtil.isNotEmpty(base64Tenant)) {
-            String tenant = JwtUtil.base64Decoder(base64Tenant);
-
-            ContextUtil.setTenant(tenant);
-            addHeader(mutate, JWT_KEY_TENANT, tenant);
-            MDC.put(JWT_KEY_TENANT, tenant);
-        }
-        String base64SubTenant = getHeader(JWT_KEY_SUB_TENANT, request);
-        if (StrUtil.isNotEmpty(base64SubTenant)) {
-            String subTenant = JwtUtil.base64Decoder(base64SubTenant);
-
-            ContextUtil.setSubTenant(subTenant);
-            addHeader(mutate, JWT_KEY_SUB_TENANT, subTenant);
-            MDC.put(JWT_KEY_SUB_TENANT, subTenant);
+    private void parseApplication(ServerHttpRequest request, ServerHttpRequest.Builder mutate) {
+        String applicationIdStr = getHeader(APPLICATION_ID_KEY, request);
+        if (StrUtil.isNotEmpty(applicationIdStr)) {
+            ContextUtil.setApplicationId(applicationIdStr);
+            addHeader(mutate, APPLICATION_ID_HEADER, ContextUtil.getApplicationId());
+            MDC.put(APPLICATION_ID_HEADER, applicationIdStr);
         }
     }
 
